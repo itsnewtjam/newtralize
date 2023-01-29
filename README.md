@@ -1,0 +1,3 @@
+# newtralize
+
+## A Joomla template

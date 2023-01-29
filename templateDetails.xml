@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<extension type="template" version="4.0" method="upgrade">
+  <name>newtralize</name>
+  <version>0.0.1</version>
+  <creationDate>2023-01-28</creationDate>
+  <author>newtjam</author>
+  <authorEmail>joomla@newtjam.com</authorEmail>
+  <authorUrl>https://newtjam.com</authorUrl>
+  <copyright>Copyright (C) 2023 newtjam. All rights reserved.</copyright>
+  <license>GNU General Public License version 2 or later</license>
+  <description>newtralize is a clean and minimal template designed to neutralize Joomla and stay out of your way.</description>
+  <updateservers>
+
+  </updateservers>
+  <files>
+    <folder>css</folder>
+    <folder>fonts</folder>
+    <folder>heads</folder>
+    <folder>html</folder>
+    <folder>js</folder>
+    <filename>error.php</filename>
+    <filename>index.php</filename>
+    <filename>template_thumbnail.png</filename>
+    <filename>templateDetails.xml</filename>
+  </files>
+  <positions>
+    <position>navbar</position>
+    <position>navigation</position>
+    <position>above-body</position>
+    <position>left-body</position>
+    <position>main-body-top</position>
+    <position>main-body-bottom</position>
+    <position>right-body</position>
+    <position>below-body</position>
+    <position>footer</position>
+    <position>alert-bar</position>
+  </positions>
+  <languages folder="language">
+    <language tag="en-GB">en-GB/en-GB.tpl_newtralize.ini</language>
+    <language tag="en-GB">en-GB/en-GB.tpl_newtralize.sys.ini</language>
+  </languages>
+  <config></config>
+</extension>
