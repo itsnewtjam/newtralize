@@ -2,7 +2,7 @@
 <extension type="template" version="4.0" method="upgrade">
   <name>newtralize</name>
   <version>0.0.1</version>
-  <creationDate>2023-01-28</creationDate>
+  <creationDate>2023-03-01</creationDate>
   <author>newtjam</author>
   <authorEmail>joomla@newtjam.com</authorEmail>
   <authorUrl>https://newtjam.com</authorUrl>
@@ -39,5 +39,95 @@
     <language tag="en-GB">en-GB/en-GB.tpl_newtralize.ini</language>
     <language tag="en-GB">en-GB/en-GB.tpl_newtralize.sys.ini</language>
   </languages>
-  <config></config>
+  <config>
+    <fields name="params">
+      <fieldset name="JOOMLA_SETTINGS">
+        <field name="logo" type="media" label="TPL_NEWTRALIZE_LOGO_LABEL" description="TPL_NEWTRALIZE_LOGO_DESC" />
+        <field name="sitetitle"  type="text" default="" label="JGLOBAL_TITLE" description="JFIELD_ALT_PAGE_TITLE_LABEL" filter="safehtml" />
+      </fieldset>
+      
+      <fieldset name="CSS_SETTINGS">
+        <field name="killjoomlacss" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_NEWTRALIZE_KILLJOOMLACSS_LABEL" description="TPL_NEWTRALIZE_KILLJOOMLACSS_DESC">
+          <option value="0">TPL_NEWTRALIZE_NO</option>
+          <option value="1">TPL_NEWTRALIZE_YES</option>
+        </field>
+      </fieldset>
+      
+      <fieldset name="JAVASCRIPT_SETTINGS">
+        <field name="killjoomlajs" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_NEWTRALIZE_KILLJOOMLAJS_LABEL" description="TPL_NEWTRALIZE_KILLJOOMLAJS_DESC">
+          <option value="0">TPL_NEWTRALIZE_NO</option>
+          <option value="1">TPL_NEWTRALIZE_YES</option>
+        </field>
+        <field name="instant" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_NEWTRALIZE_INSTANT_LABEL" description="TPL_NEWTRALIZE_INSTANT_DESC">
+          <option value="0">TPL_NEWTRALIZE_NO</option>
+          <option value="1">TPL_NEWTRALIZE_YES</option>
+        </field>
+      </fieldset>
+      
+      <fieldset name="TRACKING_SETTINGS">
+        <field name="gtmcode"  type="text" default="" label="TPL_NEWTRALIZE_GTM_LABEL" description="TPL_NEWTRALIZE_GTM_DESC" filter="string" />
+        <field name="gacode"  type="text" default="" label="TPL_NEWTRALIZE_GA_LABEL" description="TPL_NEWTRALIZE_GA_DESC" filter="string" />
+        <field name="fbcode"  type="text" default="" label="TPL_NEWTRALIZE_FB_LABEL" description="TPL_NEWTRALIZE_FB_DESC" filter="string" />
+      </fieldset>
+      
+      <fieldset name="ICON_SETTINGS">
+        <field name="fontawesomecdn" type="text" label="TPL_NEWTRALIZE_FONTAWESOMECDN_LABEL" description="TPL_NEWTRALIZE_FONTAWESOMECDN_DESC" />
+      </fieldset>
+
+      <fieldset name="MODULE_SETTINGS">
+        <field name="banner" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_NEWTRALIZE_BANNER_LABEL" description="TPL_NEWTRALIZE_BANNER_DESC">
+          <option value="0">TPL_NEWTRALIZE_DISABLED</option>
+          <option value="1">TPL_NEWTRALIZE_ENABLED</option>
+        </field>
+        <field name="topmenu" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_NEWTRALIZE_TOPMENU_LABEL" description="TPL_NEWTRALIZE_TOPMENU_DESC">
+          <option value="0">TPL_NEWTRALIZE_DISABLED</option>
+          <option value="1">TPL_NEWTRALIZE_ENABLED</option>
+        </field>
+        <field name="abovebody" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_NEWTRALIZE_ABOVEBODY_LABEL" description="TPL_NEWTRALIZE_ABOVEBODY_DESC">
+          <option value="0">TPL_NEWTRALIZE_DISABLED</option>
+          <option value="1">TPL_NEWTRALIZE_ENABLED</option>
+        </field>
+        <field name="leftbody" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_NEWTRALIZE_LEFTBODY_LABEL" description="TPL_NEWTRALIZE_LEFTBODY_DESC">
+          <option value="0">TPL_NEWTRALIZE_DISABLED</option>
+          <option value="1">TPL_NEWTRALIZE_ENABLED</option>
+        </field>
+        <field name="mainbodytop" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_NEWTRALIZE_MAINBODYTOP_LABEL" description="TPL_NEWTRALIZE_MAINBODYTOP_DESC">
+          <option value="0">TPL_NEWTRALIZE_DISABLED</option>
+          <option value="1">TPL_NEWTRALIZE_ENABLED</option>
+        </field>
+        <field name="mainbodybottom" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_NEWTRALIZE_MAINBODYBOTTOM_LABEL" description="TPL_NEWTRALIZE_MAINBODYBOTTOM_DESC">
+          <option value="0">TPL_NEWTRALIZE_DISABLED</option>
+          <option value="1">TPL_NEWTRALIZE_ENABLED</option>
+        </field>
+        <field name="rightbody" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_NEWTRALIZE_RIGHTBODY_LABEL" description="TPL_NEWTRALIZE_RIGHTBODY_DESC">
+          <option value="0">TPL_NEWTRALIZE_DISABLED</option>
+          <option value="1">TPL_NEWTRALIZE_ENABLED</option>
+        </field>
+        <field name="belowbody" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_NEWTRALIZE_BELOWBODY_LABEL" description="TPL_NEWTRALIZE_BELOWBODY_DESC">
+          <option value="0">TPL_NEWTRALIZE_DISABLED</option>
+          <option value="1">TPL_NEWTRALIZE_ENABLED</option>
+        </field>
+        <field name="footer" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_NEWTRALIZE_FOOTER_LABEL" description="TPL_NEWTRALIZE_FOOTER_DESC">
+          <option value="0">TPL_NEWTRALIZE_DISABLED</option>
+          <option value="1">TPL_NEWTRALIZE_ENABLED</option>
+        </field>
+        <field name="alertbar" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_NEWTRALIZE_ALERTBAR_LABEL" description="TPL_NEWTRALIZE_ALERTBAR_DESC">
+          <option value="0">TPL_NEWTRALIZE_DISABLED</option>
+          <option value="1">TPL_NEWTRALIZE_ENABLED</option>
+        </field>
+        <field name="copyright" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_NEWTRALIZE_COPYRIGHT_LABEL" description="TPL_NEWTRALIZE_COPYRIGHT_DESC">
+          <option value="0">TPL_NEWTRALIZE_DISABLED</option>
+          <option value="1">TPL_NEWTRALIZE_ENABLED</option>
+        </field>
+        <field name="copyrighttxt" type="text" default="" label="TPL_NEWTRALIZE_COPYRIGHTTXT_LABEL" description="TPL_NEWTRALIZE_COPYRIGHTTXT_DESC" filter="string" />
+      </fieldset>
+      
+      <fieldset name="CUSTOM_CODE">
+        <field name="codeafterhead" type="textarea" label="TPL_NEWTRALIZE_CODEAFTERHEAD_LABEL" description="TPL_NEWTRALIZE_CODEAFTERHEAD_DESC" rows="4" columns="30" filter="raw" default="" />
+        <field name="codebeforehead" type="textarea" label="TPL_NEWTRALIZE_CODEBEFOREHEAD_LABEL" description="TPL_NEWTRALIZE_CODEBEFOREHEAD_DESC" rows="4" columns="30" filter="raw" default="" />
+        <field name="codeafterbody" type="textarea" label="TPL_NEWTRALIZE_CODEAFTERBODY_LABEL" description="TPL_NEWTRALIZE_CODEAFTERBODY_DESC" rows="4" columns="30" filter="raw" default="" />
+        <field name="codebeforebody" type="textarea" label="TPL_NEWTRALIZE_CODEBEFOREBODY_LABEL" description="TPL_NEWTRALIZE_CODEBEFOREBODY_DESC" rows="4" columns="30" filter="raw" default="" />
+      </fieldset>
+		</fields>
+  </config>
 </extension>
