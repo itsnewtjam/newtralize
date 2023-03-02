@@ -251,7 +251,7 @@ $instant = $this->params->get('instant');
             <small>
               <?php if ($copyrighttxt != null && $copyright == 1) : ?>
                 &copy;<?= date('Y'); ?> <?= $copyrighttxt; ?>
-              <?php else : ?>
+              <?php elseif ($copyright == 1) : ?>
                 &copy;<?= date('Y'); ?> <?= htmlspecialchars($sitetitle); ?>
               <?php endif; ?>
             </small>
