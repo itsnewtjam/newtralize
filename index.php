@@ -247,14 +247,16 @@ $instant = $this->params->get('instant');
         <footer>
           <div class="footer-wrapper">
             <jdoc:include type="modules" name="footer" style="default" />
-            <hr />
-            <small>
-              <?php if ($copyrighttxt != null && $copyright == 1) : ?>
-                &copy;<?= date('Y'); ?> <?= $copyrighttxt; ?>
-              <?php elseif ($copyright == 1) : ?>
-                &copy;<?= date('Y'); ?> <?= htmlspecialchars($sitetitle); ?>
-              <?php endif; ?>
-            </small>
+            <?php if ($copyright == 1) : ?>
+              <hr />
+              <small>
+                <?php if ($copyrighttxt != null) : ?>
+                  &copy;<?= date('Y'); ?> <?= $copyrighttxt; ?>
+                <?php else : ?>
+                  &copy;<?= date('Y'); ?> <?= htmlspecialchars($sitetitle); ?>
+                <?php endif; ?>
+              </small>
+	    <?php endif; ?>
           </div>
         </footer>
       <?php endif; ?>
