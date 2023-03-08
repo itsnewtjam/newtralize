@@ -1,6 +1,6 @@
 # newtralize
 
-**newtralize is a clean and minimal template designed to neutralize Joomla and stay out of your way.**
+**newtralize is a clean and minimal Joomla 4 template designed to neutralize Joomla and stay out of your way.**
 
 No opinionated CSS to fight with, easy marketing implementation, just a pleasant experience.
 
