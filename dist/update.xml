@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<updates>
+  <update>
+    <name>newtralize</name>
+    <element>newtralize</element>
+    <type>template</type>
+    <client>site</client>
+    <version>0.0.1</version>
+    <infourl>https://github.com/itsnewtjam/newtralize</infourl>
+    <downloads>
+      <downloadurl type="full" format="zip">https://github.com/itsnewtjam/newtralize/releases/latest/download/newtralize.zip</downloadurl>
+    </downloads>
+    <targetplatform name="joomla" version="4"/>
+  </update>
+</updates>
