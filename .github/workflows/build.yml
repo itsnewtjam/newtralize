@@ -1,0 +1,24 @@
+name: Create Archive
+on:
+  release:
+    types:
+      - published
+
+permissions: write-all
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Archive Release
+        uses: thedoctor0/zip-release@0.7.1
+        with:
+          type: "zip"
+          filename: "newtralize.zip"
+          exclusions: "*.git* /*node_modules/* .editorconfig /dist/*"
+
+      - uses: AButler/upload-release-assets@v2.0
+        with:
+          files: "newtralize.zip"
+          repo-token: ${{ secrets.GITHUB_TOKEN }}

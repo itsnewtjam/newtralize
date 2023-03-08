@@ -10,7 +10,7 @@
   <license>GNU General Public License version 2 or later</license>
   <description>newtralize is a clean and minimal template designed to neutralize Joomla and stay out of your way.</description>
   <updateservers>
-
+    <server type="extension" name="newtralize Updates">https://raw.githubusercontent.com/itsnewtjam/newtralize/master/dist/update.xml</server>
   </updateservers>
   <files>
     <folder>css</folder>
