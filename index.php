@@ -103,7 +103,7 @@ $instant = $this->params->get('instant');
 
     <script src="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/js/template.js"></script>
 
-    <?php if (file_exists($this->baseurl . "/templates" . "/" . $this->template . "/js/custom.js")) : ?>
+    <?php if (file_exists(JPATH_SITE . "/templates" . "/" . $this->template . "/js/custom.js")) : ?>
       <script src="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/js/custom.js"></script>
     <?php endif; ?>
 
