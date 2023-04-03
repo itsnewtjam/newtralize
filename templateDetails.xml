@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <extension type="template" version="4.0" method="upgrade">
   <name>newtralize</name>
-  <version>0.0.2</version>
-  <creationDate>2023-03-01</creationDate>
+  <version>0.0.3</version>
+  <creationDate>2023-04-03</creationDate>
   <author>newtjam</author>
   <authorEmail>joomla@newtjam.com</authorEmail>
   <authorUrl>https://newtjam.com</authorUrl>

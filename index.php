@@ -107,6 +107,14 @@ $instant = $this->params->get('instant');
       <script src="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/js/custom.js"></script>
     <?php endif; ?>
 
+    <?php if (file_exists(JPATH_SITE . "/templates" . "/" . $this->template . "/js/menus/".$active->menutype.".js")) : ?>
+      <script src="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/js/menus/<?= $active->menutype; ?>.js"></script>
+    <?php endif; ?>
+
+    <?php if (file_exists(JPATH_SITE . "/templates" . "/" . $this->template . "/js/pages/".$active->alias.".js")) : ?>
+      <script src="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/js/pages/<?= $active->alias; ?>.js"></script>
+    <?php endif; ?>
+
     <?php if ($gtmcode != null) : ?>
       <!-- Google Tag Manager -->
       <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
