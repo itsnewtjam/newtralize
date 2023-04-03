@@ -72,7 +72,17 @@ You can also define CSS styles that will only be present on a specific menu item
 
 ## Adding JavaScript
 
+### Global Custom JavaScript
+
 Create a JS file in `/js/` named `custom.js`. This file will be included on every page.
+
+### Menu-Specific JavaScript
+
+You can also define JavaScript that will only be present within a given menu. Create a JS file in `/js/menus/` named with the menu's alias. For example, if your menu's alias is `main-menu`, create `main-menu.js`.
+
+### Menu Item-Specific JavaScript
+
+You can also define JavaScript that will only be present on a specific menu item. Create a JS file in `/js/pages/` named with the menu item's alias. For example, if your page's alias is `contact`, create `contact.js`.
 
 ## Adding GA Conversion Tags
 
