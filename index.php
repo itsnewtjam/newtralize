@@ -183,7 +183,7 @@ $instant = $this->params->get('instant');
       <?php endif; ?>
 
       <?php if ($topmenu == 1) : ?>
-        <div class="navbar">
+        <header class="navbar">
           <a
             class="logo"
             href="<?= $this->baseurl ?>"
@@ -193,7 +193,7 @@ $instant = $this->params->get('instant');
               alt="<?= htmlspecialchars($sitetitle); ?>"
             />
           </a>
-          <div class="nav-end">
+          <nav class="nav-end">
             <jdoc:include type="modules" name="navbar" style="default" />
             <button id="nav-button" aria-label="Toggle Main Menu" aria-controls="primary-navigation" aria-expanded="false" onclick="toggleMenu();">
               <svg class="hamburger" viewBox="0 0 100 100" width="32">
@@ -206,11 +206,11 @@ $instant = $this->params->get('instant');
             <div id="primary-navigation" data-state="closed">
               <jdoc:include type="modules" name="navigation" style="default" />
             </div>
-          </div>
-        </div>
+          </nav>
+        </header>
       <?php endif; ?>
 
-      <div class="content-wrapper">
+      <main class="content-wrapper">
         <?php if ($abovebody == 1) : ?>
           <jdoc:include type="modules" name="above-body" style="default" />
         <?php endif; ?>
@@ -249,7 +249,7 @@ $instant = $this->params->get('instant');
         <?php if ($belowbody == 1) : ?>
           <jdoc:include type="modules" name="below-body" style="default" />
         <?php endif; ?>
-      </div>
+      </main>
 
       <?php if ($footer == 1) : ?>
         <footer>
