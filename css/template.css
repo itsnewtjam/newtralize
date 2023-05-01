@@ -178,10 +178,12 @@ Base Navbar Styles
 
 #primary-navigation {
   display: none;
+  visibility: hidden;
 }
 
 #primary-navigation[data-state="open"] {
   display: block;
+  visibility: visible;
 }
 
 /*================
