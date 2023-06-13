@@ -47,15 +47,15 @@ $instant = $this->params->get('instant');
 <!DOCTYPE html>
 <html lang="<?= $this->language; ?>" dir="<?= $this->direction; ?>">
   <head>
-    <?php if ($codeafterhead != null) echo $codeafterhead; ?>
-
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="apple-mobile-web-app-capable" content="YES" />
-
-    <?php unset($document->_scripts[JURI::root(true) . '/media/jui/js/jquery.min.js']); ?>
-
     <jdoc:include type="head" />
+    
+    <?php if ($codeafterhead != null) echo $codeafterhead; ?>
+
+    <meta name="apple-mobile-web-app-capable" content="YES" />
+    
+    <?php unset($document->_scripts[JURI::root(true) . '/media/jui/js/jquery.min.js']); ?>
 
     <?php 
       if ($killjoomlajs == 1) {
@@ -82,24 +82,6 @@ $instant = $this->params->get('instant');
     ?>
 
     <?php $this->setGenerator(null); ?>
-
-    <?php if ($fontawesomecdn != null) : ?>
-      <script defer src="<?= $fontawesomecdn; ?>"></script>
-    <?php endif; ?>
-
-    <link rel="stylesheet" href="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/css/template.css" type="text/css">
-
-    <?php if (file_exists(JPATH_SITE."/"."templates/".$this->template."/"."css/custom.css")): ?>
-      <link rel="stylesheet" href="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/css/custom.css" type="text/css">
-    <?php endif; ?>
-
-    <?php if (file_exists(JPATH_SITE."/"."templates/".$this->template."/"."css/menus/".$active->menutype.".css")): ?>
-      <link rel="stylesheet" href="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/css/menus/<?= $active->menutype; ?>.css" type="text/css">
-    <?php endif; ?>
-    
-    <?php if (file_exists(JPATH_SITE."/"."templates/".$this->template."/"."css/pages/".$active->alias.".css")): ?>
-      <link rel="stylesheet" href="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/css/pages/<?= $active->alias; ?>.css" type="text/css">
-    <?php endif; ?>
 
     <script src="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/js/template.js"></script>
 
@@ -160,6 +142,24 @@ $instant = $this->params->get('instant');
 						src="https://www.facebook.com/tr?id=<?= $fbcode; ?>&ev=PageView&noscript=1"/>
 			</noscript>
 			<!-- End Facebook Pixel Code -->
+    <?php endif; ?>
+    
+    <link rel="stylesheet" href="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/css/template.css" type="text/css">
+    
+    <?php if (file_exists(JPATH_SITE."/"."templates/".$this->template."/"."css/custom.css")): ?>
+      <link rel="stylesheet" href="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/css/custom.css" type="text/css">
+    <?php endif; ?>
+      
+    <?php if (file_exists(JPATH_SITE."/"."templates/".$this->template."/"."css/menus/".$active->menutype.".css")): ?>
+      <link rel="stylesheet" href="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/css/menus/<?= $active->menutype; ?>.css" type="text/css">
+    <?php endif; ?>
+        
+    <?php if (file_exists(JPATH_SITE."/"."templates/".$this->template."/"."css/pages/".$active->alias.".css")): ?>
+      <link rel="stylesheet" href="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/css/pages/<?= $active->alias; ?>.css" type="text/css">
+    <?php endif; ?>
+
+    <?php if ($fontawesomecdn != null) : ?>
+      <script defer src="<?= $fontawesomecdn; ?>"></script>
     <?php endif; ?>
 
     <?php if ($codebeforehead != null) echo $codebeforehead; ?>
