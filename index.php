@@ -183,30 +183,32 @@ $instant = $this->params->get('instant');
       <?php endif; ?>
 
       <?php if ($topmenu == 1) : ?>
-        <header class="navbar">
-          <a
-            class="logo"
-            href="<?= $this->baseurl ?>"
-          >
-            <img
-              src="<?= $this->baseurl; ?>/<?= htmlspecialchars($logo); ?>"
-              alt="<?= htmlspecialchars($sitetitle); ?>"
-            />
-          </a>
-          <nav class="nav-end">
-            <jdoc:include type="modules" name="navbar" style="default" />
-            <button id="nav-button" aria-label="Toggle Main Menu" aria-controls="primary-navigation" aria-expanded="false" onclick="toggleMenu();">
-              <svg class="hamburger" viewBox="0 0 100 100" width="32">
-                <rect class="line top" width="80" height="10" x="10" y="20"></rect>
-                <rect class="line middle" width="80" height="10" x="10" y="45"></rect>
-                <rect class="line bottom" width="80" height="10" x="10" y="70"></rect>
-              </svg>
-            </button>
-            <div class="menu-overlay" onclick="toggleMenu();"></div>
-            <div id="primary-navigation" data-state="closed">
-              <jdoc:include type="modules" name="navigation" style="default" />
-            </div>
-          </nav>
+        <header class="navbar-wrapper">
+          <div class="navbar">
+            <a
+              class="logo"
+              href="<?= $this->baseurl ?>"
+            >
+              <img
+                src="<?= $this->baseurl; ?>/<?= htmlspecialchars($logo); ?>"
+                alt="<?= htmlspecialchars($sitetitle); ?>"
+              />
+            </a>
+            <nav class="nav-end">
+              <jdoc:include type="modules" name="navbar" style="default" />
+              <button id="nav-button" aria-label="Toggle Main Menu" aria-controls="primary-navigation" aria-expanded="false" onclick="toggleMenu();">
+                <svg class="hamburger" viewBox="0 0 100 100" width="32">
+                  <rect class="line top" width="80" height="10" x="10" y="20"></rect>
+                  <rect class="line middle" width="80" height="10" x="10" y="45"></rect>
+                  <rect class="line bottom" width="80" height="10" x="10" y="70"></rect>
+                </svg>
+              </button>
+              <div class="menu-overlay" onclick="toggleMenu();"></div>
+              <div id="primary-navigation" data-state="closed">
+                <jdoc:include type="modules" name="navigation" style="default" />
+              </div>
+            </nav>
+          </div>
         </header>
       <?php endif; ?>
 
@@ -215,7 +217,7 @@ $instant = $this->params->get('instant');
           <jdoc:include type="modules" name="above-body" style="default" />
         <?php endif; ?>
 
-        <div class="body-content">
+        <div class="body-content container-width">
           <?php if ($this->countModules('leftbody')) : ?>
             <?php if ($leftbody == 1) : ?>
               <div class="leftbody">
