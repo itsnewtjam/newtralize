@@ -22,7 +22,7 @@ if ($this->error->getCode() == "404") {
 ?>
 
 <?php if ($menuitem) : ?>
-  <?php header("Location: /404"); ?>
+  <?php header("Location: /404"); die; ?>
 <?php else : ?>
   <!DOCTYPE html>
 	<html lang="<?= $this->language; ?>" dir="<?= $this->direction; ?>">

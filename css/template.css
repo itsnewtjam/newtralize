@@ -195,7 +195,6 @@ body > .container > .content-wrapper {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  max-width: var(--container-width);
 }
 
 .body-content {
@@ -263,6 +262,11 @@ Utility Classes
   .show-desktop-only {
     display: block;
   }
+}
+
+.container-width {
+  max-width: var(--container-width);
+  margin-inline: auto;
 }
 
 .escape-fw {
