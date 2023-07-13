@@ -5,6 +5,7 @@
 No opinionated CSS to fight with, easy marketing implementation, just a pleasant experience.
 
 - [Basic Layout](#basic-layout)
+- [Utility Classes](#utility-classes)
 - [Configuration Options](#configuration-options)
 - [Adding CSS](#adding-css)
 - [Adding Javascript](#adding-javascript)
@@ -15,6 +16,16 @@ No opinionated CSS to fight with, easy marketing implementation, just a pleasant
 newtralize is set up with basic module positions, sufficient to create almost any design.
 
 <img src="https://res.cloudinary.com/da9s7ps5c/image/upload/v1677767034/newtralize_layout_3f4d3d0490.jpg" height="512" />
+
+## Utility Classes
+
+newtralize comes equipped with a few handy utility classes to help you build your layouts.
+
+- `.show-desktop-only`: Will hide an element on small screens
+- `.show-mobile-only`: Will hide an element on large screens
+- `.container-width`: Will confine an element to the max container width (set by `--container-width`)
+- `.visually-hidden`: Will hide an element visually, but keep it visible to screen readers
+- `.flow`: Provides an easy vertical spacing container. Can customize the space with `--flow-space`
 
 ## Configuration Options
 
