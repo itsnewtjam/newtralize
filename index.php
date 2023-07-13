@@ -94,24 +94,6 @@ if ($nocacheheaders == 1) {
 
     <?php $this->setGenerator(null); ?>
 
-    <?php if ($fontawesomecdn != null) : ?>
-      <script defer src="<?= $fontawesomecdn; ?>"></script>
-    <?php endif; ?>
-
-    <link rel="stylesheet" href="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/css/template.css<?php if ($uncachecss == 1) echo "?v=$timestamp"; ?>" type="text/css">
-
-    <?php if (file_exists(JPATH_SITE."/"."templates/".$this->template."/"."css/custom.css")): ?>
-      <link rel="stylesheet" href="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/css/custom.css<?php if ($uncachecss == 1) echo "?v=$timestamp"; ?>" type="text/css">
-    <?php endif; ?>
-
-    <?php if (file_exists(JPATH_SITE."/"."templates/".$this->template."/"."css/menus/".$active->menutype.".css")): ?>
-      <link rel="stylesheet" href="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/css/menus/<?= $active->menutype; ?>.css<?php if ($uncachecss == 1) echo "?v=$timestamp"; ?>" type="text/css">
-    <?php endif; ?>
-    
-    <?php if (file_exists(JPATH_SITE."/"."templates/".$this->template."/"."css/pages/".$active->alias.".css")): ?>
-      <link rel="stylesheet" href="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/css/pages/<?= $active->alias; ?>.css<?php if ($uncachecss == 1) echo "?v=$timestamp"; ?>" type="text/css">
-    <?php endif; ?>
-
     <script src="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/js/template.js<?php if ($uncachejs == 1) echo "?v=$timestamp"; ?>"></script>
   
     <?php if (file_exists(JPATH_SITE . "/templates" . "/" . $this->template . "/js/custom.js")) : ?>
@@ -172,19 +154,19 @@ if ($nocacheheaders == 1) {
 			</noscript>
 			<!-- End Facebook Pixel Code -->
     <?php endif; ?>
-    
-    <link rel="stylesheet" href="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/css/template.css" type="text/css">
-    
+
+    <link rel="stylesheet" href="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/css/template.css<?php if ($uncachecss == 1) echo "?v=$timestamp"; ?>" type="text/css">
+
     <?php if (file_exists(JPATH_SITE."/"."templates/".$this->template."/"."css/custom.css")): ?>
-      <link rel="stylesheet" href="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/css/custom.css" type="text/css">
+      <link rel="stylesheet" href="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/css/custom.css<?php if ($uncachecss == 1) echo "?v=$timestamp"; ?>" type="text/css">
     <?php endif; ?>
-      
+
     <?php if (file_exists(JPATH_SITE."/"."templates/".$this->template."/"."css/menus/".$active->menutype.".css")): ?>
-      <link rel="stylesheet" href="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/css/menus/<?= $active->menutype; ?>.css" type="text/css">
+      <link rel="stylesheet" href="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/css/menus/<?= $active->menutype; ?>.css<?php if ($uncachecss == 1) echo "?v=$timestamp"; ?>" type="text/css">
     <?php endif; ?>
-        
+    
     <?php if (file_exists(JPATH_SITE."/"."templates/".$this->template."/"."css/pages/".$active->alias.".css")): ?>
-      <link rel="stylesheet" href="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/css/pages/<?= $active->alias; ?>.css" type="text/css">
+      <link rel="stylesheet" href="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/css/pages/<?= $active->alias; ?>.css<?php if ($uncachecss == 1) echo "?v=$timestamp"; ?>" type="text/css">
     <?php endif; ?>
 
     <?php if ($fontawesomecdn != null) : ?>
