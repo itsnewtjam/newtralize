@@ -8,6 +8,8 @@ $app = Factory::getApplication();
 $document = Factory::getDocument();
 $user = Factory::getUser();
 
+$timestamp = date('U');
+
 $this->setHtml5(true);
 
 // Get active menu item alias
@@ -18,6 +20,9 @@ $params = $app->getTemplate(true)->params;
 $logo = $this->params->get('logo', '');
 $sitetitle = $this->params->get('sitetitle', $app->getCfg('sitename'));
 $sitedescription = $this->params->get('sitedescription');
+$nocacheheaders = $this->params->get('nocacheheaders');
+$uncachecss = $this->params->get('uncachecss');
+$uncachejs = $this->params->get('uncachejs');
 $fontawesomecdn = $this->params->get('fontawesomecdn');
 $gtmcode = $this->params->get('gtmcode');
 $gacode = $this->params->get('gacode');
@@ -42,20 +47,26 @@ $codeafterbody = $this->params->get('codeafterbody');
 $codebeforebody = $this->params->get('codebeforebody');
 $instant = $this->params->get('instant');
 
+if ($nocacheheaders == 1) {
+  header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+  header("Cache-Control: post-check=0, pre-check=0", false);
+  header("Pragma: no-cache");
+}
+
 ?>
 
 <!DOCTYPE html>
 <html lang="<?= $this->language; ?>" dir="<?= $this->direction; ?>">
   <head>
-    <?php if ($codeafterhead != null) echo $codeafterhead; ?>
-
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="apple-mobile-web-app-capable" content="YES" />
-
-    <?php unset($document->_scripts[JURI::root(true) . '/media/jui/js/jquery.min.js']); ?>
-
     <jdoc:include type="head" />
+    
+    <?php if ($codeafterhead != null) echo $codeafterhead; ?>
+
+    <meta name="apple-mobile-web-app-capable" content="YES" />
+    
+    <?php unset($document->_scripts[JURI::root(true) . '/media/jui/js/jquery.min.js']); ?>
 
     <?php 
       if ($killjoomlajs == 1) {
@@ -87,32 +98,32 @@ $instant = $this->params->get('instant');
       <script defer src="<?= $fontawesomecdn; ?>"></script>
     <?php endif; ?>
 
-    <link rel="stylesheet" href="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/css/template.css" type="text/css">
+    <link rel="stylesheet" href="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/css/template.css<?php if ($uncachecss == 1) echo "?v=$timestamp"; ?>" type="text/css">
 
     <?php if (file_exists(JPATH_SITE."/"."templates/".$this->template."/"."css/custom.css")): ?>
-      <link rel="stylesheet" href="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/css/custom.css" type="text/css">
+      <link rel="stylesheet" href="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/css/custom.css<?php if ($uncachecss == 1) echo "?v=$timestamp"; ?>" type="text/css">
     <?php endif; ?>
 
     <?php if (file_exists(JPATH_SITE."/"."templates/".$this->template."/"."css/menus/".$active->menutype.".css")): ?>
-      <link rel="stylesheet" href="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/css/menus/<?= $active->menutype; ?>.css" type="text/css">
+      <link rel="stylesheet" href="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/css/menus/<?= $active->menutype; ?>.css<?php if ($uncachecss == 1) echo "?v=$timestamp"; ?>" type="text/css">
     <?php endif; ?>
     
     <?php if (file_exists(JPATH_SITE."/"."templates/".$this->template."/"."css/pages/".$active->alias.".css")): ?>
-      <link rel="stylesheet" href="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/css/pages/<?= $active->alias; ?>.css" type="text/css">
+      <link rel="stylesheet" href="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/css/pages/<?= $active->alias; ?>.css<?php if ($uncachecss == 1) echo "?v=$timestamp"; ?>" type="text/css">
     <?php endif; ?>
 
-    <script src="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/js/template.js"></script>
-
+    <script src="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/js/template.js<?php if ($uncachejs == 1) echo "?v=$timestamp"; ?>"></script>
+  
     <?php if (file_exists(JPATH_SITE . "/templates" . "/" . $this->template . "/js/custom.js")) : ?>
-      <script src="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/js/custom.js"></script>
+      <script src="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/js/custom.js<?php if ($uncachejs == 1) echo "?v=$timestamp"; ?>"></script>
     <?php endif; ?>
 
     <?php if (file_exists(JPATH_SITE . "/templates" . "/" . $this->template . "/js/menus/".$active->menutype.".js")) : ?>
-      <script src="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/js/menus/<?= $active->menutype; ?>.js"></script>
+      <script src="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/js/menus/<?= $active->menutype; ?>.js<?php if ($uncachejs == 1) echo "?v=$timestamp"; ?>"></script>
     <?php endif; ?>
 
     <?php if (file_exists(JPATH_SITE . "/templates" . "/" . $this->template . "/js/pages/".$active->alias.".js")) : ?>
-      <script src="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/js/pages/<?= $active->alias; ?>.js"></script>
+      <script src="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/js/pages/<?= $active->alias; ?>.js<?php if ($uncachejs == 1) echo "?v=$timestamp"; ?>"></script>
     <?php endif; ?>
 
     <?php if ($gtmcode != null) : ?>
@@ -161,6 +172,24 @@ $instant = $this->params->get('instant');
 			</noscript>
 			<!-- End Facebook Pixel Code -->
     <?php endif; ?>
+    
+    <link rel="stylesheet" href="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/css/template.css" type="text/css">
+    
+    <?php if (file_exists(JPATH_SITE."/"."templates/".$this->template."/"."css/custom.css")): ?>
+      <link rel="stylesheet" href="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/css/custom.css" type="text/css">
+    <?php endif; ?>
+      
+    <?php if (file_exists(JPATH_SITE."/"."templates/".$this->template."/"."css/menus/".$active->menutype.".css")): ?>
+      <link rel="stylesheet" href="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/css/menus/<?= $active->menutype; ?>.css" type="text/css">
+    <?php endif; ?>
+        
+    <?php if (file_exists(JPATH_SITE."/"."templates/".$this->template."/"."css/pages/".$active->alias.".css")): ?>
+      <link rel="stylesheet" href="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/css/pages/<?= $active->alias; ?>.css" type="text/css">
+    <?php endif; ?>
+
+    <?php if ($fontawesomecdn != null) : ?>
+      <script defer src="<?= $fontawesomecdn; ?>"></script>
+    <?php endif; ?>
 
     <?php if ($codebeforehead != null) echo $codebeforehead; ?>
   </head>
@@ -183,30 +212,32 @@ $instant = $this->params->get('instant');
       <?php endif; ?>
 
       <?php if ($topmenu == 1) : ?>
-        <header class="navbar">
-          <a
-            class="logo"
-            href="<?= $this->baseurl ?>"
-          >
-            <img
-              src="<?= $this->baseurl; ?>/<?= htmlspecialchars($logo); ?>"
-              alt="<?= htmlspecialchars($sitetitle); ?>"
-            />
-          </a>
-          <nav class="nav-end">
-            <jdoc:include type="modules" name="navbar" style="default" />
-            <button id="nav-button" aria-label="Toggle Main Menu" aria-controls="primary-navigation" aria-expanded="false" onclick="toggleMenu();">
-              <svg class="hamburger" viewBox="0 0 100 100" width="32">
-                <rect class="line top" width="80" height="10" x="10" y="20"></rect>
-                <rect class="line middle" width="80" height="10" x="10" y="45"></rect>
-                <rect class="line bottom" width="80" height="10" x="10" y="70"></rect>
-              </svg>
-            </button>
-            <div class="menu-overlay" onclick="toggleMenu();"></div>
-            <div id="primary-navigation" data-state="closed">
-              <jdoc:include type="modules" name="navigation" style="default" />
-            </div>
-          </nav>
+        <header class="navbar-wrapper">
+          <div class="navbar">
+            <a
+              class="logo"
+              href="<?= $this->baseurl ?>"
+            >
+              <img
+                src="<?= $this->baseurl; ?>/<?= htmlspecialchars($logo); ?>"
+                alt="<?= htmlspecialchars($sitetitle); ?>"
+              />
+            </a>
+            <nav class="nav-end">
+              <jdoc:include type="modules" name="navbar" style="default" />
+              <button id="nav-button" aria-label="Toggle Main Menu" aria-controls="primary-navigation" aria-expanded="false" onclick="toggleMenu();">
+                <svg class="hamburger" viewBox="0 0 100 100" width="32">
+                  <rect class="line top" width="80" height="10" x="10" y="20"></rect>
+                  <rect class="line middle" width="80" height="10" x="10" y="45"></rect>
+                  <rect class="line bottom" width="80" height="10" x="10" y="70"></rect>
+                </svg>
+              </button>
+              <div class="menu-overlay" onclick="toggleMenu();"></div>
+              <div id="primary-navigation" data-state="closed">
+                <jdoc:include type="modules" name="navigation" style="default" />
+              </div>
+            </nav>
+          </div>
         </header>
       <?php endif; ?>
 
@@ -215,7 +246,7 @@ $instant = $this->params->get('instant');
           <jdoc:include type="modules" name="above-body" style="default" />
         <?php endif; ?>
 
-        <div class="body-content">
+        <div class="body-content container-width">
           <?php if ($this->countModules('leftbody')) : ?>
             <?php if ($leftbody == 1) : ?>
               <div class="leftbody">
