@@ -8,6 +8,8 @@ $app = Factory::getApplication();
 $document = Factory::getDocument();
 $user = Factory::getUser();
 
+$timestamp = date('U');
+
 $this->setHtml5(true);
 
 // Get active menu item alias
@@ -18,6 +20,9 @@ $params = $app->getTemplate(true)->params;
 $logo = $this->params->get('logo', '');
 $sitetitle = $this->params->get('sitetitle', $app->getCfg('sitename'));
 $sitedescription = $this->params->get('sitedescription');
+$nocacheheaders = $this->params->get('nocacheheaders');
+$uncachecss = $this->params->get('uncachecss');
+$uncachejs = $this->params->get('uncachejs');
 $fontawesomecdn = $this->params->get('fontawesomecdn');
 $gtmcode = $this->params->get('gtmcode');
 $gacode = $this->params->get('gacode');
@@ -41,6 +46,12 @@ $codebeforehead = $this->params->get('codebeforehead');
 $codeafterbody = $this->params->get('codeafterbody');
 $codebeforebody = $this->params->get('codebeforebody');
 $instant = $this->params->get('instant');
+
+if ($nocacheheaders == 1) {
+  header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+  header("Cache-Control: post-check=0, pre-check=0", false);
+  header("Pragma: no-cache");
+}
 
 ?>
 
@@ -87,32 +98,32 @@ $instant = $this->params->get('instant');
       <script defer src="<?= $fontawesomecdn; ?>"></script>
     <?php endif; ?>
 
-    <link rel="stylesheet" href="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/css/template.css" type="text/css">
+    <link rel="stylesheet" href="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/css/template.css<?php if ($uncachecss == 1) echo "?v=$timestamp"; ?>" type="text/css">
 
     <?php if (file_exists(JPATH_SITE."/"."templates/".$this->template."/"."css/custom.css")): ?>
-      <link rel="stylesheet" href="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/css/custom.css" type="text/css">
+      <link rel="stylesheet" href="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/css/custom.css<?php if ($uncachecss == 1) echo "?v=$timestamp"; ?>" type="text/css">
     <?php endif; ?>
 
     <?php if (file_exists(JPATH_SITE."/"."templates/".$this->template."/"."css/menus/".$active->menutype.".css")): ?>
-      <link rel="stylesheet" href="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/css/menus/<?= $active->menutype; ?>.css" type="text/css">
+      <link rel="stylesheet" href="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/css/menus/<?= $active->menutype; ?>.css<?php if ($uncachecss == 1) echo "?v=$timestamp"; ?>" type="text/css">
     <?php endif; ?>
     
     <?php if (file_exists(JPATH_SITE."/"."templates/".$this->template."/"."css/pages/".$active->alias.".css")): ?>
-      <link rel="stylesheet" href="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/css/pages/<?= $active->alias; ?>.css" type="text/css">
+      <link rel="stylesheet" href="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/css/pages/<?= $active->alias; ?>.css<?php if ($uncachecss == 1) echo "?v=$timestamp"; ?>" type="text/css">
     <?php endif; ?>
 
-    <script src="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/js/template.js"></script>
+    <script src="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/js/template.js<?php if ($uncachejs == 1) echo "?v=$timestamp"; ?>"></script>
 
     <?php if (file_exists(JPATH_SITE . "/templates" . "/" . $this->template . "/js/custom.js")) : ?>
-      <script src="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/js/custom.js"></script>
+      <script src="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/js/custom.js<?php if ($uncachejs == 1) echo "?v=$timestamp"; ?>"></script>
     <?php endif; ?>
 
     <?php if (file_exists(JPATH_SITE . "/templates" . "/" . $this->template . "/js/menus/".$active->menutype.".js")) : ?>
-      <script src="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/js/menus/<?= $active->menutype; ?>.js"></script>
+      <script src="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/js/menus/<?= $active->menutype; ?>.js<?php if ($uncachejs == 1) echo "?v=$timestamp"; ?>"></script>
     <?php endif; ?>
 
     <?php if (file_exists(JPATH_SITE . "/templates" . "/" . $this->template . "/js/pages/".$active->alias.".js")) : ?>
-      <script src="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/js/pages/<?= $active->alias; ?>.js"></script>
+      <script src="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/js/pages/<?= $active->alias; ?>.js<?php if ($uncachejs == 1) echo "?v=$timestamp"; ?>"></script>
     <?php endif; ?>
 
     <?php if ($gtmcode != null) : ?>
