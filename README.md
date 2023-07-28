@@ -4,7 +4,10 @@
 
 No opinionated CSS to fight with, easy marketing implementation, just a pleasant experience.
 
+**Note: This template is an active work in progress, take care when updating to new versions. Any big changes will be noted in the Release notes.**
+
 - [Basic Layout](#basic-layout)
+- [Configuring Layout](#congifuring-layout)
 - [Utility Classes](#utility-classes)
 - [Configuration Options](#configuration-options)
 - [Adding CSS](#adding-css)
@@ -17,13 +20,19 @@ newtralize is set up with basic module positions, sufficient to create almost an
 
 <img src="https://res.cloudinary.com/da9s7ps5c/image/upload/v1677767034/newtralize_layout_3f4d3d0490.jpg" height="512" />
 
+## Configuring Layout
+
+newtralize provides easy configuration for container widths. You can define your own narrow, normal, and wide container widths in the [Layout Settings](#layout-settings). You can then assign those containers to the template's module positions, or use them in your own content with the generated [Utility Classes](#utility-classes).
+
 ## Utility Classes
 
 newtralize comes equipped with a few handy utility classes to help you build your layouts.
 
 - `.show-desktop-only`: Will hide an element on small screens
 - `.show-mobile-only`: Will hide an element on large screens
-- `.container-width`: Will confine an element to the max container width (set by `--container-width`)
+- `.container-narrow`: Will confine an element to the narrow container width (set in [Layout Settings](#layout-settings))
+- `.container-normal`: Will confine an element to the normal container width (set in [Layout Settings](#layout-settings))
+- `.container-wide`: Will confine an element to the wide container width (set in [Layout Settings](#layout-settings))
 - `.visually-hidden`: Will hide an element visually, but keep it visible to screen readers
 - `.flow`: Provides an easy vertical spacing container. Can customize the space with `--flow-space`
 
@@ -57,7 +66,15 @@ newtralize comes equipped with a few handy utility classes to help you build you
 
 **Custom FontAwesome URL:** Define a FontAwesome kit URL
 
-### Layout/Module Settings
+### Layout Settings
+
+Define container widths, and assign containers to the template's module positions.
+
+**Normal Container Width:** Set the max width for the normal container, in rem units.
+**Narrow Container Width:** Set the max width for the narrow container, in rem units.
+**Wide Container Width:** Set the max width for the wide container, in rem units.
+
+### Module Positions
 
 Enable or disable module positions
 
