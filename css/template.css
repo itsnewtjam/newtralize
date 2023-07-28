@@ -68,10 +68,6 @@ svg {
 Globals
 =================*/
 
-:root {
-  --container-width: 68.75em;
-}
-
 :target {
   scroll-margin-block-start: 5rem;
 }
@@ -83,9 +79,7 @@ body {
 body > .container {
   display: flex;
   flex-direction: column;
-  max-width: var(--container-width);
   min-height: 100vh;
-  margin-inline: auto;
 }
 
 /*================
@@ -93,7 +87,6 @@ Base Banner Styles
 =================*/
 
 .banner {
-  padding-block: 0.5rem;
   padding-inline: 1rem;
 }
 
@@ -264,8 +257,18 @@ Utility Classes
   }
 }
 
-.container-width {
-  max-width: var(--container-width);
+.container-narrow {
+  max-width: var(--container-narrow);
+  margin-inline: auto;
+}
+
+.container-normal {
+  max-width: var(--container-normal);
+  margin-inline: auto;
+}
+
+.container-wide {
+  max-width: var(--container-wide);
   margin-inline: auto;
 }
 
