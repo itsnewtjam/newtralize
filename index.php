@@ -20,13 +20,17 @@ $params = $app->getTemplate(true)->params;
 $logo = $this->params->get('logo', '');
 $sitetitle = $this->params->get('sitetitle', $app->getCfg('sitename'));
 $sitedescription = $this->params->get('sitedescription');
+
 $nocacheheaders = $this->params->get('nocacheheaders');
 $uncachecss = $this->params->get('uncachecss');
 $uncachejs = $this->params->get('uncachejs');
+
 $fontawesomecdn = $this->params->get('fontawesomecdn');
+
 $gtmcode = $this->params->get('gtmcode');
 $gacode = $this->params->get('gacode');
 $fbcode = $this->params->get('fbcode');
+
 $banner = $this->params->get('banner');
 $topmenu = $this->params->get('topmenu');
 $abovebody = $this->params->get('abovebody');
@@ -37,15 +41,27 @@ $rightbody = $this->params->get('rightbody');
 $belowbody = $this->params->get('belowbody');
 $footer = $this->params->get('footer');
 $alertbar = $this->params->get('alertbar');
-$killjoomlajs = $this->params->get('killjoomlajs');
-$killjoomlacss = $this->params->get('killjoomlacss');
 $copyright = $this->params->get('copyright');
 $copyrighttxt = $this->params->get('copyrighttxt');
+
+$containerNarrow = $this->params->get('containerNarrow');
+$containerNormal = $this->params->get('containerNormal');
+$containerWide = $this->params->get('containerWide');
+$bannerContainer = $this->params->get('bannerSize');
+$topmenuContainer = $this->params->get('topmenuSize');
+$abovebodyContainer = $this->params->get('abovebodySize');
+$mainbodyContainer = $this->params->get('mainbodySize');
+$belowbodyContainer = $this->params->get('belowbodySize');
+$footerContainer = $this->params->get('footerSize');
+
+$killjoomlajs = $this->params->get('killjoomlajs');
+$killjoomlacss = $this->params->get('killjoomlacss');
+$instant = $this->params->get('instant');
+
 $codeafterhead = $this->params->get('codeafterhead');
 $codebeforehead = $this->params->get('codebeforehead');
 $codeafterbody = $this->params->get('codeafterbody');
 $codebeforebody = $this->params->get('codebeforebody');
-$instant = $this->params->get('instant');
 
 if ($nocacheheaders == 1) {
   header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
@@ -155,6 +171,14 @@ if ($nocacheheaders == 1) {
 			<!-- End Facebook Pixel Code -->
     <?php endif; ?>
 
+    <style>
+      :root {
+        --container-narrow: <?= $containerNarrow ?>rem;
+        --container-normal: <?= $containerNormal ?>rem;
+        --container-wide: <?= $containerWide ?>rem;
+      }
+    </style>
+
     <link rel="stylesheet" href="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/css/template.css<?php if ($uncachecss == 1) echo "?v=$timestamp"; ?>" type="text/css">
 
     <?php if (file_exists(JPATH_SITE."/"."templates/".$this->template."/"."css/custom.css")): ?>
@@ -188,14 +212,16 @@ if ($nocacheheaders == 1) {
 
     <div class="container">
       <?php if ($banner == 1) : ?>
-        <div class="banner">
-          <jdoc:include type="modules" name="banner" style="default" />
+        <div class="banner-wrapper">
+          <div class="banner <?= $bannerContainer !== "full" ? "container-$bannerContainer" : ""; ?>">
+            <jdoc:include type="modules" name="banner" style="default" />
+          </div>
         </div>
       <?php endif; ?>
 
       <?php if ($topmenu == 1) : ?>
         <header class="navbar-wrapper">
-          <div class="navbar">
+          <div class="navbar <?= $topmenuContainer !== "full" ? "container-$topmenuContainer" : ""; ?>">
             <a
               class="logo"
               href="<?= $this->baseurl ?>"
@@ -225,10 +251,12 @@ if ($nocacheheaders == 1) {
 
       <main class="content-wrapper">
         <?php if ($abovebody == 1) : ?>
-          <jdoc:include type="modules" name="above-body" style="default" />
+          <div class="abovebody <?= $abovebodyContainer !== "full" ? "container-$abovebodyContainer" : ""; ?>">
+            <jdoc:include type="modules" name="above-body" style="default" />
+          </div>
         <?php endif; ?>
 
-        <div class="body-content container-width">
+        <div class="body-content <?= $mainbodyContainer !== "full" ? "container-$mainbodyContainer" : ""; ?>">
           <?php if ($this->countModules('leftbody')) : ?>
             <?php if ($leftbody == 1) : ?>
               <div class="leftbody">
@@ -260,13 +288,15 @@ if ($nocacheheaders == 1) {
         </div>
 
         <?php if ($belowbody == 1) : ?>
-          <jdoc:include type="modules" name="below-body" style="default" />
+          <div class="belowbody <?= $belowbodyContainer !== "full" ? "container-$belowbodyContainer" : ""; ?>">
+            <jdoc:include type="modules" name="below-body" style="default" />
+          </div>
         <?php endif; ?>
       </main>
 
       <?php if ($footer == 1) : ?>
         <footer>
-          <div class="footer-wrapper">
+          <div class="footer-wrapper <?= $footerContainer !== "full" ? "container-$footerContainer" : ""; ?>">
             <jdoc:include type="modules" name="footer" style="default" />
             <?php if ($copyright == 1) : ?>
               <hr />
@@ -280,14 +310,6 @@ if ($nocacheheaders == 1) {
 	    <?php endif; ?>
           </div>
         </footer>
-      <?php endif; ?>
-
-      <?php if ($this->countModules('alert-bar')) : ?>
-        <?php if ($alertbar == 1) : ?>
-          <div id="alertbar">
-            <jdoc:include type="modules" name="alert-bar" style="none" />
-          </div>
-        <?php endif; ?>
       <?php endif; ?>
 
       <jdoc:include type="modules" name="debug" style="default" />
