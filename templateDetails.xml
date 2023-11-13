@@ -136,17 +136,6 @@
           <option value="0">TPL_NEWTRALIZE_NO</option>
           <option value="1">TPL_NEWTRALIZE_YES</option>
         </field>
-        <field
-          name="uncacheHeads" 
-          type="radio"
-          label="TPL_NEWTRALIZE_UNCACHEHEADS_LABEL"
-          description="TPL_NEWTRALIZE_UNCACHEHEADS_DESC"
-          class="btn-group btn-group-yesno"
-          default="0"
-        >
-          <option value="0">TPL_NEWTRALIZE_NO</option>
-          <option value="1">TPL_NEWTRALIZE_YES</option>
-        </field>
       </fieldset>
 
       <fieldset name="SCOPED_CODE_SETTINGS">
@@ -223,20 +212,20 @@
 
       <fieldset name="LAYOUT_SETTINGS">
         <field
+          name="paddingInline"
+          type="number"
+          label="TPL_NEWTRALIZE_CONTAINERPADDING_LABEL"
+          description="TPL_NEWTRALIZE_CONTAINERPADDING_DESC"
+          default="1"
+          min="0"
+          filter="string"
+        />
+        <field
           name="containerNormal"
           type="number"
           label="TPL_NEWTRALIZE_CONTAINERNORMAL_LABEL"
           description="TPL_NEWTRALIZE_CONTAINERNORMAL_DESC"
           default="64"
-          min="0"
-          filter="string"
-        />
-        <field
-          name="containerNarrow"
-          type="number"
-          label="TPL_NEWTRALIZE_CONTAINERNARROW_LABEL"
-          description="TPL_NEWTRALIZE_CONTAINERNARROW_DESC"
-          default="40"
           min="0"
           filter="string"
         />
@@ -258,7 +247,6 @@
           default="normal"
           showon="banner:1"
         >
-          <option value="narrow">TPL_NEWTRALIZE_SIZE_NARROW</option>
           <option value="normal">TPL_NEWTRALIZE_SIZE_NORMAL</option>
           <option value="wide">TPL_NEWTRALIZE_SIZE_WIDE</option>
           <option value="full">TPL_NEWTRALIZE_SIZE_FULL</option>
@@ -272,7 +260,6 @@
           default="normal"
           showon="navbar:1"
         >
-          <option value="narrow">TPL_NEWTRALIZE_SIZE_NARROW</option>
           <option value="normal">TPL_NEWTRALIZE_SIZE_NORMAL</option>
           <option value="wide">TPL_NEWTRALIZE_SIZE_WIDE</option>
           <option value="full">TPL_NEWTRALIZE_SIZE_FULL</option>
@@ -286,7 +273,6 @@
           default="normal"
           showon="aboveBody:1"
         >
-          <option value="narrow">TPL_NEWTRALIZE_SIZE_NARROW</option>
           <option value="normal">TPL_NEWTRALIZE_SIZE_NORMAL</option>
           <option value="wide">TPL_NEWTRALIZE_SIZE_WIDE</option>
           <option value="full">TPL_NEWTRALIZE_SIZE_FULL</option>
@@ -300,7 +286,6 @@
           default="normal"
           showon="mainBody:1"
         >
-          <option value="narrow">TPL_NEWTRALIZE_SIZE_NARROW</option>
           <option value="normal">TPL_NEWTRALIZE_SIZE_NORMAL</option>
           <option value="wide">TPL_NEWTRALIZE_SIZE_WIDE</option>
           <option value="full">TPL_NEWTRALIZE_SIZE_FULL</option>
@@ -314,7 +299,6 @@
           default="normal"
           showon="belowBody:1"
         >
-          <option value="narrow">TPL_NEWTRALIZE_SIZE_NARROW</option>
           <option value="normal">TPL_NEWTRALIZE_SIZE_NORMAL</option>
           <option value="wide">TPL_NEWTRALIZE_SIZE_WIDE</option>
           <option value="full">TPL_NEWTRALIZE_SIZE_FULL</option>
@@ -328,7 +312,6 @@
           default="normal"
           showon="footer:1"
         >
-          <option value="narrow">TPL_NEWTRALIZE_SIZE_NARROW</option>
           <option value="normal">TPL_NEWTRALIZE_SIZE_NORMAL</option>
           <option value="wide">TPL_NEWTRALIZE_SIZE_WIDE</option>
           <option value="full">TPL_NEWTRALIZE_SIZE_FULL</option>

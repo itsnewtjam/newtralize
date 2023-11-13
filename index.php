@@ -10,7 +10,8 @@ use Joomla\Database\DatabaseInterface;
 $app = Factory::getApplication();
 $document = $app->getDocument();
 
-define('NEWTRALIZE_BASE', JPATH_SITE . "/templates/" . $this->template);
+define('NEWTRALIZE_FILE', JPATH_SITE . "/templates/" . $this->template);
+define('NEWTRALIZE_BASE', "/templates/" . $this->template);
 $timestamp = date('U');
 
 $this->setHtml5(true);
@@ -48,7 +49,6 @@ $copyrightText = $params->get('copyrightText', '');
 $sendNoCacheHeaders = $params->get('noCacheHeaders', '0') === '1';
 $uncacheCss = $params->get('uncacheCss', '0') === '1';
 $uncacheJs = $params->get('uncacheJs', '0') === '1';
-$uncacheHeads = $params->get('uncacheHeads', '0') === '1';
 
 // CSS, JS, and Heads Settings
 $scopeCssBy = $params->get('scopeCssBy', 'alias');
@@ -64,8 +64,8 @@ $metaCode = $params->get('metaCode', '');
 $fontAwesomeKit = $params->get('fontAwesomeKit', '');
 
 // Layout Settings
+$paddingInline = $params->get('paddingInline', '1');
 $containerNormal = $params->get('containerNormal', '64');
-$containerNarrow = $params->get('containerNarrow', '40');
 $containerWide = $params->get('containerWide', '75');
 $bannerSize = $params->get('bannerSize', 'normal');
 $navbarSize = $params->get('navbarSize', 'normal');
@@ -115,31 +115,31 @@ if ($sendNoCacheHeaders) {
     <script src="<?= NEWTRALIZE_BASE . "/js/template.js" . ($uncacheJs ? "?v=$timestamp" : ""); ?>"></script>
   
     <?php 
-      $customJs = NEWTRALIZE_BASE . "/js/custom.js";
-      if (file_exists($customJs)) : 
+      $customJs = "/js/custom.js";
+      if (file_exists(NEWTRALIZE_FILE . $customJs)) : 
     ?>
-      <script src="<?= $customJs . ($uncacheJs ? "?v=$timestamp" : ""); ?>"></script>
+      <script src="<?= NEWTRALIZE_BASE . $customJs . ($uncacheJs ? "?v=$timestamp" : ""); ?>"></script>
     <?php endif; ?>
 
     <?php 
-      $menuJs = NEWTRALIZE_BASE . "/js/menus/" . $active->menutype . ".js";
-      if (file_exists($menuJs)) : 
+      $menuJs = "/js/menus/" . $active->menutype . ".js";
+      if (file_exists(NEWTRALIZE_FILE . $menuJs)) : 
     ?>
-      <script src="<?= $menuJs . ($uncacheJs ? "?v=$timestamp" : ""); ?>"></script>
+      <script src="<?= NEWTRALIZE_BASE . $menuJs . ($uncacheJs ? "?v=$timestamp" : ""); ?>"></script>
     <?php endif; ?>
 
     <?php 
-      $categoryJs = NEWTRALIZE_BASE . "/js/categories/" . ($scopeJsBy === 'id' ? $activeCategory->id : $activeCategory->alias) . ".js";
-      if (file_exists($categoryJs)) : 
+      $categoryJs = "/js/categories/" . ($scopeJsBy === 'id' ? $activeCategory->id : $activeCategory->alias) . ".js";
+      if (file_exists(NEWTRALIZE_FILE . $categoryJs)) : 
     ?>
-      <script src="<?= $categoryJs . ($uncacheJs ? "?v=$timestamp" : ""); ?>"></script>
+      <script src="<?= NEWTRALIZE_BASE . $categoryJs . ($uncacheJs ? "?v=$timestamp" : ""); ?>"></script>
     <?php endif; ?>
 
     <?php
-      $pageJs = NEWTRALIZE_BASE . "/js/pages/" . ($scopeJsBy === 'id' ? $active->id : $active->alias) . ".js";
-      if (file_exists($pageJs)) : 
+      $pageJs = "/js/pages/" . ($scopeJsBy === 'id' ? $active->id : $active->alias) . ".js";
+      if (file_exists(NEWTRALIZE_FILE . $pageJs)) : 
     ?>
-      <script src="<?= $pageJs . ($uncacheJs ? "?v=$timestamp" : ""); ?>"></script>
+      <script src="<?= NEWTRALIZE_BASE . $pageJs . ($uncacheJs ? "?v=$timestamp" : ""); ?>"></script>
     <?php endif; ?>
 
     <?php if ($gtmCode) : ?>
@@ -185,41 +185,41 @@ if ($sendNoCacheHeaders) {
     <?php endif; ?>
 
     <style>
-      :root {
-        --container-narrow: <?= $containerNarrow ?>rem;
-        --container-normal: <?= $containerNormal ?>rem;
-        --container-wide: <?= $containerWide ?>rem;
+      body > .container {
+        --_padding-inline: <?= $paddingInline; ?>rem;
+        --_container-normal: <?= $containerNormal; ?>rem;
+        --_container-wide: <?= $containerWide; ?>rem;
       }
     </style>
 
     <link rel="stylesheet" href="<?= NEWTRALIZE_BASE . "/css/template.css" . ($uncacheCss ? "?v=$timestamp" : ""); ?>" type="text/css">
 
     <?php
-      $customCss = NEWTRALIZE_BASE . "/css/custom.css";
-      if (file_exists($customCss)) : 
+      $customCss = "/css/custom.css";
+      if (file_exists(NEWTRALIZE_FILE . $customCss)) : 
     ?>
-      <link rel="stylesheet" href="<?= $customCss . ($uncacheCss ? "?v=$timestamp" : ""); ?>" type="text/css">
+      <link rel="stylesheet" href="<?= NEWTRALIZE_BASE . $customCss . ($uncacheCss ? "?v=$timestamp" : ""); ?>" type="text/css">
     <?php endif; ?>
 
     <?php
-      $menuCss = NEWTRALIZE_BASE . "/css/menus/" . $active->menutype . ".css";
-      if (file_exists($menuCss)) : 
+      $menuCss = "/css/menus/" . $active->menutype . ".css";
+      if (file_exists(NEWTRALIZE_FILE . $menuCss)) : 
     ?>
-      <link rel="stylesheet" href="<?= $menuCss . ($uncacheCss ? "?v=$timestamp" : ""); ?>" type="text/css">
+      <link rel="stylesheet" href="<?= NEWTRALIZE_BASE . $menuCss . ($uncacheCss ? "?v=$timestamp" : ""); ?>" type="text/css">
     <?php endif; ?>
 
     <?php
-      $categoryCss = NEWTRALIZE_BASE . "/css/categories/" . ($scopeCssBy === 'id' ? $activeCategory->id : $activeCategory->alias) . ".css";
-      if (file_exists($categoryCss)) : 
+      $categoryCss = "/css/categories/" . ($scopeCssBy === 'id' ? $activeCategory->id : $activeCategory->alias) . ".css";
+      if (file_exists(NEWTRALIZE_FILE . $categoryCss)) : 
     ?>
-      <link rel="stylesheet" href="<?= $categoryCss . ($uncacheCss ? "?v=$timestamp" : ""); ?>" type="text/css">
+      <link rel="stylesheet" href="<?= NEWTRALIZE_BASE . $categoryCss . ($uncacheCss ? "?v=$timestamp" : ""); ?>" type="text/css">
     <?php endif; ?>
 
     <?php
-      $pageCss = NEWTRALIZE_BASE . "/css/pages/" . ($scopeCssBy === 'id' ? $active->id : $active->alias) . ".css";
-      if (file_exists($pageCss)) : 
+      $pageCss = "/css/pages/" . ($scopeCssBy === 'id' ? $active->id : $active->alias) . ".css";
+      if (file_exists(NEWTRALIZE_FILE . $pageCss)) : 
     ?>
-      <link rel="stylesheet" href="<?= $pageCss . ($uncacheCss ? "?v=$timestamp" : ""); ?>" type="text/css">
+      <link rel="stylesheet" href="<?= NEWTRALIZE_BASE . $pageCss . ($uncacheCss ? "?v=$timestamp" : ""); ?>" type="text/css">
     <?php endif; ?>
     
     <?php if ($fontAwesomeKit) : ?>
@@ -230,23 +230,23 @@ if ($sendNoCacheHeaders) {
   </head>
 
   <?php 
-    $menuHead = NEWTRALIZE_BASE . "/heads/menus/" . $active->menutype . ".php";
+    $menuHead = NEWTRALIZE_FILE . "/heads/menus/" . $active->menutype . ".php";
     if (file_exists($menuHead)) {
-      include($menuHead . ($uncacheCss ? "?v=$timestamp" : ""));
+      include($menuHead);
     }
   ?>
 
   <?php 
-    $categoryHead = NEWTRALIZE_BASE . "/heads/categories/" . ($scopeHeadsBy === 'id' ? $activeCategory->id : $activeCategory->alias) . ".php";
+    $categoryHead = NEWTRALIZE_FILE . "/heads/categories/" . ($scopeHeadsBy === 'id' ? $activeCategory->id : $activeCategory->alias) . ".php";
     if (file_exists($categoryHead)) {
-      include($categoryHead . ($uncacheCss ? "?v=$timestamp" : ""));
+      include($categoryHead);
     }
   ?>
 
   <?php 
-    $pageHead = NEWTRALIZE_BASE . "/heads/pages/" . ($scopeHeadsBy === 'id' ? $active->id : $active->alias) . ".php";
+    $pageHead = NEWTRALIZE_FILE . "/heads/pages/" . ($scopeHeadsBy === 'id' ? $active->id : $active->alias) . ".php";
     if (file_exists($pageHead)) {
-      include($pageHead . ($uncacheCss ? "?v=$timestamp" : ""));
+      include($pageHead);
     }
   ?>
 
@@ -266,16 +266,16 @@ if ($sendNoCacheHeaders) {
 
     <div class="container">
       <?php if ($showBanner) : ?>
-        <div class="banner-wrapper">
-          <div class="banner <?= $bannerSize !== "full" ? "container-$bannerSize" : ""; ?>">
+        <div class="banner-wrapper container-full">
+          <div class="banner <?= $bannerSize !== "container-full" ? "container-$bannerSize" : ""; ?>">
             <jdoc:include type="modules" name="banner" style="default" />
           </div>
         </div>
       <?php endif; ?>
 
       <?php if ($showNavbar) : ?>
-        <header class="navbar-wrapper">
-          <div class="navbar <?= $navbarSize !== "full" ? "container-$navbarSize" : ""; ?>">
+        <header class="navbar-wrapper container-full">
+          <div class="navbar <?= $navbarSize !== "container-full" ? "container-$navbarSize" : ""; ?>">
             <a
               class="logo"
               href="<?= $this->baseurl; ?>"
@@ -303,14 +303,14 @@ if ($sendNoCacheHeaders) {
         </header>
       <?php endif; ?>
 
-      <main class="content-wrapper">
+      <main class="content-wrapper container-full">
         <?php if ($showAboveBody) : ?>
-          <div class="abovebody <?= $aboveBodySize !== "full" ? "container-$aboveBodySize" : ""; ?>">
+          <div class="abovebody <?= $aboveBodySize !== "container-full" ? "container-$aboveBodySize" : ""; ?>">
             <jdoc:include type="modules" name="above-body" style="default" />
           </div>
         <?php endif; ?>
 
-        <div class="body-wrapper <?= $mainBodySize !== "full" ? "container-$mainBodySize" : ""; ?>">
+        <div class="body-wrapper <?= $mainBodySize !== "container-full" ? "container-$mainBodySize" : ""; ?>">
           <?php if ($this->countModules('leftbody')) : ?>
             <?php if ($showLeftBody) : ?>
               <div class="leftbody">
@@ -342,15 +342,15 @@ if ($sendNoCacheHeaders) {
         </div>
 
         <?php if ($showBelowBody) : ?>
-          <div class="belowbody <?= $belowBodySize !== "full" ? "container-$belowBodySize" : ""; ?>">
+          <div class="belowbody <?= $belowBodySize !== "container-full" ? "container-$belowBodySize" : ""; ?>">
             <jdoc:include type="modules" name="below-body" style="default" />
           </div>
         <?php endif; ?>
       </main>
 
       <?php if ($showFooter) : ?>
-        <footer class="footer-wrapper">
-          <div class="footer <?= $footerSize !== "full" ? "container-$footerSize" : ""; ?>">
+        <footer class="footer-wrapper container-full">
+          <div class="footer <?= $footerSize !== "container-full" ? "container-$footerSize" : ""; ?>">
             <?php if ($showFooterLogo) : ?>
               <a
                 class="footer-logo"
