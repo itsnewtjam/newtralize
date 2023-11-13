@@ -2,11 +2,12 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Application\SiteApplication;
 use Joomla\CMS\Factory;
 
+/** @var SiteApplication **/
 $app = Factory::getApplication();
-$document = Factory::getDocument();
-$user = Factory::getUser();
+$document = $app->getDocument();
 
 $timestamp = date('U');
 
@@ -17,51 +18,62 @@ $active = $app->getMenu()->getActive();
 
 $params = $app->getTemplate(true)->params;
 
-$logo = $this->params->get('logo', '');
-$sitetitle = $this->params->get('sitetitle', $app->getCfg('sitename'));
-$sitedescription = $this->params->get('sitedescription');
+$sitetitle = $app->get('sitename');
 
-$nocacheheaders = $this->params->get('nocacheheaders');
-$uncachecss = $this->params->get('uncachecss');
-$uncachejs = $this->params->get('uncachejs');
+// Site Settings
+$logo = $params->get('logo', '');
+$showFooterLogo = $params->get('showFooterLogo', '1') === '1';
+$differentFooterLogo = $params->get('differentFooterLogo', '1') === '1';
+$footerLogo = $differentFooterLogo ? $params->get('footerLogo', '') : $logo;
+$showCopyright = $params->get('showCopyright', '1') === '1';
+$copyrightText = $params->get('copyrightText', '');
 
-$fontawesomecdn = $this->params->get('fontawesomecdn');
+// Cache Settings
+$sendNoCacheHeaders = $params->get('noCacheHeaders', '0') === '1';
+$uncacheCss = $params->get('uncacheCss', '0') === '1';
+$uncacheJs = $params->get('uncacheJs', '0') === '1';
+$uncacheHeads = $params->get('uncacheHeads', '0') === '1';
 
-$gtmcode = $this->params->get('gtmcode');
-$gacode = $this->params->get('gacode');
-$fbcode = $this->params->get('fbcode');
+// CSS, JS, and Heads Settings
+$scopeCssBy = $params->get('scopeCssBy', 'alias');
+$scopeJsBy = $params->get('scopeJsBy', 'alias');
+$scopeHeadsBy = $params->get('scopeHeadsBy', 'alias');
 
-$banner = $this->params->get('banner');
-$topmenu = $this->params->get('topmenu');
-$abovebody = $this->params->get('abovebody');
-$leftbody = $this->params->get('leftbody');
-$mainbodytop = $this->params->get('mainbodytop');
-$mainbodybottom = $this->params->get('mainbodybottom');
-$rightbody = $this->params->get('rightbody');
-$belowbody = $this->params->get('belowbody');
-$footer = $this->params->get('footer');
-$alertbar = $this->params->get('alertbar');
-$copyright = $this->params->get('copyright');
-$copyrighttxt = $this->params->get('copyrighttxt');
+// Tracking Settings
+$gtmCode = $params->get('gtmCode', '');
+$gaCode = $params->get('gaCode', '');
+$metaCode = $params->get('metaCode', '');
 
-$containerNarrow = $this->params->get('containerNarrow');
-$containerNormal = $this->params->get('containerNormal');
-$containerWide = $this->params->get('containerWide');
-$bannerContainer = $this->params->get('bannerSize');
-$topmenuContainer = $this->params->get('topmenuSize');
-$abovebodyContainer = $this->params->get('abovebodySize');
-$mainbodyContainer = $this->params->get('mainbodySize');
-$belowbodyContainer = $this->params->get('belowbodySize');
-$footerContainer = $this->params->get('footerSize');
+// Icons Settings
+$fontAwesomeKit = $params->get('fontAwesomeKit', '');
 
-$killjoomlajs = $this->params->get('killjoomlajs');
-$killjoomlacss = $this->params->get('killjoomlacss');
-$instant = $this->params->get('instant');
+// Layout Settings
+$containerNormal = $params->get('containerNormal', '64');
+$containerNarrow = $params->get('containerNarrow', '40');
+$containerWide = $params->get('containerWide', '75');
+$bannerSize = $params->get('bannerSize', 'normal');
+$navbarSize = $params->get('navbarSize', 'normal');
+$aboveBodySize = $params->get('aboveBodySize', 'normal');
+$mainBodySize = $params->get('mainBodySize', 'normal');
+$belowBodySize = $params->get('belowBodySize', 'normal');
+$footerSize = $params->get('footerSize', 'normal');
 
-$codeafterhead = $this->params->get('codeafterhead');
-$codebeforehead = $this->params->get('codebeforehead');
-$codeafterbody = $this->params->get('codeafterbody');
-$codebeforebody = $this->params->get('codebeforebody');
+// Module Position Settings
+$showBanner = $params->get('banner', '1') === '1';
+$showNavbar = $params->get('navbar', '1') === '1';
+$showAboveBody = $params->get('aboveBody', '1') === '1';
+$showLeftBody = $params->get('leftBody', '1') === '1';
+$showMainBodyTop = $params->get('mainBodyTop', '1') === '1';
+$showMainBodyBottom = $params->get('mainBodyBottom', '1') === '1';
+$showRightBody = $params->get('rightBody', '1') === '1';
+$showBelowBody = $params->get('belowBody', '1') === '1';
+$showFooter = $params->get('footer', '1') === '1';
+
+// Custom Code Settings
+$codeAfterHead = $params->get('codeAfterHead', '');
+$codeBeforeHead = $params->get('codeBeforeHead', '');
+$codeAfterBody = $params->get('codeAfterBody', '');
+$codeBeforeBody = $params->get('codeBeforeBody', '');
 
 if ($nocacheheaders == 1) {
   header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
@@ -82,32 +94,6 @@ if ($nocacheheaders == 1) {
 
     <meta name="apple-mobile-web-app-capable" content="YES" />
     
-    <?php unset($document->_scripts[JURI::root(true) . '/media/jui/js/jquery.min.js']); ?>
-
-    <?php 
-      if ($killjoomlajs == 1) {
-        unset($document->_scripts[JURI::root(true) . '/media/system/js/caption.js']);
-        unset($document->_scripts[JURI::root(true) . '/media/modal/js/script.min.js']);
-        unset($document->_scripts[JURI::root(true) . '/media/system/js/core.js']);
-        unset($document->_scripts[JURI::root(true) . '/media/jui/js/bootstrap.min.js']);
-        if (isset($this->_script['text/javascript'])) {
-          $this->_script['text/javascript'] = preg_replace('/jQuery\(window\).on\(\'load\'\,  function\(\) \{(.*);/is', '', $this->_script['text/javascript']);
-          if (empty($this->_script['text/javascript'])) {
-            unset($this->_script['text/javascript']);
-          }
-        }
-      }
-    ?>
-
-    <?php 
-      if ($killjoomlacss == 1) {
-        unset($this->_stylesheets[JURI::root(true) . '/media/modals/css/bootstrap.min.css']);
-        unset($this->_stylesheets[JURI::root(true) . '/media/jui/css/bootstrap.min.css']);
-        unset($this->_stylesheets[JURI::root(true) . '/media/jui/css/bootstrap-responsive.min.css']);
-        unset($this->_stylesheets[JURI::root(true) . '/media/jui/css/bootstrap-extended.css']);
-      }
-    ?>
-
     <?php $this->setGenerator(null); ?>
 
     <script src="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/js/template.js<?php if ($uncachejs == 1) echo "?v=$timestamp"; ?>"></script>

@@ -42,89 +42,292 @@
   </languages>
   <config>
     <fields name="params">
-      <fieldset name="JOOMLA_SETTINGS">
-        <field name="logo" type="media" label="TPL_NEWTRALIZE_LOGO_LABEL" description="TPL_NEWTRALIZE_LOGO_DESC" />
-        <field name="sitetitle"  type="text" default="" label="JGLOBAL_TITLE" description="JFIELD_ALT_PAGE_TITLE_LABEL" filter="safehtml" />
+      <fieldset name="SITE_SETTINGS">
+        <field
+          name="logo"
+          type="media"
+          label="TPL_NEWTRALIZE_LOGO_LABEL"
+          description="TPL_NEWTRALIZE_LOGO_DESC"
+        />
+        <field 
+          name="showFooterLogo"
+          type="radio"
+          label="TPL_NEWTRALIZE_SHOWFOOTERLOGO_LABEL"
+          description="TPL_NEWTRALIZE_SHOWFOOTERLOGO_DESC"
+          class="btn-group btn-group-yesno"
+          default="1" 
+        >
+          <option value="0">TPL_NEWTRALIZE_NO</option>
+          <option value="1">TPL_NEWTRALIZE_YES</option>
+        </field>
+        <field 
+          name="differentFooterLogo"
+          type="radio"
+          label="TPL_NEWTRALIZE_DIFFERENTFOOTERLOGO_LABEL"
+          description="TPL_NEWTRALIZE_DIFFERENTFOOTERLOGO_DESC"
+          class="btn-group btn-group-yesno"
+          default="1" 
+          showon="showFooterLogo:1"
+        >
+          <option value="0">TPL_NEWTRALIZE_NO</option>
+          <option value="1">TPL_NEWTRALIZE_YES</option>
+        </field>
+        <field
+          name="footerLogo"
+          type="media"
+          label="TPL_NEWTRALIZE_FOOTERLOGO_LABEL"
+          description="TPL_NEWTRALIZE_FOOTERLOGO_DESC"
+          showon="differentFooterLogo:1"
+        />
+        <field
+          name="showCopyright"
+          type="radio"
+          class="btn-group btn-group-yesno"
+          default="1"
+          label="TPL_NEWTRALIZE_COPYRIGHT_LABEL"
+          description="TPL_NEWTRALIZE_COPYRIGHT_DESC"
+          showon="footer:1"
+        >
+          <option value="0">TPL_NEWTRALIZE_DISABLED</option>
+          <option value="1">TPL_NEWTRALIZE_ENABLED</option>
+        </field>
+        <field
+          name="copyrightText"
+          type="text"
+          default=""
+          label="TPL_NEWTRALIZE_COPYRIGHTTEXT_LABEL"
+          description="TPL_NEWTRALIZE_COPYRIGHTTEXT_DESC"
+          filter="string"
+          showon="showCopyright:1"
+        />
       </fieldset>
-      
+
       <fieldset name="CACHE_SETTINGS">
-        <field name="nocacheheaders" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_NEWTRALIZE_NOCACHEHEADERS_LABEL" description="TPL_NEWTRALIZE_NOCACHEHEADERS_DESC">
+        <field
+          name="noCacheHeaders"
+          type="radio"
+          label="TPL_NEWTRALIZE_NOCACHEHEADERS_LABEL"
+          description="TPL_NEWTRALIZE_NOCACHEHEADERS_DESC"
+          class="btn-group btn-group-yesno"
+          default="0"
+        >
           <option value="0">TPL_NEWTRALIZE_NO</option>
           <option value="1">TPL_NEWTRALIZE_YES</option>
         </field>
-        <field name="uncachecss" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_NEWTRALIZE_UNCACHECSS_LABEL" description="TPL_NEWTRALIZE_UNCACHECSS_DESC">
+        <field
+          name="uncacheCss"
+          type="radio"
+          label="TPL_NEWTRALIZE_UNCACHECSS_LABEL"
+          description="TPL_NEWTRALIZE_UNCACHECSS_DESC"
+          class="btn-group btn-group-yesno"
+          default="0"
+        >
           <option value="0">TPL_NEWTRALIZE_NO</option>
           <option value="1">TPL_NEWTRALIZE_YES</option>
         </field>
-        <field name="uncachejs" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_NEWTRALIZE_UNCACHEJS_LABEL" description="TPL_NEWTRALIZE_UNCACHEJS_DESC">
+        <field
+          name="uncacheJs" 
+          type="radio"
+          label="TPL_NEWTRALIZE_UNCACHEJS_LABEL"
+          description="TPL_NEWTRALIZE_UNCACHEJS_DESC"
+          class="btn-group btn-group-yesno"
+          default="0"
+        >
+          <option value="0">TPL_NEWTRALIZE_NO</option>
+          <option value="1">TPL_NEWTRALIZE_YES</option>
+        </field>
+        <field
+          name="uncacheHeads" 
+          type="radio"
+          label="TPL_NEWTRALIZE_UNCACHEHEADS_LABEL"
+          description="TPL_NEWTRALIZE_UNCACHEHEADS_DESC"
+          class="btn-group btn-group-yesno"
+          default="0"
+        >
           <option value="0">TPL_NEWTRALIZE_NO</option>
           <option value="1">TPL_NEWTRALIZE_YES</option>
         </field>
       </fieldset>
 
-      <fieldset name="CSS_SETTINGS">
-        <field name="killjoomlacss" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_NEWTRALIZE_KILLJOOMLACSS_LABEL" description="TPL_NEWTRALIZE_KILLJOOMLACSS_DESC">
-          <option value="0">TPL_NEWTRALIZE_NO</option>
-          <option value="1">TPL_NEWTRALIZE_YES</option>
+      <fieldset name="SCOPED_CODE_SETTINGS">
+        <field
+          name="scopeCssBy" 
+          type="radio"
+          label="TPL_NEWTRALIZE_SCOPECSSBY_LABEL"
+          description="TPL_NEWTRALIZE_SCOPECSSBY_DESC"
+          class="btn-group"
+          default="alias"
+        >
+          <option value="alias">TPL_NEWTRALIZE_SCOPEBY_ALIAS</option>
+          <option value="id">TPL_NEWTRALIZE_SCOPEBY_ID</option>
         </field>
-      </fieldset>
-      
-      <fieldset name="JAVASCRIPT_SETTINGS">
-        <field name="killjoomlajs" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_NEWTRALIZE_KILLJOOMLAJS_LABEL" description="TPL_NEWTRALIZE_KILLJOOMLAJS_DESC">
-          <option value="0">TPL_NEWTRALIZE_NO</option>
-          <option value="1">TPL_NEWTRALIZE_YES</option>
+        <field
+          name="scopeJsBy" 
+          type="radio"
+          label="TPL_NEWTRALIZE_SCOPEJSBY_LABEL"
+          description="TPL_NEWTRALIZE_SCOPEJSBY_DESC"
+          class="btn-group"
+          default="alias"
+        >
+          <option value="alias">TPL_NEWTRALIZE_SCOPEBY_ALIAS</option>
+          <option value="id">TPL_NEWTRALIZE_SCOPEBY_ID</option>
         </field>
-        <field name="instant" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_NEWTRALIZE_INSTANT_LABEL" description="TPL_NEWTRALIZE_INSTANT_DESC">
-          <option value="0">TPL_NEWTRALIZE_NO</option>
-          <option value="1">TPL_NEWTRALIZE_YES</option>
+        <field
+          name="scopeHeadsBy" 
+          type="radio"
+          label="TPL_NEWTRALIZE_SCOPEHEADSBY_LABEL"
+          description="TPL_NEWTRALIZE_SCOPEHEADSBY_DESC"
+          class="btn-group"
+          default="alias"
+        >
+          <option value="alias">TPL_NEWTRALIZE_SCOPEBY_ALIAS</option>
+          <option value="id">TPL_NEWTRALIZE_SCOPEBY_ID</option>
         </field>
       </fieldset>
       
       <fieldset name="TRACKING_SETTINGS">
-        <field name="gtmcode"  type="text" default="" label="TPL_NEWTRALIZE_GTM_LABEL" description="TPL_NEWTRALIZE_GTM_DESC" filter="string" />
-        <field name="gacode"  type="text" default="" label="TPL_NEWTRALIZE_GA_LABEL" description="TPL_NEWTRALIZE_GA_DESC" filter="string" />
-        <field name="fbcode"  type="text" default="" label="TPL_NEWTRALIZE_FB_LABEL" description="TPL_NEWTRALIZE_FB_DESC" filter="string" />
+        <field
+          name="gtmCode"
+          type="text"
+          label="TPL_NEWTRALIZE_GTM_LABEL"
+          description="TPL_NEWTRALIZE_GTM_DESC"
+          default=""
+          filter="string"
+        />
+        <field
+          name="gaCode"
+          type="text"
+          label="TPL_NEWTRALIZE_GA_LABEL"
+          description="TPL_NEWTRALIZE_GA_DESC"
+          default=""
+          filter="string"
+        />
+        <field
+          name="metaCode"
+          type="text"
+          default=""
+          label="TPL_NEWTRALIZE_META_LABEL"
+          description="TPL_NEWTRALIZE_META_DESC"
+          filter="string"
+        />
       </fieldset>
       
       <fieldset name="ICON_SETTINGS">
-        <field name="fontawesomecdn" type="text" label="TPL_NEWTRALIZE_FONTAWESOMECDN_LABEL" description="TPL_NEWTRALIZE_FONTAWESOMECDN_DESC" />
+        <field
+          name="fontAwesomeKit"
+          type="text"
+          label="TPL_NEWTRALIZE_FONTAWESOMEKIT_LABEL"
+          description="TPL_NEWTRALIZE_FONTAWESOMEKIT_DESC"
+        />
       </fieldset>
 
       <fieldset name="LAYOUT_SETTINGS">
-        <field name="containerNormal" type="number" default="64" min="0" label="TPL_NEWTRALIZE_CONTAINERNORMAL_LABEL" description="TPL_NEWTRALIZE_CONTAINERNORMAL_DESC" filter="string" />
-        <field name="containerNarrow" type="number" default="40" min="0" label="TPL_NEWTRALIZE_CONTAINERNARROW_LABEL" description="TPL_NEWTRALIZE_CONTAINERNARROW_DESC" filter="string" />
-        <field name="containerWide" type="number" default="75" min="0" label="TPL_NEWTRALIZE_CONTAINERWIDE_LABEL" description="TPL_NEWTRALIZE_CONTAINERWIDE_DESC" filter="string" />
-        <field name="bannerSize" type="radio" class="btn-group" default="normal" label="TPL_NEWTRALIZE_BANNERSIZE_LABEL" description="TPL_NEWTRALIZE_BANNERSIZE_DESC" showon="banner:1">
+        <field
+          name="containerNormal"
+          type="number"
+          label="TPL_NEWTRALIZE_CONTAINERNORMAL_LABEL"
+          description="TPL_NEWTRALIZE_CONTAINERNORMAL_DESC"
+          default="64"
+          min="0"
+          filter="string"
+        />
+        <field
+          name="containerNarrow"
+          type="number"
+          label="TPL_NEWTRALIZE_CONTAINERNARROW_LABEL"
+          description="TPL_NEWTRALIZE_CONTAINERNARROW_DESC"
+          default="40"
+          min="0"
+          filter="string"
+        />
+        <field
+          name="containerWide"
+          type="number"
+          label="TPL_NEWTRALIZE_CONTAINERWIDE_LABEL"
+          description="TPL_NEWTRALIZE_CONTAINERWIDE_DESC"
+          default="75"
+          min="0"
+          filter="string"
+        />
+        <field
+          name="bannerSize"
+          type="radio"
+          label="TPL_NEWTRALIZE_BANNERSIZE_LABEL"
+          description="TPL_NEWTRALIZE_BANNERSIZE_DESC"
+          class="btn-group"
+          default="normal"
+          showon="banner:1"
+        >
           <option value="narrow">TPL_NEWTRALIZE_SIZE_NARROW</option>
           <option value="normal">TPL_NEWTRALIZE_SIZE_NORMAL</option>
           <option value="wide">TPL_NEWTRALIZE_SIZE_WIDE</option>
           <option value="full">TPL_NEWTRALIZE_SIZE_FULL</option>
         </field>
-        <field name="topmenuSize" type="radio" class="btn-group" default="normal" label="TPL_NEWTRALIZE_TOPMENUSIZE_LABEL" description="TPL_NEWTRALIZE_TOPMENUSIZE_DESC" showon="topmenu:1">
+        <field
+          name="navbarSize"
+          type="radio"
+          label="TPL_NEWTRALIZE_NAVBARSIZE_LABEL"
+          description="TPL_NEWTRALIZE_NAVBARSIZE_DESC"
+          class="btn-group"
+          default="normal"
+          showon="navbar:1"
+        >
           <option value="narrow">TPL_NEWTRALIZE_SIZE_NARROW</option>
           <option value="normal">TPL_NEWTRALIZE_SIZE_NORMAL</option>
           <option value="wide">TPL_NEWTRALIZE_SIZE_WIDE</option>
           <option value="full">TPL_NEWTRALIZE_SIZE_FULL</option>
         </field>
-        <field name="abovebodySize" type="radio" class="btn-group" default="normal" label="TPL_NEWTRALIZE_ABOVEBODYSIZE_LABEL" description="TPL_NEWTRALIZE_ABOVEBODYSIZE_DESC" showon="abovebody:1">
+        <field
+          name="aboveBodySize"
+          type="radio"
+          label="TPL_NEWTRALIZE_ABOVEBODYSIZE_LABEL"
+          description="TPL_NEWTRALIZE_ABOVEBODYSIZE_DESC"
+          class="btn-group"
+          default="normal"
+          showon="aboveBody:1"
+        >
           <option value="narrow">TPL_NEWTRALIZE_SIZE_NARROW</option>
           <option value="normal">TPL_NEWTRALIZE_SIZE_NORMAL</option>
           <option value="wide">TPL_NEWTRALIZE_SIZE_WIDE</option>
           <option value="full">TPL_NEWTRALIZE_SIZE_FULL</option>
         </field>
-        <field name="mainbodySize" type="radio" class="btn-group" default="normal" label="TPL_NEWTRALIZE_MAINBODYSIZE_LABEL" description="TPL_NEWTRALIZE_MAINBODYSIZE_DESC" showon="mainbody:1">
+        <field
+          name="mainBodySize"
+          type="radio"
+          label="TPL_NEWTRALIZE_MAINBODYSIZE_LABEL"
+          description="TPL_NEWTRALIZE_MAINBODYSIZE_DESC"
+          class="btn-group"
+          default="normal"
+          showon="mainBody:1"
+        >
           <option value="narrow">TPL_NEWTRALIZE_SIZE_NARROW</option>
           <option value="normal">TPL_NEWTRALIZE_SIZE_NORMAL</option>
           <option value="wide">TPL_NEWTRALIZE_SIZE_WIDE</option>
           <option value="full">TPL_NEWTRALIZE_SIZE_FULL</option>
         </field>
-        <field name="belowbodySize" type="radio" class="btn-group" default="normal" label="TPL_NEWTRALIZE_BELOWBODYSIZE_LABEL" description="TPL_NEWTRALIZE_BELOWBODYSIZE_DESC" showon="belowbody:1">
+        <field
+          name="belowBodySize"
+          type="radio"
+          label="TPL_NEWTRALIZE_BELOWBODYSIZE_LABEL"
+          description="TPL_NEWTRALIZE_BELOWBODYSIZE_DESC"
+          class="btn-group"
+          default="normal"
+          showon="belowBody:1"
+        >
           <option value="narrow">TPL_NEWTRALIZE_SIZE_NARROW</option>
           <option value="normal">TPL_NEWTRALIZE_SIZE_NORMAL</option>
           <option value="wide">TPL_NEWTRALIZE_SIZE_WIDE</option>
           <option value="full">TPL_NEWTRALIZE_SIZE_FULL</option>
         </field>
-        <field name="footerSize" type="radio" class="btn-group" default="normal" label="TPL_NEWTRALIZE_FOOTERSIZE_LABEL" description="TPL_NEWTRALIZE_FOOTERSIZE_DESC" showon="footer:1">
+        <field
+          name="footerSize"
+          type="radio"
+          label="TPL_NEWTRALIZE_FOOTERSIZE_LABEL"
+          description="TPL_NEWTRALIZE_FOOTERSIZE_DESC"
+          class="btn-group"
+          default="normal"
+          showon="footer:1"
+        >
           <option value="narrow">TPL_NEWTRALIZE_SIZE_NARROW</option>
           <option value="normal">TPL_NEWTRALIZE_SIZE_NORMAL</option>
           <option value="wide">TPL_NEWTRALIZE_SIZE_WIDE</option>
@@ -133,54 +336,148 @@
       </fieldset>
 
       <fieldset name="MODULE_SETTINGS">
-        <field name="banner" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_NEWTRALIZE_BANNER_LABEL" description="TPL_NEWTRALIZE_BANNER_DESC">
+        <field
+          name="banner"
+          type="radio"
+          label="TPL_NEWTRALIZE_BANNER_LABEL"
+          description="TPL_NEWTRALIZE_BANNER_DESC"
+          class="btn-group btn-group-yesno"
+          default="1"
+        >
           <option value="0">TPL_NEWTRALIZE_DISABLED</option>
           <option value="1">TPL_NEWTRALIZE_ENABLED</option>
         </field>
-        <field name="topmenu" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_NEWTRALIZE_TOPMENU_LABEL" description="TPL_NEWTRALIZE_TOPMENU_DESC">
+        <field 
+          name="navbar"
+          type="radio"
+          label="TPL_NEWTRALIZE_NAVBAR_LABEL"
+          description="TPL_NEWTRALIZE_NAVBAR_DESC"
+          class="btn-group btn-group-yesno"
+          default="1"
+        >
           <option value="0">TPL_NEWTRALIZE_DISABLED</option>
           <option value="1">TPL_NEWTRALIZE_ENABLED</option>
         </field>
-        <field name="abovebody" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_NEWTRALIZE_ABOVEBODY_LABEL" description="TPL_NEWTRALIZE_ABOVEBODY_DESC">
+        <field
+          name="aboveBody"
+          type="radio"
+          label="TPL_NEWTRALIZE_ABOVEBODY_LABEL"
+          description="TPL_NEWTRALIZE_ABOVEBODY_DESC"
+          class="btn-group btn-group-yesno"
+          default="1"
+        >
           <option value="0">TPL_NEWTRALIZE_DISABLED</option>
           <option value="1">TPL_NEWTRALIZE_ENABLED</option>
         </field>
-        <field name="leftbody" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_NEWTRALIZE_LEFTBODY_LABEL" description="TPL_NEWTRALIZE_LEFTBODY_DESC">
+        <field
+          name="leftBody"
+          type="radio"
+          label="TPL_NEWTRALIZE_LEFTBODY_LABEL"
+          description="TPL_NEWTRALIZE_LEFTBODY_DESC"
+          class="btn-group btn-group-yesno"
+          default="1"
+        >
           <option value="0">TPL_NEWTRALIZE_DISABLED</option>
           <option value="1">TPL_NEWTRALIZE_ENABLED</option>
         </field>
-        <field name="mainbodytop" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_NEWTRALIZE_MAINBODYTOP_LABEL" description="TPL_NEWTRALIZE_MAINBODYTOP_DESC">
+        <field
+          name="mainBodyTop"
+          type="radio"
+          label="TPL_NEWTRALIZE_MAINBODYTOP_LABEL"
+          description="TPL_NEWTRALIZE_MAINBODYTOP_DESC"
+          class="btn-group btn-group-yesno"
+          default="1"
+        >
           <option value="0">TPL_NEWTRALIZE_DISABLED</option>
           <option value="1">TPL_NEWTRALIZE_ENABLED</option>
         </field>
-        <field name="mainbodybottom" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_NEWTRALIZE_MAINBODYBOTTOM_LABEL" description="TPL_NEWTRALIZE_MAINBODYBOTTOM_DESC">
+        <field
+          name="mainBodyBottom"
+          type="radio"
+          label="TPL_NEWTRALIZE_MAINBODYBOTTOM_LABEL"
+          description="TPL_NEWTRALIZE_MAINBODYBOTTOM_DESC"
+          class="btn-group btn-group-yesno"
+          default="1"
+        >
           <option value="0">TPL_NEWTRALIZE_DISABLED</option>
           <option value="1">TPL_NEWTRALIZE_ENABLED</option>
         </field>
-        <field name="rightbody" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_NEWTRALIZE_RIGHTBODY_LABEL" description="TPL_NEWTRALIZE_RIGHTBODY_DESC">
+        <field
+          name="rightBody"
+          type="radio"
+          label="TPL_NEWTRALIZE_RIGHTBODY_LABEL"
+          description="TPL_NEWTRALIZE_RIGHTBODY_DESC"
+          class="btn-group btn-group-yesno"
+          default="1"
+        >
           <option value="0">TPL_NEWTRALIZE_DISABLED</option>
           <option value="1">TPL_NEWTRALIZE_ENABLED</option>
         </field>
-        <field name="belowbody" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_NEWTRALIZE_BELOWBODY_LABEL" description="TPL_NEWTRALIZE_BELOWBODY_DESC">
+        <field
+          name="belowBody"
+          type="radio"
+          label="TPL_NEWTRALIZE_BELOWBODY_LABEL"
+          description="TPL_NEWTRALIZE_BELOWBODY_DESC"
+          class="btn-group btn-group-yesno"
+          default="1"
+        >
           <option value="0">TPL_NEWTRALIZE_DISABLED</option>
           <option value="1">TPL_NEWTRALIZE_ENABLED</option>
         </field>
-        <field name="footer" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_NEWTRALIZE_FOOTER_LABEL" description="TPL_NEWTRALIZE_FOOTER_DESC">
+        <field
+          name="footer"
+          type="radio"
+          label="TPL_NEWTRALIZE_FOOTER_LABEL"
+          description="TPL_NEWTRALIZE_FOOTER_DESC"
+          class="btn-group btn-group-yesno"
+          default="1"
+        >
           <option value="0">TPL_NEWTRALIZE_DISABLED</option>
           <option value="1">TPL_NEWTRALIZE_ENABLED</option>
         </field>
-        <field name="copyright" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_NEWTRALIZE_COPYRIGHT_LABEL" description="TPL_NEWTRALIZE_COPYRIGHT_DESC">
-          <option value="0">TPL_NEWTRALIZE_DISABLED</option>
-          <option value="1">TPL_NEWTRALIZE_ENABLED</option>
-        </field>
-        <field name="copyrighttxt" type="text" default="" label="TPL_NEWTRALIZE_COPYRIGHTTXT_LABEL" description="TPL_NEWTRALIZE_COPYRIGHTTXT_DESC" filter="string" />
       </fieldset>
       
       <fieldset name="CUSTOM_CODE">
-        <field name="codeafterhead" type="textarea" label="TPL_NEWTRALIZE_CODEAFTERHEAD_LABEL" description="TPL_NEWTRALIZE_CODEAFTERHEAD_DESC" rows="4" columns="30" filter="raw" default="" />
-        <field name="codebeforehead" type="textarea" label="TPL_NEWTRALIZE_CODEBEFOREHEAD_LABEL" description="TPL_NEWTRALIZE_CODEBEFOREHEAD_DESC" rows="4" columns="30" filter="raw" default="" />
-        <field name="codeafterbody" type="textarea" label="TPL_NEWTRALIZE_CODEAFTERBODY_LABEL" description="TPL_NEWTRALIZE_CODEAFTERBODY_DESC" rows="4" columns="30" filter="raw" default="" />
-        <field name="codebeforebody" type="textarea" label="TPL_NEWTRALIZE_CODEBEFOREBODY_LABEL" description="TPL_NEWTRALIZE_CODEBEFOREBODY_DESC" rows="4" columns="30" filter="raw" default="" />
+        <field
+          name="codeAfterHead"
+          type="textarea"
+          label="TPL_NEWTRALIZE_CODEAFTERHEAD_LABEL"
+          description="TPL_NEWTRALIZE_CODEAFTERHEAD_DESC"
+          rows="4"
+          columns="30"
+          filter="raw"
+          default=""
+        />
+        <field
+          name="codeBeforeHead"
+          type="textarea"
+          label="TPL_NEWTRALIZE_CODEBEFOREHEAD_LABEL"
+          description="TPL_NEWTRALIZE_CODEBEFOREHEAD_DESC"
+          rows="4"
+          columns="30"
+          filter="raw"
+          default=""
+        />
+        <field
+          name="codeAfterBody"
+          type="textarea"
+          label="TPL_NEWTRALIZE_CODEAFTERBODY_LABEL"
+          description="TPL_NEWTRALIZE_CODEAFTERBODY_DESC"
+          rows="4"
+          columns="30"
+          filter="raw"
+          default=""
+        />
+        <field
+          name="codeBeforeBody"
+          type="textarea"
+          label="TPL_NEWTRALIZE_CODEBEFOREBODY_LABEL"
+          description="TPL_NEWTRALIZE_CODEBEFOREBODY_DESC"
+          rows="4"
+          columns="30"
+          filter="raw"
+          default=""
+        />
       </fieldset>
 		</fields>
   </config>

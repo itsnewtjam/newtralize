@@ -1,4 +1,12 @@
 v1.0.0 (2023-xx-xx)
+[Added]
+- New options to set a footer logo
+- Added cache prevention options for Head files
+[Changed]
+- Reorganized template style settings
+[Removed]
+- Removed "Kill Joomla CSS" and "Kill Joomla JS" options
+- Removed instant.page option
 
 v0.0.7 (2023-07-28)
 [Added]
