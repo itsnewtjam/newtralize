@@ -2,8 +2,12 @@ v1.0.0 (2023-xx-xx)
 [Added]
 - New options to set a footer logo
 - Added cache prevention options for Head files
+- Added option to scope CSS, JS, and Head files by ID rather than alias
+- CSS, JS, and Head files can now be scoped by category
+  - Files scoped to a category will only be loaded on articles in that category
 [Changed]
 - Reorganized template style settings
+- Cleaned up template index
 [Removed]
 - Removed "Kill Joomla CSS" and "Kill Joomla JS" options
 - Removed instant.page option

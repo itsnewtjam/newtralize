@@ -4,17 +4,33 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Application\SiteApplication;
 use Joomla\CMS\Factory;
+use Joomla\Database\DatabaseInterface;
 
 /** @var SiteApplication **/
 $app = Factory::getApplication();
 $document = $app->getDocument();
 
+define('NEWTRALIZE_BASE', JPATH_SITE . "/templates/" . $this->template);
 $timestamp = date('U');
 
 $this->setHtml5(true);
 
 // Get active menu item alias
 $active = $app->getMenu()->getActive();
+
+$activeCategory = null;
+if ($active->query['option'] === "com_content" && $active->query['view'] === "article") {
+  /** @var DatabaseInterface **/
+  $db = Factory::getContainer()->get(DatabaseInterface::class);
+  $query = $db->getQuery(true);
+  $query
+    ->select($db->quoteName(['b.id', 'b.alias']))
+    ->from($db->quoteName('#__content', 'a'))
+    ->join("INNER", $db->quoteName('#__categories', 'b') . " ON " . $db->quoteName('a.catid') . " = " . $db->quoteName('b.id'))
+    ->where($db->quoteName('a.id') . " = " . $db->quote($active->query['id']));
+  $db->setQuery($query);
+  $activeCategory = $db->loadObject();
+}
 
 $params = $app->getTemplate(true)->params;
 
@@ -75,7 +91,7 @@ $codeBeforeHead = $params->get('codeBeforeHead', '');
 $codeAfterBody = $params->get('codeAfterBody', '');
 $codeBeforeBody = $params->get('codeBeforeBody', '');
 
-if ($nocacheheaders == 1) {
+if ($sendNoCacheHeaders) {
   header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
   header("Cache-Control: post-check=0, pre-check=0", false);
   header("Pragma: no-cache");
@@ -90,53 +106,64 @@ if ($nocacheheaders == 1) {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <jdoc:include type="head" />
     
-    <?php if ($codeafterhead != null) echo $codeafterhead; ?>
+    <?php if ($codeAfterHead) echo $codeAfterHead; ?>
 
     <meta name="apple-mobile-web-app-capable" content="YES" />
     
     <?php $this->setGenerator(null); ?>
 
-    <script src="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/js/template.js<?php if ($uncachejs == 1) echo "?v=$timestamp"; ?>"></script>
+    <script src="<?= NEWTRALIZE_BASE . "/js/template.js" . ($uncacheJs ? "?v=$timestamp" : ""); ?>"></script>
   
-    <?php if (file_exists(JPATH_SITE . "/templates" . "/" . $this->template . "/js/custom.js")) : ?>
-      <script src="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/js/custom.js<?php if ($uncachejs == 1) echo "?v=$timestamp"; ?>"></script>
+    <?php 
+      $customJs = NEWTRALIZE_BASE . "/js/custom.js";
+      if (file_exists($customJs)) : 
+    ?>
+      <script src="<?= $customJs . ($uncacheJs ? "?v=$timestamp" : ""); ?>"></script>
     <?php endif; ?>
 
-    <?php if (file_exists(JPATH_SITE . "/templates" . "/" . $this->template . "/js/menus/".$active->menutype.".js")) : ?>
-      <script src="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/js/menus/<?= $active->menutype; ?>.js<?php if ($uncachejs == 1) echo "?v=$timestamp"; ?>"></script>
+    <?php 
+      $menuJs = NEWTRALIZE_BASE . "/js/menus/" . $active->menutype . ".js";
+      if (file_exists($menuJs)) : 
+    ?>
+      <script src="<?= $menuJs . ($uncacheJs ? "?v=$timestamp" : ""); ?>"></script>
     <?php endif; ?>
 
-    <?php if (file_exists(JPATH_SITE . "/templates" . "/" . $this->template . "/js/pages/".$active->alias.".js")) : ?>
-      <script src="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/js/pages/<?= $active->alias; ?>.js<?php if ($uncachejs == 1) echo "?v=$timestamp"; ?>"></script>
+    <?php 
+      $categoryJs = NEWTRALIZE_BASE . "/js/categories/" . ($scopeJsBy === 'id' ? $activeCategory->id : $activeCategory->alias) . ".js";
+      if (file_exists($categoryJs)) : 
+    ?>
+      <script src="<?= $categoryJs . ($uncacheJs ? "?v=$timestamp" : ""); ?>"></script>
     <?php endif; ?>
 
-    <?php if ($gtmcode != null) : ?>
+    <?php
+      $pageJs = NEWTRALIZE_BASE . "/js/pages/" . ($scopeJsBy === 'id' ? $active->id : $active->alias) . ".js";
+      if (file_exists($pageJs)) : 
+    ?>
+      <script src="<?= $pageJs . ($uncacheJs ? "?v=$timestamp" : ""); ?>"></script>
+    <?php endif; ?>
+
+    <?php if ($gtmCode) : ?>
       <!-- Google Tag Manager -->
       <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 			new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 			j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 			'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-			})(window,document,'script','dataLayer','<?= $gtmcode; ?>');</script>
+			})(window,document,'script','dataLayer','<?= $gtmCode; ?>');</script>
 			<!-- End Google Tag Manager -->
     <?php endif; ?>
 
-    <?php if ($gacode != null) : ?>
+    <?php if ($gaCode) : ?>
       <!-- Global site tag (gtag.js) - Google Analytics -->
-			<script async src="https://www.googletagmanager.com/gtag/js?id=<?= $gacode; ?>"></script>
+			<script async src="https://www.googletagmanager.com/gtag/js?id=<?= $gaCode; ?>"></script>
 			<script>
 				window.dataLayer = window.dataLayer || [];
 				function gtag(){dataLayer.push(arguments);}
 				gtag('js', new Date());
-				gtag('config', '<?= $gacode; ?>');
+				gtag('config', '<?= $gaCode; ?>');
 			</script>
-      <?php 
-        if (file_exists(JPATH_SITE."/"."templates/".$this->template."/"."heads/gaconversions/".$active->alias.".php")) {
-          include(JPATH_SITE."/"."templates/".$this->template."/"."heads/gaconversions/".$active->alias.".php");
-        }
-      ?>
     <?php endif; ?>
 
-    <?php if ($fbcode != null) : ?>
+    <?php if ($metaCode) : ?>
       <!-- Facebook Pixel Code -->
 			<script>
 				!function(f,b,e,v,n,t,s)
@@ -147,12 +174,12 @@ if ($nocacheheaders == 1) {
 				t.src=v;s=b.getElementsByTagName(e)[0];
 				s.parentNode.insertBefore(t,s)}(window, document,'script',
 				'https://connect.facebook.net/en_US/fbevents.js');
-				fbq('init', '<?= $fbcode; ?>');
+				fbq('init', '<?= $metaCode; ?>');
 				fbq('track', 'PageView');
 			</script>
 			<noscript>
 				<img height="1" width="1" style="display:none" 
-						src="https://www.facebook.com/tr?id=<?= $fbcode; ?>&ev=PageView&noscript=1"/>
+						src="https://www.facebook.com/tr?id=<?= $metaCode; ?>&ev=PageView&noscript=1"/>
 			</noscript>
 			<!-- End Facebook Pixel Code -->
     <?php endif; ?>
@@ -165,52 +192,93 @@ if ($nocacheheaders == 1) {
       }
     </style>
 
-    <link rel="stylesheet" href="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/css/template.css<?php if ($uncachecss == 1) echo "?v=$timestamp"; ?>" type="text/css">
+    <link rel="stylesheet" href="<?= NEWTRALIZE_BASE . "/css/template.css" . ($uncacheCss ? "?v=$timestamp" : ""); ?>" type="text/css">
 
-    <?php if (file_exists(JPATH_SITE."/"."templates/".$this->template."/"."css/custom.css")): ?>
-      <link rel="stylesheet" href="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/css/custom.css<?php if ($uncachecss == 1) echo "?v=$timestamp"; ?>" type="text/css">
+    <?php
+      $customCss = NEWTRALIZE_BASE . "/css/custom.css";
+      if (file_exists($customCss)) : 
+    ?>
+      <link rel="stylesheet" href="<?= $customCss . ($uncacheCss ? "?v=$timestamp" : ""); ?>" type="text/css">
     <?php endif; ?>
 
-    <?php if (file_exists(JPATH_SITE."/"."templates/".$this->template."/"."css/menus/".$active->menutype.".css")): ?>
-      <link rel="stylesheet" href="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/css/menus/<?= $active->menutype; ?>.css<?php if ($uncachecss == 1) echo "?v=$timestamp"; ?>" type="text/css">
+    <?php
+      $menuCss = NEWTRALIZE_BASE . "/css/menus/" . $active->menutype . ".css";
+      if (file_exists($menuCss)) : 
+    ?>
+      <link rel="stylesheet" href="<?= $menuCss . ($uncacheCss ? "?v=$timestamp" : ""); ?>" type="text/css">
+    <?php endif; ?>
+
+    <?php
+      $categoryCss = NEWTRALIZE_BASE . "/css/categories/" . ($scopeCssBy === 'id' ? $activeCategory->id : $activeCategory->alias) . ".css";
+      if (file_exists($categoryCss)) : 
+    ?>
+      <link rel="stylesheet" href="<?= $categoryCss . ($uncacheCss ? "?v=$timestamp" : ""); ?>" type="text/css">
+    <?php endif; ?>
+
+    <?php
+      $pageCss = NEWTRALIZE_BASE . "/css/pages/" . ($scopeCssBy === 'id' ? $active->id : $active->alias) . ".css";
+      if (file_exists($pageCss)) : 
+    ?>
+      <link rel="stylesheet" href="<?= $pageCss . ($uncacheCss ? "?v=$timestamp" : ""); ?>" type="text/css">
     <?php endif; ?>
     
-    <?php if (file_exists(JPATH_SITE."/"."templates/".$this->template."/"."css/pages/".$active->alias.".css")): ?>
-      <link rel="stylesheet" href="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/css/pages/<?= $active->alias; ?>.css<?php if ($uncachecss == 1) echo "?v=$timestamp"; ?>" type="text/css">
+    <?php if ($fontAwesomeKit) : ?>
+      <script defer src="<?= $fontAwesomeKit; ?>"></script>
     <?php endif; ?>
 
-    <?php if ($fontawesomecdn != null) : ?>
-      <script defer src="<?= $fontawesomecdn; ?>"></script>
-    <?php endif; ?>
-
-    <?php if ($codebeforehead != null) echo $codebeforehead; ?>
+    <?php if ($codeBeforeHead) echo $codeBeforeHead; ?>
   </head>
 
-  <body data-menu="<?= $active->menutype; ?>" data-page="<?= $active->alias; ?>">
-    <?php if ($gtmcode != null) : ?>
+  <?php 
+    $menuHead = NEWTRALIZE_BASE . "/heads/menus/" . $active->menutype . ".php";
+    if (file_exists($menuHead)) {
+      include($menuHead . ($uncacheCss ? "?v=$timestamp" : ""));
+    }
+  ?>
+
+  <?php 
+    $categoryHead = NEWTRALIZE_BASE . "/heads/categories/" . ($scopeHeadsBy === 'id' ? $activeCategory->id : $activeCategory->alias) . ".php";
+    if (file_exists($categoryHead)) {
+      include($categoryHead . ($uncacheCss ? "?v=$timestamp" : ""));
+    }
+  ?>
+
+  <?php 
+    $pageHead = NEWTRALIZE_BASE . "/heads/pages/" . ($scopeHeadsBy === 'id' ? $active->id : $active->alias) . ".php";
+    if (file_exists($pageHead)) {
+      include($pageHead . ($uncacheCss ? "?v=$timestamp" : ""));
+    }
+  ?>
+
+  <body
+    data-menu="<?= $active->menutype; ?>"
+    data-category="<?= $activeCategory->alias; ?>"
+    data-page="<?= $active->alias; ?>"
+  >
+    <?php if ($gtmCode) : ?>
       <!-- Google Tag Manager (noscript) -->
-      <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=<?= $gtmcode; ?>"
+      <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=<?= $gtmCode; ?>"
       height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <!-- End Google Tag Manager (noscript) -->
     <?php endif; ?>
 
-    <?php if ($codeafterbody != null) echo $codeafterbody; ?>
+    <?php if ($codeAfterBody) echo $codeAfterBody; ?>
 
     <div class="container">
-      <?php if ($banner == 1) : ?>
+      <?php if ($showBanner) : ?>
         <div class="banner-wrapper">
-          <div class="banner <?= $bannerContainer !== "full" ? "container-$bannerContainer" : ""; ?>">
+          <div class="banner <?= $bannerSize !== "full" ? "container-$bannerSize" : ""; ?>">
             <jdoc:include type="modules" name="banner" style="default" />
           </div>
         </div>
       <?php endif; ?>
 
-      <?php if ($topmenu == 1) : ?>
+      <?php if ($showNavbar) : ?>
         <header class="navbar-wrapper">
-          <div class="navbar <?= $topmenuContainer !== "full" ? "container-$topmenuContainer" : ""; ?>">
+          <div class="navbar <?= $navbarSize !== "full" ? "container-$navbarSize" : ""; ?>">
             <a
               class="logo"
-              href="<?= $this->baseurl ?>"
+              href="<?= $this->baseurl; ?>"
             >
               <img
                 src="<?= $this->baseurl; ?>/<?= htmlspecialchars($logo); ?>"
@@ -236,15 +304,15 @@ if ($nocacheheaders == 1) {
       <?php endif; ?>
 
       <main class="content-wrapper">
-        <?php if ($abovebody == 1) : ?>
-          <div class="abovebody <?= $abovebodyContainer !== "full" ? "container-$abovebodyContainer" : ""; ?>">
+        <?php if ($showAboveBody) : ?>
+          <div class="abovebody <?= $aboveBodySize !== "full" ? "container-$aboveBodySize" : ""; ?>">
             <jdoc:include type="modules" name="above-body" style="default" />
           </div>
         <?php endif; ?>
 
-        <div class="body-content <?= $mainbodyContainer !== "full" ? "container-$mainbodyContainer" : ""; ?>">
+        <div class="body-wrapper <?= $mainBodySize !== "full" ? "container-$mainBodySize" : ""; ?>">
           <?php if ($this->countModules('leftbody')) : ?>
-            <?php if ($leftbody == 1) : ?>
+            <?php if ($showLeftBody) : ?>
               <div class="leftbody">
                 <jdoc:include type="modules" name="left-body" style="default" />
               </div>
@@ -252,20 +320,20 @@ if ($nocacheheaders == 1) {
           <?php endif; ?>
 
           <div class="mainbody">
-            <?php if ($mainbodytop == 1) : ?>
+            <?php if ($showMainBodyTop) : ?>
               <jdoc:include type="modules" name="main-body-top" style="default" />
             <?php endif; ?>
             
             <jdoc:include type="message" />
             <jdoc:include type="component" />
 
-            <?php if ($mainbodybottom == 1) : ?>
+            <?php if ($showMainBodyBottom) : ?>
               <jdoc:include type="modules" name="main-body-bottom" style="default" />
             <?php endif; ?>
           </div>
 
           <?php if ($this->countModules('right-body')) : ?>
-            <?php if ($rightbody == 1) : ?>
+            <?php if ($showRightBody) : ?>
               <div class="rightbody">
                 <jdoc:include type="modules" name="right-body" style="default" />
               </div>
@@ -273,27 +341,38 @@ if ($nocacheheaders == 1) {
           <?php endif; ?>
         </div>
 
-        <?php if ($belowbody == 1) : ?>
-          <div class="belowbody <?= $belowbodyContainer !== "full" ? "container-$belowbodyContainer" : ""; ?>">
+        <?php if ($showBelowBody) : ?>
+          <div class="belowbody <?= $belowBodySize !== "full" ? "container-$belowBodySize" : ""; ?>">
             <jdoc:include type="modules" name="below-body" style="default" />
           </div>
         <?php endif; ?>
       </main>
 
-      <?php if ($footer == 1) : ?>
-        <footer>
-          <div class="footer-wrapper <?= $footerContainer !== "full" ? "container-$footerContainer" : ""; ?>">
+      <?php if ($showFooter) : ?>
+        <footer class="footer-wrapper">
+          <div class="footer <?= $footerSize !== "full" ? "container-$footerSize" : ""; ?>">
+            <?php if ($showFooterLogo) : ?>
+              <a
+                class="footer-logo"
+                href="<?= $this->baseurl; ?>"
+              >
+                <img
+                  src="<?= $this->baseurl; ?>/<?= htmlspecialchars($footerLogo); ?>"
+                  alt="<?= htmlspecialchars($sitetitle); ?>"
+                />
+              </a>
+            <?php endif; ?>
             <jdoc:include type="modules" name="footer" style="default" />
-            <?php if ($copyright == 1) : ?>
+            <?php if ($showCopyright) : ?>
               <hr />
               <small>
-                <?php if ($copyrighttxt != null) : ?>
-                  &copy;<?= date('Y'); ?> <?= $copyrighttxt; ?>
+                <?php if ($copyrightText) : ?>
+                  &copy;<?= date('Y'); ?> <?= htmlspecialchars($copyrightText); ?>
                 <?php else : ?>
                   &copy;<?= date('Y'); ?> <?= htmlspecialchars($sitetitle); ?>
                 <?php endif; ?>
               </small>
-	    <?php endif; ?>
+            <?php endif; ?>
           </div>
         </footer>
       <?php endif; ?>
@@ -301,10 +380,6 @@ if ($nocacheheaders == 1) {
       <jdoc:include type="modules" name="debug" style="default" />
     </div>
 
-    <?php if ($codebeforebody != null) echo $codebeforebody; ?>
-
-    <?php if ($instant == 1) : ?>
-      <script src="//instant.page/5.1.0" type="module" integrity="sha384-by67kQnR+pyfy8yWP4kPO12fHKRLHZPfEsiSXR8u2IKcTdxD805MGUXBzVPnkLHw"></script>
-    <?php endif; ?>
+    <?php if ($codeBeforeBody) echo $codeBeforeBody; ?>
   </body>
 </html>
