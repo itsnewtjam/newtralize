@@ -25,6 +25,7 @@
     <filename>templateDetails.xml</filename>
   </files>
   <positions>
+    <position>banner</position>
     <position>navbar</position>
     <position>navigation</position>
     <position>above-body</position>
@@ -34,7 +35,6 @@
     <position>right-body</position>
     <position>below-body</position>
     <position>footer</position>
-    <position>alert-bar</position>
   </positions>
   <languages folder="language">
     <language tag="en-GB">en-GB/en-GB.tpl_newtralize.ini</language>
