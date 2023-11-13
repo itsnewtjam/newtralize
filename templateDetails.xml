@@ -12,6 +12,7 @@
   <updateservers>
     <server type="extension" name="newtralize Updates">https://raw.githubusercontent.com/itsnewtjam/newtralize/master/dist/update.xml</server>
   </updateservers>
+  <scriptfile>install.php</scriptfile>
   <files>
     <folder>css</folder>
     <folder>fonts</folder>
