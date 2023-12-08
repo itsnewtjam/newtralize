@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <extension type="template" version="4.0" method="upgrade">
   <name>newtralize</name>
-  <version>0.0.7</version>
-  <creationDate>2023-07-13</creationDate>
+  <version>0.0.8</version>
+  <creationDate>2023-12-08</creationDate>
   <author>newtjam</author>
   <authorEmail>joomla@newtjam.com</authorEmail>
   <authorUrl>https://newtjam.com</authorUrl>
@@ -80,8 +80,14 @@
       </fieldset>
       
       <fieldset name="TRACKING_SETTINGS">
-        <field name="gtmcode"  type="text" default="" label="TPL_NEWTRALIZE_GTM_LABEL" description="TPL_NEWTRALIZE_GTM_DESC" filter="string" />
-        <field name="gacode"  type="text" default="" label="TPL_NEWTRALIZE_GA_LABEL" description="TPL_NEWTRALIZE_GA_DESC" filter="string" />
+        <field name="googleSetup" type="list" default="gtm" label="TPL_NEWTRALIZE_GOOGLESETUP_LABEL" description="TPL_NEWTRALIZE_GOOGLESETUP_DESC">
+          <option value="gtm">Google Tag Manager</option>
+          <option value="ga">Google Analytics</option>
+          <option value="ga-gtm">Google Analytics with GTM Conversions</option>
+        </field>
+        <field name="gtmcode"  type="text" default="" label="TPL_NEWTRALIZE_GTM_LABEL" description="TPL_NEWTRALIZE_GTM_DESC" filter="string" showon="googleSetup:gtm" />
+        <field name="gacode"  type="text" default="" label="TPL_NEWTRALIZE_GA_LABEL" description="TPL_NEWTRALIZE_GA_DESC" filter="string" showon="googleSetup:ga[OR]googleSetup:ga-gtm" />
+        <field name="gagtmcode"  type="text" default="" label="TPL_NEWTRALIZE_GAGTM_LABEL" description="TPL_NEWTRALIZE_GAGTM_DESC" filter="string" showon="googleSetup:ga-gtm" />
         <field name="fbcode"  type="text" default="" label="TPL_NEWTRALIZE_FB_LABEL" description="TPL_NEWTRALIZE_FB_DESC" filter="string" />
       </fieldset>
       
