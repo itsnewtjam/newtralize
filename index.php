@@ -27,8 +27,10 @@ $uncachejs = $this->params->get('uncachejs');
 
 $fontawesomecdn = $this->params->get('fontawesomecdn');
 
+$googleSetup = $this->params->get('googleSetup');
 $gtmcode = $this->params->get('gtmcode');
 $gacode = $this->params->get('gacode');
+$gagtmcode = $this->params->get('gagtmcode');
 $fbcode = $this->params->get('fbcode');
 
 $banner = $this->params->get('banner');
@@ -124,7 +126,7 @@ if ($nocacheheaders == 1) {
       <script src="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/js/pages/<?= $active->alias; ?>.js<?php if ($uncachejs == 1) echo "?v=$timestamp"; ?>"></script>
     <?php endif; ?>
 
-    <?php if ($gtmcode != null) : ?>
+    <?php if ($googleSetup === "gtm" && $gtmcode != null) : ?>
       <!-- Google Tag Manager -->
       <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 			new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -134,7 +136,7 @@ if ($nocacheheaders == 1) {
 			<!-- End Google Tag Manager -->
     <?php endif; ?>
 
-    <?php if ($gacode != null) : ?>
+    <?php if (($googleSetup === "ga" || $googleSetup === "ga-gtm") && $gacode != null) : ?>
       <!-- Global site tag (gtag.js) - Google Analytics -->
 			<script async src="https://www.googletagmanager.com/gtag/js?id=<?= $gacode; ?>"></script>
 			<script>
@@ -142,6 +144,9 @@ if ($nocacheheaders == 1) {
 				function gtag(){dataLayer.push(arguments);}
 				gtag('js', new Date());
 				gtag('config', '<?= $gacode; ?>');
+        <?php if ($googleSetup === "ga-gtm" && $gagtmcode != null) : ?>
+          gtag('config', '<?= $gagtmcode; ?>');
+        <?php endif; ?>
 			</script>
       <?php 
         if (file_exists(JPATH_SITE."/"."templates/".$this->template."/"."heads/gaconversions/".$active->alias.".php")) {
