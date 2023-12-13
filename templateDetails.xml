@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <extension type="template" version="4.0" method="upgrade">
   <name>newtralize</name>
-  <version>0.0.8</version>
-  <creationDate>2023-12-08</creationDate>
+  <version>0.0.9</version>
+  <creationDate>2023-12-13</creationDate>
   <author>newtjam</author>
   <authorEmail>joomla@newtjam.com</authorEmail>
   <authorUrl>https://newtjam.com</authorUrl>
@@ -96,6 +96,7 @@
       </fieldset>
 
       <fieldset name="LAYOUT_SETTINGS">
+        <field name="navTime" type="number" default="250" min="0" label="TPL_NEWTRALIZE_NAVTIME_LABEL" description="TPL_NEWTRALIZE_NAVTIME_DESC" filter="string" />
         <field name="containerNormal" type="number" default="64" min="0" label="TPL_NEWTRALIZE_CONTAINERNORMAL_LABEL" description="TPL_NEWTRALIZE_CONTAINERNORMAL_DESC" filter="string" />
         <field name="containerNarrow" type="number" default="40" min="0" label="TPL_NEWTRALIZE_CONTAINERNARROW_LABEL" description="TPL_NEWTRALIZE_CONTAINERNARROW_DESC" filter="string" />
         <field name="containerWide" type="number" default="75" min="0" label="TPL_NEWTRALIZE_CONTAINERWIDE_LABEL" description="TPL_NEWTRALIZE_CONTAINERWIDE_DESC" filter="string" />
