@@ -46,6 +46,7 @@ $alertbar = $this->params->get('alertbar');
 $copyright = $this->params->get('copyright');
 $copyrighttxt = $this->params->get('copyrighttxt');
 
+$navTime = $this->params->get('navTime');
 $containerNarrow = $this->params->get('containerNarrow');
 $containerNormal = $this->params->get('containerNormal');
 $containerWide = $this->params->get('containerWide');
@@ -111,6 +112,12 @@ if ($nocacheheaders == 1) {
     ?>
 
     <?php $this->setGenerator(null); ?>
+
+    <script>
+      const newtralizeData = {
+        nav_time: "<?= $navTime ?>"
+      };
+    </script>
 
     <script src="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/js/template.js<?php if ($uncachejs == 1) echo "?v=$timestamp"; ?>"></script>
   
@@ -246,7 +253,7 @@ if ($nocacheheaders == 1) {
                 </svg>
               </button>
               <div class="menu-overlay" onclick="toggleMenu();"></div>
-              <div id="primary-navigation" data-state="closed">
+              <div id="primary-navigation" data-state="closed" style="--_nav-time: <?= $navTime ?>ms">
                 <jdoc:include type="modules" name="navigation" style="default" />
               </div>
             </nav>
