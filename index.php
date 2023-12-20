@@ -33,6 +33,7 @@ $gacode = $this->params->get('gacode');
 $gagtmcode = $this->params->get('gagtmcode');
 $fbcode = $this->params->get('fbcode');
 
+$rawpages = $this->params->get('rawPages');
 $banner = $this->params->get('banner');
 $topmenu = $this->params->get('topmenu');
 $abovebody = $this->params->get('abovebody');
@@ -222,110 +223,114 @@ if ($nocacheheaders == 1) {
 
     <?php if ($codeafterbody != null) echo $codeafterbody; ?>
 
-    <div class="container">
-      <?php if ($banner == 1) : ?>
-        <div class="banner-wrapper">
-          <div class="banner <?= $bannerContainer !== "full" ? "container-$bannerContainer" : ""; ?>">
-            <jdoc:include type="modules" name="banner" style="default" />
-          </div>
-        </div>
-      <?php endif; ?>
-
-      <?php if ($topmenu == 1) : ?>
-        <header class="navbar-wrapper">
-          <div class="navbar <?= $topmenuContainer !== "full" ? "container-$topmenuContainer" : ""; ?>">
-            <a
-              class="logo"
-              href="<?= $this->baseurl ?>"
-            >
-              <img
-                src="<?= $this->baseurl; ?>/<?= htmlspecialchars($logo); ?>"
-                alt="<?= htmlspecialchars($sitetitle); ?>"
-              />
-            </a>
-            <nav class="nav-end">
-              <jdoc:include type="modules" name="navbar" style="default" />
-              <button id="nav-button" aria-label="Toggle Main Menu" aria-controls="primary-navigation" aria-expanded="false" onclick="toggleMenu();">
-                <svg class="hamburger" viewBox="0 0 100 100" width="32">
-                  <rect class="line top" width="80" height="10" x="10" y="20"></rect>
-                  <rect class="line middle" width="80" height="10" x="10" y="45"></rect>
-                  <rect class="line bottom" width="80" height="10" x="10" y="70"></rect>
-                </svg>
-              </button>
-              <div class="menu-overlay" onclick="toggleMenu();"></div>
-              <div id="primary-navigation" data-state="closed" style="--_nav-time: <?= $navTime ?>ms">
-                <jdoc:include type="modules" name="navigation" style="default" />
-              </div>
-            </nav>
-          </div>
-        </header>
-      <?php endif; ?>
-
-      <main class="content-wrapper">
-        <?php if ($abovebody == 1) : ?>
-          <div class="abovebody <?= $abovebodyContainer !== "full" ? "container-$abovebodyContainer" : ""; ?>">
-            <jdoc:include type="modules" name="above-body" style="default" />
+    <?php if (in_array($active->id, $rawpages)) : ?>
+      <jdoc:include type="component" />
+    <?php else : ?>
+      <div class="container">
+        <?php if ($banner == 1) : ?>
+          <div class="banner-wrapper">
+            <div class="banner <?= $bannerContainer !== "full" ? "container-$bannerContainer" : ""; ?>">
+              <jdoc:include type="modules" name="banner" style="default" />
+            </div>
           </div>
         <?php endif; ?>
 
-        <div class="body-content <?= $mainbodyContainer !== "full" ? "container-$mainbodyContainer" : ""; ?>">
-          <?php if ($this->countModules('leftbody')) : ?>
-            <?php if ($leftbody == 1) : ?>
-              <div class="leftbody">
-                <jdoc:include type="modules" name="left-body" style="default" />
-              </div>
-            <?php endif; ?>
-          <?php endif; ?>
-
-          <div class="mainbody">
-            <?php if ($mainbodytop == 1) : ?>
-              <jdoc:include type="modules" name="main-body-top" style="default" />
-            <?php endif; ?>
-            
-            <jdoc:include type="message" />
-            <jdoc:include type="component" />
-
-            <?php if ($mainbodybottom == 1) : ?>
-              <jdoc:include type="modules" name="main-body-bottom" style="default" />
-            <?php endif; ?>
-          </div>
-
-          <?php if ($this->countModules('right-body')) : ?>
-            <?php if ($rightbody == 1) : ?>
-              <div class="rightbody">
-                <jdoc:include type="modules" name="right-body" style="default" />
-              </div>
-            <?php endif; ?>
-          <?php endif; ?>
-        </div>
-
-        <?php if ($belowbody == 1) : ?>
-          <div class="belowbody <?= $belowbodyContainer !== "full" ? "container-$belowbodyContainer" : ""; ?>">
-            <jdoc:include type="modules" name="below-body" style="default" />
-          </div>
+        <?php if ($topmenu == 1) : ?>
+          <header class="navbar-wrapper">
+            <div class="navbar <?= $topmenuContainer !== "full" ? "container-$topmenuContainer" : ""; ?>">
+              <a
+                class="logo"
+                href="<?= $this->baseurl ?>"
+              >
+                <img
+                  src="<?= $this->baseurl; ?>/<?= htmlspecialchars($logo); ?>"
+                  alt="<?= htmlspecialchars($sitetitle); ?>"
+                />
+              </a>
+              <nav class="nav-end">
+                <jdoc:include type="modules" name="navbar" style="default" />
+                <button id="nav-button" aria-label="Toggle Main Menu" aria-controls="primary-navigation" aria-expanded="false" onclick="toggleMenu();">
+                  <svg class="hamburger" viewBox="0 0 100 100" width="32">
+                    <rect class="line top" width="80" height="10" x="10" y="20"></rect>
+                    <rect class="line middle" width="80" height="10" x="10" y="45"></rect>
+                    <rect class="line bottom" width="80" height="10" x="10" y="70"></rect>
+                  </svg>
+                </button>
+                <div class="menu-overlay" onclick="toggleMenu();"></div>
+                <div id="primary-navigation" data-state="closed" style="--_nav-time: <?= $navTime ?>ms">
+                  <jdoc:include type="modules" name="navigation" style="default" />
+                </div>
+              </nav>
+            </div>
+          </header>
         <?php endif; ?>
-      </main>
 
-      <?php if ($footer == 1) : ?>
-        <footer>
-          <div class="footer-wrapper <?= $footerContainer !== "full" ? "container-$footerContainer" : ""; ?>">
-            <jdoc:include type="modules" name="footer" style="default" />
-            <?php if ($copyright == 1) : ?>
-              <hr />
-              <small>
-                <?php if ($copyrighttxt != null) : ?>
-                  &copy;<?= date('Y'); ?> <?= $copyrighttxt; ?>
-                <?php else : ?>
-                  &copy;<?= date('Y'); ?> <?= htmlspecialchars($sitetitle); ?>
-                <?php endif; ?>
-              </small>
-	    <?php endif; ?>
+        <main class="content-wrapper">
+          <?php if ($abovebody == 1) : ?>
+            <div class="abovebody <?= $abovebodyContainer !== "full" ? "container-$abovebodyContainer" : ""; ?>">
+              <jdoc:include type="modules" name="above-body" style="default" />
+            </div>
+          <?php endif; ?>
+
+          <div class="body-content <?= $mainbodyContainer !== "full" ? "container-$mainbodyContainer" : ""; ?>">
+            <?php if ($this->countModules('leftbody')) : ?>
+              <?php if ($leftbody == 1) : ?>
+                <div class="leftbody">
+                  <jdoc:include type="modules" name="left-body" style="default" />
+                </div>
+              <?php endif; ?>
+            <?php endif; ?>
+
+            <div class="mainbody">
+              <?php if ($mainbodytop == 1) : ?>
+                <jdoc:include type="modules" name="main-body-top" style="default" />
+              <?php endif; ?>
+              
+              <jdoc:include type="message" />
+              <jdoc:include type="component" />
+
+              <?php if ($mainbodybottom == 1) : ?>
+                <jdoc:include type="modules" name="main-body-bottom" style="default" />
+              <?php endif; ?>
+            </div>
+
+            <?php if ($this->countModules('right-body')) : ?>
+              <?php if ($rightbody == 1) : ?>
+                <div class="rightbody">
+                  <jdoc:include type="modules" name="right-body" style="default" />
+                </div>
+              <?php endif; ?>
+            <?php endif; ?>
           </div>
-        </footer>
-      <?php endif; ?>
 
-      <jdoc:include type="modules" name="debug" style="default" />
-    </div>
+          <?php if ($belowbody == 1) : ?>
+            <div class="belowbody <?= $belowbodyContainer !== "full" ? "container-$belowbodyContainer" : ""; ?>">
+              <jdoc:include type="modules" name="below-body" style="default" />
+            </div>
+          <?php endif; ?>
+        </main>
+
+        <?php if ($footer == 1) : ?>
+          <footer>
+            <div class="footer-wrapper <?= $footerContainer !== "full" ? "container-$footerContainer" : ""; ?>">
+              <jdoc:include type="modules" name="footer" style="default" />
+              <?php if ($copyright == 1) : ?>
+                <hr />
+                <small>
+                  <?php if ($copyrighttxt != null) : ?>
+                    &copy;<?= date('Y'); ?> <?= $copyrighttxt; ?>
+                  <?php else : ?>
+                    &copy;<?= date('Y'); ?> <?= htmlspecialchars($sitetitle); ?>
+                  <?php endif; ?>
+                </small>
+        <?php endif; ?>
+            </div>
+          </footer>
+        <?php endif; ?>
+
+        <jdoc:include type="modules" name="debug" style="default" />
+      </div>
+    <?php endif; ?>
 
     <?php if ($codebeforebody != null) echo $codebeforebody; ?>
 

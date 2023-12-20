@@ -96,6 +96,17 @@
       </fieldset>
 
       <fieldset name="LAYOUT_SETTINGS">
+        <field
+          name="rawPages"
+          type="sql"
+          label="TPL_NEWTRALIZE_RAWPAGES_LABEL"
+          description="TPL_NEWTRALIZE_RAWPAGES_DESC"
+          query="SELECT id, title FROM #__menu WHERE published = 1 AND client_id = 0 AND type = 'component'"
+          key_field="id"
+          value_field="title"
+          multiple="true"
+          layout="joomla.form.field.list-fancy-select"
+        />
         <field name="navTime" type="number" default="250" min="0" label="TPL_NEWTRALIZE_NAVTIME_LABEL" description="TPL_NEWTRALIZE_NAVTIME_DESC" filter="string" />
         <field name="containerNormal" type="number" default="64" min="0" label="TPL_NEWTRALIZE_CONTAINERNORMAL_LABEL" description="TPL_NEWTRALIZE_CONTAINERNORMAL_DESC" filter="string" />
         <field name="containerNarrow" type="number" default="40" min="0" label="TPL_NEWTRALIZE_CONTAINERNARROW_LABEL" description="TPL_NEWTRALIZE_CONTAINERNARROW_DESC" filter="string" />
