@@ -33,7 +33,7 @@ $gacode = $this->params->get('gacode');
 $gagtmcode = $this->params->get('gagtmcode');
 $fbcode = $this->params->get('fbcode');
 
-$rawpages = $this->params->get('rawPages');
+$rawpages = $this->params->get('rawPages', []);
 $banner = $this->params->get('banner');
 $topmenu = $this->params->get('topmenu');
 $abovebody = $this->params->get('abovebody');
