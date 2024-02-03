@@ -72,10 +72,6 @@
           <option value="0">TPL_NEWTRALIZE_NO</option>
           <option value="1">TPL_NEWTRALIZE_YES</option>
         </field>
-        <field name="instant" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_NEWTRALIZE_INSTANT_LABEL" description="TPL_NEWTRALIZE_INSTANT_DESC">
-          <option value="0">TPL_NEWTRALIZE_NO</option>
-          <option value="1">TPL_NEWTRALIZE_YES</option>
-        </field>
       </fieldset>
       
       <fieldset name="TRACKING_SETTINGS">

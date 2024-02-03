@@ -59,7 +59,6 @@ $footerContainer = $this->params->get('footerSize');
 
 $killjoomlajs = $this->params->get('killjoomlajs');
 $killjoomlacss = $this->params->get('killjoomlacss');
-$instant = $this->params->get('instant');
 
 $codeafterhead = $this->params->get('codeafterhead');
 $codebeforehead = $this->params->get('codebeforehead');
@@ -329,8 +328,5 @@ if ($nocacheheaders == 1) {
 
     <?php if ($codebeforebody != null) echo $codebeforebody; ?>
 
-    <?php if ($instant == 1) : ?>
-      <script src="//instant.page/5.1.0" type="module" integrity="sha384-by67kQnR+pyfy8yWP4kPO12fHKRLHZPfEsiSXR8u2IKcTdxD805MGUXBzVPnkLHw"></script>
-    <?php endif; ?>
   </body>
 </html>
