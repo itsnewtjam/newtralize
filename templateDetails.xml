@@ -2,11 +2,10 @@
 <extension type="template" version="4.0" method="upgrade">
   <name>newtralize</name>
   <version>0.0.11</version>
-  <creationDate>2024-01-04</creationDate>
   <author>newtjam</author>
   <authorEmail>joomla@newtjam.com</authorEmail>
   <authorUrl>https://newtjam.com</authorUrl>
-  <copyright>Copyright (C) 2023 newtjam. All rights reserved.</copyright>
+  <copyright>Copyright (C) 2024 newtjam. All rights reserved.</copyright>
   <license>GNU General Public License version 2 or later</license>
   <description>newtralize is a clean and minimal template designed to neutralize Joomla and stay out of your way.</description>
   <updateservers>
@@ -41,7 +40,7 @@
   </languages>
   <config>
     <fields name="params">
-      <fieldset name="JOOMLA_SETTINGS">
+      <fieldset name="SITE_SETTINGS">
         <field name="logo" type="media" label="TPL_NEWTRALIZE_LOGO_LABEL" description="TPL_NEWTRALIZE_LOGO_DESC" />
         <field name="sitetitle"  type="text" default="" label="JGLOBAL_TITLE" description="JFIELD_ALT_PAGE_TITLE_LABEL" filter="safehtml" />
       </fieldset>
