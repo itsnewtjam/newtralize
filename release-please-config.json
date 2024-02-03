@@ -1,0 +1,21 @@
+{
+  "draft": true,
+  "pull-request-title-pattern": "chore: release${component} ${version}",
+  "extra-files": [
+    {
+      "type": "xml",
+      "path": "templateDetails.xml",
+      "xpath": "//extension/version"
+    },
+    {
+      "type": "xml",
+      "path": "dist/update.xml",
+      "xpath": "//updates/update/version"
+    }
+  ],
+  "packages": {
+    ".": {
+      "release-type": "simple"
+    }
+  }
+}
