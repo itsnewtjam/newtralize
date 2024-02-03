@@ -57,9 +57,6 @@ $mainbodyContainer = $this->params->get('mainbodySize');
 $belowbodyContainer = $this->params->get('belowbodySize');
 $footerContainer = $this->params->get('footerSize');
 
-$killjoomlajs = $this->params->get('killjoomlajs');
-$killjoomlacss = $this->params->get('killjoomlacss');
-
 $codeafterhead = $this->params->get('codeafterhead');
 $codebeforehead = $this->params->get('codebeforehead');
 $codeafterbody = $this->params->get('codeafterbody');
@@ -83,32 +80,6 @@ if ($nocacheheaders == 1) {
     <?php if ($codeafterhead != null) echo $codeafterhead; ?>
 
     <meta name="apple-mobile-web-app-capable" content="YES" />
-    
-    <?php unset($document->_scripts[JURI::root(true) . '/media/jui/js/jquery.min.js']); ?>
-
-    <?php 
-      if ($killjoomlajs == 1) {
-        unset($document->_scripts[JURI::root(true) . '/media/system/js/caption.js']);
-        unset($document->_scripts[JURI::root(true) . '/media/modal/js/script.min.js']);
-        unset($document->_scripts[JURI::root(true) . '/media/system/js/core.js']);
-        unset($document->_scripts[JURI::root(true) . '/media/jui/js/bootstrap.min.js']);
-        if (isset($this->_script['text/javascript'])) {
-          $this->_script['text/javascript'] = preg_replace('/jQuery\(window\).on\(\'load\'\,  function\(\) \{(.*);/is', '', $this->_script['text/javascript']);
-          if (empty($this->_script['text/javascript'])) {
-            unset($this->_script['text/javascript']);
-          }
-        }
-      }
-    ?>
-
-    <?php 
-      if ($killjoomlacss == 1) {
-        unset($this->_stylesheets[JURI::root(true) . '/media/modals/css/bootstrap.min.css']);
-        unset($this->_stylesheets[JURI::root(true) . '/media/jui/css/bootstrap.min.css']);
-        unset($this->_stylesheets[JURI::root(true) . '/media/jui/css/bootstrap-responsive.min.css']);
-        unset($this->_stylesheets[JURI::root(true) . '/media/jui/css/bootstrap-extended.css']);
-      }
-    ?>
 
     <?php $this->setGenerator(null); ?>
 

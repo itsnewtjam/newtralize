@@ -61,17 +61,9 @@
       </fieldset>
 
       <fieldset name="CSS_SETTINGS">
-        <field name="killjoomlacss" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_NEWTRALIZE_KILLJOOMLACSS_LABEL" description="TPL_NEWTRALIZE_KILLJOOMLACSS_DESC">
-          <option value="0">TPL_NEWTRALIZE_NO</option>
-          <option value="1">TPL_NEWTRALIZE_YES</option>
-        </field>
       </fieldset>
       
       <fieldset name="JAVASCRIPT_SETTINGS">
-        <field name="killjoomlajs" type="radio" class="btn-group btn-group-yesno" default="0" label="TPL_NEWTRALIZE_KILLJOOMLAJS_LABEL" description="TPL_NEWTRALIZE_KILLJOOMLAJS_DESC">
-          <option value="0">TPL_NEWTRALIZE_NO</option>
-          <option value="1">TPL_NEWTRALIZE_YES</option>
-        </field>
       </fieldset>
       
       <fieldset name="TRACKING_SETTINGS">
