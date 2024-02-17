@@ -2,70 +2,77 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Application\SiteApplication;
 use Joomla\CMS\Factory;
 
+/** @var SiteApplication **/
 $app = Factory::getApplication();
-$document = Factory::getDocument();
-$user = Factory::getUser();
+$document = $app->getDocument();
 
-$timestamp = date('U');
+const NBASE = JPATH_SITE . "/templates/" . $this->template;
+const NTIMESTAMP = date('U');
 
 $this->setHtml5(true);
 
 // Get active menu item alias
 $active = $app->getMenu()->getActive();
 
-$params = $app->getTemplate(true)->params;
+$n = $app->getTemplate(true)->params;
 
-$logo = $this->params->get('logo', '');
-$sitetitle = $this->params->get('sitetitle', $app->getCfg('sitename'));
-$sitedescription = $this->params->get('sitedescription');
+$logo = $n->get('logo', '');
+$sitetitle = $n->get('sitetitle', $app->get('sitename'));
+$sitedescription = $n->get('sitedescription');
 
-$nocacheheaders = $this->params->get('nocacheheaders');
-$uncachecss = $this->params->get('uncachecss');
-$uncachejs = $this->params->get('uncachejs');
+$nocacheheaders = $n->get('nocacheheaders') === "1";
+$uncachecss = $n->get('uncachecss') === "1";
+$uncachejs = $n->get('uncachejs') === "1";
 
-$fontawesomecdn = $this->params->get('fontawesomecdn');
+$fontawesomecdn = $n->get('fontawesomecdn');
 
-$googleSetup = $this->params->get('googleSetup');
-$gtmcode = $this->params->get('gtmcode');
-$gacode = $this->params->get('gacode');
-$gagtmcode = $this->params->get('gagtmcode');
-$fbcode = $this->params->get('fbcode');
+$googleSetup = $n->get('googleSetup');
+$gtmcode = $n->get('gtmcode');
+$gacode = $n->get('gacode');
+$gagtmcode = $n->get('gagtmcode');
+$fbcode = $n->get('fbcode');
 
-$banner = $this->params->get('banner');
-$topmenu = $this->params->get('topmenu');
-$abovebody = $this->params->get('abovebody');
-$leftbody = $this->params->get('leftbody');
-$mainbodytop = $this->params->get('mainbodytop');
-$mainbodybottom = $this->params->get('mainbodybottom');
-$rightbody = $this->params->get('rightbody');
-$belowbody = $this->params->get('belowbody');
-$footer = $this->params->get('footer');
-$alertbar = $this->params->get('alertbar');
-$copyright = $this->params->get('copyright');
-$copyrighttxt = $this->params->get('copyrighttxt');
+$banner = $n->get('banner') === "1";
+$topmenu = $n->get('topmenu') === "1";
+$abovebody = $n->get('abovebody') === "1";
+$leftbody = $n->get('leftbody') === "1";
+$mainbodytop = $n->get('mainbodytop') === "1";
+$mainbodybottom = $n->get('mainbodybottom') === "1";
+$rightbody = $n->get('rightbody') === "1";
+$belowbody = $n->get('belowbody') === "1";
+$footer = $n->get('footer') === "1";
+$copyright = $n->get('copyright') === "1";
+$copyrighttxt = $n->get('copyrighttxt');
 
-$navTime = $this->params->get('navTime');
-$containerNarrow = $this->params->get('containerNarrow');
-$containerNormal = $this->params->get('containerNormal');
-$containerWide = $this->params->get('containerWide');
-$bannerContainer = $this->params->get('bannerSize');
-$topmenuContainer = $this->params->get('topmenuSize');
-$abovebodyContainer = $this->params->get('abovebodySize');
-$mainbodyContainer = $this->params->get('mainbodySize');
-$belowbodyContainer = $this->params->get('belowbodySize');
-$footerContainer = $this->params->get('footerSize');
+$navTime = $n->get('navTime');
+$containerNarrow = $n->get('containerNarrow');
+$containerNormal = $n->get('containerNormal');
+$containerWide = $n->get('containerWide');
+$bannerContainer = $n->get('bannerSize');
+$topmenuContainer = $n->get('topmenuSize');
+$abovebodyContainer = $n->get('abovebodySize');
+$mainbodyContainer = $n->get('mainbodySize');
+$belowbodyContainer = $n->get('belowbodySize');
+$footerContainer = $n->get('footerSize');
 
-$codeafterhead = $this->params->get('codeafterhead');
-$codebeforehead = $this->params->get('codebeforehead');
-$codeafterbody = $this->params->get('codeafterbody');
-$codebeforebody = $this->params->get('codebeforebody');
+$codeafterhead = $n->get('codeafterhead');
+$codebeforehead = $n->get('codebeforehead');
+$codeafterbody = $n->get('codeafterbody');
+$codebeforebody = $n->get('codebeforebody');
 
-if ($nocacheheaders == 1) {
+if ($nocacheheaders) {
   header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
   header("Cache-Control: post-check=0, pre-check=0", false);
   header("Pragma: no-cache");
+}
+
+function getNPath($path, $uncache) {
+  $cachebust = "";
+  if ($uncache) $cachebust = "?v=" . NTIMESTAMP;
+  return NBASE . $path . $cachebust;
 }
 
 ?>
@@ -89,18 +96,18 @@ if ($nocacheheaders == 1) {
       };
     </script>
 
-    <script src="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/js/template.js<?php if ($uncachejs == 1) echo "?v=$timestamp"; ?>"></script>
+    <script src="<?= getNPath("/js/template.js", $uncachejs); ?>"></script>
   
-    <?php if (file_exists(JPATH_SITE . "/templates" . "/" . $this->template . "/js/custom.js")) : ?>
-      <script src="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/js/custom.js<?php if ($uncachejs == 1) echo "?v=$timestamp"; ?>"></script>
+    <?php if (file_exists(getNPath("/js/custom.js", $uncachejs))) : ?>
+      <script src="<?= getNPath("/js/custom.js", $uncachejs); ?>"></script>
     <?php endif; ?>
 
-    <?php if (file_exists(JPATH_SITE . "/templates" . "/" . $this->template . "/js/menus/".$active->menutype.".js")) : ?>
-      <script src="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/js/menus/<?= $active->menutype; ?>.js<?php if ($uncachejs == 1) echo "?v=$timestamp"; ?>"></script>
+    <?php if (file_exists(getNPath("/js/menus/$active->menutype.js", $uncachejs))) : ?>
+      <script src="<?= getNPath("/js/menus/$active->menutype.js", $uncachejs); ?>"></script>
     <?php endif; ?>
 
-    <?php if (file_exists(JPATH_SITE . "/templates" . "/" . $this->template . "/js/pages/".$active->alias.".js")) : ?>
-      <script src="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/js/pages/<?= $active->alias; ?>.js<?php if ($uncachejs == 1) echo "?v=$timestamp"; ?>"></script>
+    <?php if (file_exists(getNPath("/js/pages/$active->alias.js", $uncachejs))) : ?>
+      <script src="<?= getNPath("/js/pages/$active->alias.js", $uncachejs); ?>"></script>
     <?php endif; ?>
 
     <?php if ($googleSetup === "gtm" && $gtmcode != null) : ?>
@@ -126,8 +133,8 @@ if ($nocacheheaders == 1) {
         <?php endif; ?>
 			</script>
       <?php 
-        if (file_exists(JPATH_SITE."/"."templates/".$this->template."/"."heads/gaconversions/".$active->alias.".php")) {
-          include(JPATH_SITE."/"."templates/".$this->template."/"."heads/gaconversions/".$active->alias.".php");
+        if (file_exists(getNPath("/heads/$active->alias.php", false))) {
+          include(getNPath("/heads/$active->alias.php", false));
         }
       ?>
     <?php endif; ?>
@@ -155,24 +162,24 @@ if ($nocacheheaders == 1) {
 
     <style>
       :root {
-        --container-narrow: <?= $containerNarrow ?>rem;
-        --container-normal: <?= $containerNormal ?>rem;
-        --container-wide: <?= $containerWide ?>rem;
+        --container-narrow: <?= $containerNarrow; ?>rem;
+        --container-normal: <?= $containerNormal; ?>rem;
+        --container-wide: <?= $containerWide; ?>rem;
       }
     </style>
 
-    <link rel="stylesheet" href="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/css/template.css<?php if ($uncachecss == 1) echo "?v=$timestamp"; ?>" type="text/css">
+    <link rel="stylesheet" href="<?= getNPath("/css/template.css", $uncachecss); ?>" type="text/css">
 
-    <?php if (file_exists(JPATH_SITE."/"."templates/".$this->template."/"."css/custom.css")): ?>
-      <link rel="stylesheet" href="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/css/custom.css<?php if ($uncachecss == 1) echo "?v=$timestamp"; ?>" type="text/css">
+    <?php if (file_exists(getNPath("/css/custom.css", $uncachecss))): ?>
+      <link rel="stylesheet" href="<?= getNPath("/css/custom.css", $uncachecss); ?>" type="text/css">
     <?php endif; ?>
 
-    <?php if (file_exists(JPATH_SITE."/"."templates/".$this->template."/"."css/menus/".$active->menutype.".css")): ?>
-      <link rel="stylesheet" href="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/css/menus/<?= $active->menutype; ?>.css<?php if ($uncachecss == 1) echo "?v=$timestamp"; ?>" type="text/css">
+    <?php if (file_exists(getNPath("/css/menus/$active->menutype.css", $uncachecss))): ?>
+      <link rel="stylesheet" href="<?= getNPath("/css/menus/$active->menutype.css", $uncachecss); ?>" type="text/css">
     <?php endif; ?>
     
-    <?php if (file_exists(JPATH_SITE."/"."templates/".$this->template."/"."css/pages/".$active->alias.".css")): ?>
-      <link rel="stylesheet" href="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/css/pages/<?= $active->alias; ?>.css<?php if ($uncachecss == 1) echo "?v=$timestamp"; ?>" type="text/css">
+    <?php if (file_exists(getNPath("/css/pages/$active->alias.css", $uncachecss))): ?>
+      <link rel="stylesheet" href="<?= getNPath("/css/pages/$active->alias.css", $uncachecss); ?>" type="text/css">
     <?php endif; ?>
 
     <?php if ($fontawesomecdn != null) : ?>
@@ -193,7 +200,7 @@ if ($nocacheheaders == 1) {
     <?php if ($codeafterbody != null) echo $codeafterbody; ?>
 
     <div class="container">
-      <?php if ($banner == 1) : ?>
+      <?php if ($banner) : ?>
         <div class="banner-wrapper">
           <div class="banner <?= $bannerContainer !== "full" ? "container-$bannerContainer" : ""; ?>">
             <jdoc:include type="modules" name="banner" style="default" />
@@ -201,7 +208,7 @@ if ($nocacheheaders == 1) {
         </div>
       <?php endif; ?>
 
-      <?php if ($topmenu == 1) : ?>
+      <?php if ($topmenu) : ?>
         <header class="navbar-wrapper">
           <div class="navbar <?= $topmenuContainer !== "full" ? "container-$topmenuContainer" : ""; ?>">
             <a
@@ -232,7 +239,7 @@ if ($nocacheheaders == 1) {
       <?php endif; ?>
 
       <main class="content-wrapper">
-        <?php if ($abovebody == 1) : ?>
+        <?php if ($abovebody) : ?>
           <div class="abovebody <?= $abovebodyContainer !== "full" ? "container-$abovebodyContainer" : ""; ?>">
             <jdoc:include type="modules" name="above-body" style="default" />
           </div>
@@ -240,7 +247,7 @@ if ($nocacheheaders == 1) {
 
         <div class="body-content <?= $mainbodyContainer !== "full" ? "container-$mainbodyContainer" : ""; ?>">
           <?php if ($this->countModules('leftbody')) : ?>
-            <?php if ($leftbody == 1) : ?>
+            <?php if ($leftbody) : ?>
               <div class="leftbody">
                 <jdoc:include type="modules" name="left-body" style="default" />
               </div>
@@ -248,20 +255,20 @@ if ($nocacheheaders == 1) {
           <?php endif; ?>
 
           <div class="mainbody">
-            <?php if ($mainbodytop == 1) : ?>
+            <?php if ($mainbodytop) : ?>
               <jdoc:include type="modules" name="main-body-top" style="default" />
             <?php endif; ?>
             
             <jdoc:include type="message" />
             <jdoc:include type="component" />
 
-            <?php if ($mainbodybottom == 1) : ?>
+            <?php if ($mainbodybottom) : ?>
               <jdoc:include type="modules" name="main-body-bottom" style="default" />
             <?php endif; ?>
           </div>
 
           <?php if ($this->countModules('right-body')) : ?>
-            <?php if ($rightbody == 1) : ?>
+            <?php if ($rightbody) : ?>
               <div class="rightbody">
                 <jdoc:include type="modules" name="right-body" style="default" />
               </div>
@@ -269,18 +276,18 @@ if ($nocacheheaders == 1) {
           <?php endif; ?>
         </div>
 
-        <?php if ($belowbody == 1) : ?>
+        <?php if ($belowbody) : ?>
           <div class="belowbody <?= $belowbodyContainer !== "full" ? "container-$belowbodyContainer" : ""; ?>">
             <jdoc:include type="modules" name="below-body" style="default" />
           </div>
         <?php endif; ?>
       </main>
 
-      <?php if ($footer == 1) : ?>
+      <?php if ($footer) : ?>
         <footer>
           <div class="footer-wrapper <?= $footerContainer !== "full" ? "container-$footerContainer" : ""; ?>">
             <jdoc:include type="modules" name="footer" style="default" />
-            <?php if ($copyright == 1) : ?>
+            <?php if ($copyright) : ?>
               <hr />
               <small>
                 <?php if ($copyrighttxt != null) : ?>
@@ -289,7 +296,7 @@ if ($nocacheheaders == 1) {
                   &copy;<?= date('Y'); ?> <?= htmlspecialchars($sitetitle); ?>
                 <?php endif; ?>
               </small>
-      <?php endif; ?>
+            <?php endif; ?>
           </div>
         </footer>
       <?php endif; ?>

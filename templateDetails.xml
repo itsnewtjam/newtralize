@@ -32,7 +32,6 @@
     <position>right-body</position>
     <position>below-body</position>
     <position>footer</position>
-    <position>alert-bar</position>
   </positions>
   <languages folder="language">
     <language tag="en-GB">en-GB/en-GB.tpl_newtralize.ini</language>
