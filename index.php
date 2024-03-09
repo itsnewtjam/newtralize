@@ -19,15 +19,20 @@ $active = $app->getMenu()->getActive();
 
 $n = $app->getTemplate(true)->params;
 
+$sitetitle = $app->get('sitename');
+
 $logo = $n->get('logo', '');
-$sitetitle = $n->get('sitetitle', $app->get('sitename'));
-$sitedescription = $n->get('sitedescription');
+$showFooterLogo = $n->get('showfooterlogo', '1') === "1";
+$differentFooterLogo = $n->get('differentfooterlogo', '1') === "1";
+$footerLogo = $differentFooterLogo ? $n->get('footerlogo', '') : $logo;
+$copyright = $n->get('copyright', '1') === "1";
+$copyrighttxt = $n->get('copyrighttxt', '');
 
-$nocacheheaders = $n->get('nocacheheaders') === "1";
-$uncachecss = $n->get('uncachecss') === "1";
-$uncachejs = $n->get('uncachejs') === "1";
+$nocacheheaders = $n->get('nocacheheaders', '0') === "1";
+$uncachecss = $n->get('uncachecss', '0') === "1";
+$uncachejs = $n->get('uncachejs', '0') === "1";
 
-$fontawesomecdn = $n->get('fontawesomecdn');
+$fontawesomecdn = $n->get('fontawesomecdn', '');
 
 $googleSetup = $n->get('googleSetup');
 $gtmcode = $n->get('gtmcode');
@@ -44,8 +49,6 @@ $mainbodybottom = $n->get('mainbodybottom') === "1";
 $rightbody = $n->get('rightbody') === "1";
 $belowbody = $n->get('belowbody') === "1";
 $footer = $n->get('footer') === "1";
-$copyright = $n->get('copyright') === "1";
-$copyrighttxt = $n->get('copyrighttxt');
 
 $navTime = $n->get('navTime');
 $containerNarrow = $n->get('containerNarrow');
@@ -284,8 +287,19 @@ function getNPath($path, $uncache) {
       </main>
 
       <?php if ($footer) : ?>
-        <footer>
-          <div class="footer-wrapper <?= $footerContainer !== "full" ? "container-$footerContainer" : ""; ?>">
+        <footer class="footer-wrapper">
+          <div class="footer <?= $footerContainer !== "full" ? "container-$footerContainer" : ""; ?>">
+            <?php if ($showFooterLogo) : ?>
+              <a
+                class="footer-logo"
+                href="<?= $this->baseurl; ?>"
+              >
+                <img
+                  src="<?= $this->baseurl; ?>/<?= htmlspecialchars($footerLogo); ?>"
+                  alt="<?= htmlspecialchars($sitetitle); ?>"
+                />
+              </a>
+            <?php endif; ?>
             <jdoc:include type="modules" name="footer" style="default" />
             <?php if ($copyright) : ?>
               <hr />

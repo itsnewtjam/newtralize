@@ -41,7 +41,20 @@
     <fields name="params">
       <fieldset name="SITE_SETTINGS">
         <field name="logo" type="media" label="TPL_NEWTRALIZE_LOGO_LABEL" description="TPL_NEWTRALIZE_LOGO_DESC" />
-        <field name="sitetitle"  type="text" default="" label="JGLOBAL_TITLE" description="JFIELD_ALT_PAGE_TITLE_LABEL" filter="safehtml" />
+        <field name="showfooterlogo" type="radio" label="TPL_NEWTRALIZE_SHOWFOOTERLOGO_LABEL" description="TPL_NEWTRALIZE_SHOWFOOTERLOGO_DESC" class="btn-group btn-group-yesno" default="1">
+          <option value="0">TPL_NEWTRALIZE_NO</option>
+          <option value="1">TPL_NEWTRALIZE_YES</option>
+        </field>
+        <field name="differentfooterlogo" type="radio" label="TPL_NEWTRALIZE_DIFFERENTFOOTERLOGO_LABEL" description="TPL_NEWTRALIZE_DIFFERENTFOOTERLOGO_DESC" class="btn-group btn-group-yesno" default="1">
+          <option value="0">TPL_NEWTRALIZE_NO</option>
+          <option value="1">TPL_NEWTRALIZE_YES</option>
+        </field>
+        <field name="footerlogo" type="media" label="TPL_NEWTRALIZE_FOOTERLOGO_LABEL" description="TPL_NEWTRALIZE_FOOTERLOGO" showon="differentfooterlogo:1" />
+        <field name="copyright" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_NEWTRALIZE_COPYRIGHT_LABEL" description="TPL_NEWTRALIZE_COPYRIGHT_DESC">
+          <option value="0">TPL_NEWTRALIZE_DISABLED</option>
+          <option value="1">TPL_NEWTRALIZE_ENABLED</option>
+        </field>
+        <field name="copyrighttxt" type="text" default="" label="TPL_NEWTRALIZE_COPYRIGHTTXT_LABEL" description="TPL_NEWTRALIZE_COPYRIGHTTXT_DESC" filter="string" />
       </fieldset>
       
       <fieldset name="CACHE_SETTINGS">
@@ -161,11 +174,6 @@
           <option value="0">TPL_NEWTRALIZE_DISABLED</option>
           <option value="1">TPL_NEWTRALIZE_ENABLED</option>
         </field>
-        <field name="copyright" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_NEWTRALIZE_COPYRIGHT_LABEL" description="TPL_NEWTRALIZE_COPYRIGHT_DESC">
-          <option value="0">TPL_NEWTRALIZE_DISABLED</option>
-          <option value="1">TPL_NEWTRALIZE_ENABLED</option>
-        </field>
-        <field name="copyrighttxt" type="text" default="" label="TPL_NEWTRALIZE_COPYRIGHTTXT_LABEL" description="TPL_NEWTRALIZE_COPYRIGHTTXT_DESC" filter="string" />
       </fieldset>
       
       <fieldset name="CUSTOM_CODE">
