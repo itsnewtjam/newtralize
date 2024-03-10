@@ -4,6 +4,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Application\SiteApplication;
 use Joomla\CMS\Factory;
+use Joomla\Database\DatabaseInterface;
 
 /** @var SiteApplication **/
 $app = Factory::getApplication();
@@ -16,6 +17,32 @@ $this->setHtml5(true);
 
 // Get active menu item alias
 $active = $app->getMenu()->getActive();
+
+$activeCategory = null;
+$activeArticle = null;
+if ($active->query['option'] === "com_content" && $active->query['view'] === "article") {
+  /** @var DatabaseInterface **/
+  $db = Factory::getContainer()->get(DatabaseInterface::class);
+  $query = $db->getQuery(true);
+  $query
+    ->select($db->quoteName(
+      ['a.id', 'a.alias', 'b.id', 'b.alias'],
+      ['articleId', 'articleAlias', 'categoryId', 'categoryAlias']
+    ))
+    ->from($db->quoteName('#__content', 'a'))
+    ->join("INNER", $db->quoteName('#__categories', 'b') . " ON " . $db->quoteName('a.catid') . " = " . $db->quoteName('b.id'))
+    ->where($db->quoteName('a.id') . " = " . $db->quote($active->query['id']));
+  $db->setQuery($query);
+  $articleData = $db->loadObject();
+  $activeCategory = (object) [
+    'id' => $articleData->categoryId,
+    'alias' => $articleData->categoryAlias,
+  ];
+  $activeArticle = (object) [
+    'id' => $articleData->articleId,
+    'alias' => $articleData->articleAlias,
+  ];
+}
 
 $n = $app->getTemplate(true)->params;
 
@@ -109,6 +136,14 @@ function getNPath($path, $uncache) {
       <script src="<?= getNPath("/js/menus/$active->menutype.js", $uncachejs); ?>"></script>
     <?php endif; ?>
 
+    <?php if (file_exists(getNPath("/js/categories/$activeCategory->alias.js", $uncachejs))) : ?>
+      <script src="<?= getNPath("/js/categories/$activeCategory->alias.js", $uncachejs); ?>"></script>
+    <?php endif; ?>
+
+    <?php if (file_exists(getNPath("/js/articles/$activeArticle->alias.js", $uncachejs))) : ?>
+      <script src="<?= getNPath("/js/articles/$activeArticle->alias.js", $uncachejs); ?>"></script>
+    <?php endif; ?>
+
     <?php if (file_exists(getNPath("/js/pages/$active->alias.js", $uncachejs))) : ?>
       <script src="<?= getNPath("/js/pages/$active->alias.js", $uncachejs); ?>"></script>
     <?php endif; ?>
@@ -135,11 +170,6 @@ function getNPath($path, $uncache) {
           gtag('config', '<?= $gagtmcode; ?>');
         <?php endif; ?>
 			</script>
-      <?php 
-        if (file_exists(getNPath("/heads/$active->alias.php", false))) {
-          include(getNPath("/heads/$active->alias.php", false));
-        }
-      ?>
     <?php endif; ?>
 
     <?php if ($fbcode != null) : ?>
@@ -180,6 +210,14 @@ function getNPath($path, $uncache) {
     <?php if (file_exists(getNPath("/css/menus/$active->menutype.css", $uncachecss))): ?>
       <link rel="stylesheet" href="<?= getNPath("/css/menus/$active->menutype.css", $uncachecss); ?>" type="text/css">
     <?php endif; ?>
+
+    <?php if (file_exists(getNPath("/css/categories/$activeCategory->alias.css", $uncachecss))) : ?>
+      <link rel="stylesheet" href="<?= getNPath("/css/categories/$activeCategory->alias.css", $uncachecss); ?>" type="text/css">
+    <?php endif; ?>
+
+    <?php if (file_exists(getNPath("/css/articles/$activeArticle->alias.css", $uncachecss))) : ?>
+      <link rel="stylesheet" href="<?= getNPath("/css/articles/$activeArticle->alias.css", $uncachecss); ?>" type="text/css">
+    <?php endif; ?>
     
     <?php if (file_exists(getNPath("/css/pages/$active->alias.css", $uncachecss))): ?>
       <link rel="stylesheet" href="<?= getNPath("/css/pages/$active->alias.css", $uncachecss); ?>" type="text/css">
@@ -190,6 +228,30 @@ function getNPath($path, $uncache) {
     <?php endif; ?>
 
     <?php if ($codebeforehead != null) echo $codebeforehead; ?>
+
+    <?php 
+      if (file_exists(getNPath("/heads/menus/$active->menutype.php", false))) {
+        include(getNPath("/heads/menus/$active->menutype.php", false));
+      }
+    ?>
+    
+    <?php 
+      if (file_exists(getNPath("/heads/categories/$activeCategory->alias.php", false))) {
+        include(getNPath("/heads/categories/$activeCategory->alias.php", false));
+      }
+    ?>
+    
+    <?php 
+      if (file_exists(getNPath("/heads/articles/$activeArticle->alias.php", false))) {
+        include(getNPath("/heads/articles/$activeArticle->alias.php", false));
+      }
+    ?>
+    
+    <?php 
+      if (file_exists(getNPath("/heads/pages/$active->alias.php", false))) {
+        include(getNPath("/heads/pages/$active->alias.php", false));
+      }
+    ?>
   </head>
 
   <body data-menu="<?= $active->menutype; ?>" data-page="<?= $active->alias; ?>">
