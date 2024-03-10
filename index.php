@@ -10,8 +10,9 @@ use Joomla\Database\DatabaseInterface;
 $app = Factory::getApplication();
 $document = $app->getDocument();
 
-const NBASE = JPATH_SITE . "/templates/" . $this->template;
-const NTIMESTAMP = date('U');
+define('NBASE', "/templates/" . $this->template);
+define('NFILE', JPATH_BASE . NBASE);
+define('NTIMESTAMP', date('U'));
 
 $this->setHtml5(true);
 
@@ -132,23 +133,23 @@ function getNPath($path, $uncache) {
 
     <script src="<?= getNPath("/js/template.js", $uncachejs); ?>"></script>
   
-    <?php if (file_exists(getNPath("/js/custom.js", $uncachejs))) : ?>
+    <?php if (file_exists(NFILE . "/js/custom.js")) : ?>
       <script src="<?= getNPath("/js/custom.js", $uncachejs); ?>"></script>
     <?php endif; ?>
 
-    <?php if (file_exists(getNPath("/js/menus/$active->menutype.js", $uncachejs))) : ?>
+    <?php if (file_exists(NFILE . "/js/menus/$active->menutype.js")) : ?>
       <script src="<?= getNPath("/js/menus/$active->menutype.js", $uncachejs); ?>"></script>
     <?php endif; ?>
 
-    <?php if (file_exists(getNPath("/js/categories/$scopeCategories.js", $uncachejs))) : ?>
+    <?php if (file_exists(NFILE . "/js/categories/$scopeCategories.js")) : ?>
       <script src="<?= getNPath("/js/categories/$scopeCategories.js", $uncachejs); ?>"></script>
     <?php endif; ?>
 
-    <?php if (file_exists(getNPath("/js/articles/$scopeArticles.js", $uncachejs))) : ?>
+    <?php if (file_exists(NFILE . "/js/articles/$scopeArticles.js")) : ?>
       <script src="<?= getNPath("/js/articles/$scopeArticles.js", $uncachejs); ?>"></script>
     <?php endif; ?>
 
-    <?php if (file_exists(getNPath("/js/pages/$scopePages.js", $uncachejs))) : ?>
+    <?php if (file_exists(NFILE . "/js/pages/$scopePages.js")) : ?>
       <script src="<?= getNPath("/js/pages/$scopePages.js", $uncachejs); ?>"></script>
     <?php endif; ?>
 
@@ -207,23 +208,23 @@ function getNPath($path, $uncache) {
 
     <link rel="stylesheet" href="<?= getNPath("/css/template.css", $uncachecss); ?>" type="text/css">
 
-    <?php if (file_exists(getNPath("/css/custom.css", $uncachecss))): ?>
+    <?php if (file_exists(NFILE . "/css/custom.css")): ?>
       <link rel="stylesheet" href="<?= getNPath("/css/custom.css", $uncachecss); ?>" type="text/css">
     <?php endif; ?>
 
-    <?php if (file_exists(getNPath("/css/menus/$active->menutype.css", $uncachecss))): ?>
+    <?php if (file_exists(NFILE . "/css/menus/$active->menutype.css")): ?>
       <link rel="stylesheet" href="<?= getNPath("/css/menus/$active->menutype.css", $uncachecss); ?>" type="text/css">
     <?php endif; ?>
 
-    <?php if (file_exists(getNPath("/css/categories/$scopeCategories.css", $uncachecss))) : ?>
+    <?php if (file_exists(NFILE . "/css/categories/$scopeCategories.css")) : ?>
       <link rel="stylesheet" href="<?= getNPath("/css/categories/$scopeCategories.css", $uncachecss); ?>" type="text/css">
     <?php endif; ?>
 
-    <?php if (file_exists(getNPath("/css/articles/$scopeArticles.css", $uncachecss))) : ?>
+    <?php if (file_exists(NFILE . "/css/articles/$scopeArticles.css")) : ?>
       <link rel="stylesheet" href="<?= getNPath("/css/articles/$scopeArticles.css", $uncachecss); ?>" type="text/css">
     <?php endif; ?>
     
-    <?php if (file_exists(getNPath("/css/pages/$scopePages.css", $uncachecss))): ?>
+    <?php if (file_exists(NFILE . "/css/pages/$scopePages.css")): ?>
       <link rel="stylesheet" href="<?= getNPath("/css/pages/$scopePages.css", $uncachecss); ?>" type="text/css">
     <?php endif; ?>
 
@@ -234,25 +235,25 @@ function getNPath($path, $uncache) {
     <?php if ($codebeforehead != null) echo $codebeforehead; ?>
 
     <?php 
-      if (file_exists(getNPath("/heads/menus/$active->menutype.php", false))) {
+      if (file_exists(NFILE . "/heads/menus/$active->menutype.php")) {
         include(getNPath("/heads/menus/$active->menutype.php", false));
       }
     ?>
     
     <?php 
-      if (file_exists(getNPath("/heads/categories/$scopeCategories.php", false))) {
+      if (file_exists(NFILE . "/heads/categories/$scopeCategories.php")) {
         include(getNPath("/heads/categories/$scopeCategories.php", false));
       }
     ?>
     
     <?php 
-      if (file_exists(getNPath("/heads/articles/$scopeArticles.php", false))) {
+      if (file_exists(NFILE . "/heads/articles/$scopeArticles.php")) {
         include(getNPath("/heads/articles/$scopeArticles.php", false));
       }
     ?>
     
     <?php 
-      if (file_exists(getNPath("/heads/pages/$scopePages.php", false))) {
+      if (file_exists(NFILE . "/heads/pages/$scopePages.php")) {
         include(getNPath("/heads/pages/$scopePages.php", false));
       }
     ?>
