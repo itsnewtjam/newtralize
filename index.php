@@ -59,6 +59,10 @@ $nocacheheaders = $n->get('nocacheheaders', '0') === "1";
 $uncachecss = $n->get('uncachecss', '0') === "1";
 $uncachejs = $n->get('uncachejs', '0') === "1";
 
+$scopeCategories = $n->get('scopecategories', 'alias') === "alias" ? $activeCategory->alias : $activeCategory->id;
+$scopeArticles = $n->get('scopearticles', 'alias') === "alias" ? $activeArticle->alias : $activeArticle->id;
+$scopePages = $n->get('scopepages', 'alias') === "alias" ? $active->alias : $active->id;
+
 $fontawesomecdn = $n->get('fontawesomecdn', '');
 
 $googleSetup = $n->get('googleSetup');
@@ -136,16 +140,16 @@ function getNPath($path, $uncache) {
       <script src="<?= getNPath("/js/menus/$active->menutype.js", $uncachejs); ?>"></script>
     <?php endif; ?>
 
-    <?php if (file_exists(getNPath("/js/categories/$activeCategory->alias.js", $uncachejs))) : ?>
-      <script src="<?= getNPath("/js/categories/$activeCategory->alias.js", $uncachejs); ?>"></script>
+    <?php if (file_exists(getNPath("/js/categories/$scopeCategories.js", $uncachejs))) : ?>
+      <script src="<?= getNPath("/js/categories/$scopeCategories.js", $uncachejs); ?>"></script>
     <?php endif; ?>
 
-    <?php if (file_exists(getNPath("/js/articles/$activeArticle->alias.js", $uncachejs))) : ?>
-      <script src="<?= getNPath("/js/articles/$activeArticle->alias.js", $uncachejs); ?>"></script>
+    <?php if (file_exists(getNPath("/js/articles/$scopeArticles.js", $uncachejs))) : ?>
+      <script src="<?= getNPath("/js/articles/$scopeArticles.js", $uncachejs); ?>"></script>
     <?php endif; ?>
 
-    <?php if (file_exists(getNPath("/js/pages/$active->alias.js", $uncachejs))) : ?>
-      <script src="<?= getNPath("/js/pages/$active->alias.js", $uncachejs); ?>"></script>
+    <?php if (file_exists(getNPath("/js/pages/$scopePages.js", $uncachejs))) : ?>
+      <script src="<?= getNPath("/js/pages/$scopePages.js", $uncachejs); ?>"></script>
     <?php endif; ?>
 
     <?php if ($googleSetup === "gtm" && $gtmcode != null) : ?>
@@ -211,16 +215,16 @@ function getNPath($path, $uncache) {
       <link rel="stylesheet" href="<?= getNPath("/css/menus/$active->menutype.css", $uncachecss); ?>" type="text/css">
     <?php endif; ?>
 
-    <?php if (file_exists(getNPath("/css/categories/$activeCategory->alias.css", $uncachecss))) : ?>
-      <link rel="stylesheet" href="<?= getNPath("/css/categories/$activeCategory->alias.css", $uncachecss); ?>" type="text/css">
+    <?php if (file_exists(getNPath("/css/categories/$scopeCategories.css", $uncachecss))) : ?>
+      <link rel="stylesheet" href="<?= getNPath("/css/categories/$scopeCategories.css", $uncachecss); ?>" type="text/css">
     <?php endif; ?>
 
-    <?php if (file_exists(getNPath("/css/articles/$activeArticle->alias.css", $uncachecss))) : ?>
-      <link rel="stylesheet" href="<?= getNPath("/css/articles/$activeArticle->alias.css", $uncachecss); ?>" type="text/css">
+    <?php if (file_exists(getNPath("/css/articles/$scopeArticles.css", $uncachecss))) : ?>
+      <link rel="stylesheet" href="<?= getNPath("/css/articles/$scopeArticles.css", $uncachecss); ?>" type="text/css">
     <?php endif; ?>
     
-    <?php if (file_exists(getNPath("/css/pages/$active->alias.css", $uncachecss))): ?>
-      <link rel="stylesheet" href="<?= getNPath("/css/pages/$active->alias.css", $uncachecss); ?>" type="text/css">
+    <?php if (file_exists(getNPath("/css/pages/$scopePages.css", $uncachecss))): ?>
+      <link rel="stylesheet" href="<?= getNPath("/css/pages/$scopePages.css", $uncachecss); ?>" type="text/css">
     <?php endif; ?>
 
     <?php if ($fontawesomecdn != null) : ?>
@@ -236,20 +240,20 @@ function getNPath($path, $uncache) {
     ?>
     
     <?php 
-      if (file_exists(getNPath("/heads/categories/$activeCategory->alias.php", false))) {
-        include(getNPath("/heads/categories/$activeCategory->alias.php", false));
+      if (file_exists(getNPath("/heads/categories/$scopeCategories.php", false))) {
+        include(getNPath("/heads/categories/$scopeCategories.php", false));
       }
     ?>
     
     <?php 
-      if (file_exists(getNPath("/heads/articles/$activeArticle->alias.php", false))) {
-        include(getNPath("/heads/articles/$activeArticle->alias.php", false));
+      if (file_exists(getNPath("/heads/articles/$scopeArticles.php", false))) {
+        include(getNPath("/heads/articles/$scopeArticles.php", false));
       }
     ?>
     
     <?php 
-      if (file_exists(getNPath("/heads/pages/$active->alias.php", false))) {
-        include(getNPath("/heads/pages/$active->alias.php", false));
+      if (file_exists(getNPath("/heads/pages/$scopePages.php", false))) {
+        include(getNPath("/heads/pages/$scopePages.php", false));
       }
     ?>
   </head>

@@ -72,10 +72,19 @@
         </field>
       </fieldset>
 
-      <fieldset name="CSS_SETTINGS">
-      </fieldset>
-      
-      <fieldset name="JAVASCRIPT_SETTINGS">
+      <fieldset name="SCOPED_CODE_SETTINGS">
+        <field name="scopecategories" type="radio" class="btn-group" default="alias" label="TPL_NEWTRALIZE_SCOPECATEGORIES_LABEL" description="TPL_NEWTRALIZE_SCOPECATEGORIES_DESC">
+          <option value="alias">TPL_NEWTRALIZE_CATEGORY_ALIAS</option>
+          <option value="id">TPL_NEWTRALIZE_CATEGORY_ID</option>
+        </field>
+        <field name="scopearticles" type="radio" class="btn-group" default="alias" label="TPL_NEWTRALIZE_SCOPEARTICLES_LABEL" description="TPL_NEWTRALIZE_SCOPEARTICLES_DESC">
+          <option value="alias">TPL_NEWTRALIZE_ARTICLE_ALIAS</option>
+          <option value="id">TPL_NEWTRALIZE_ARTICLE_ID</option>
+        </field>
+        <field name="scopepages" type="radio" class="btn-group" default="alias" label="TPL_NEWTRALIZE_SCOPEPAGES_LABEL" description="TPL_NEWTRALIZE_SCOPEPAGES_DESC">
+          <option value="alias">TPL_NEWTRALIZE_MENUITEM_ALIAS</option>
+          <option value="id">TPL_NEWTRALIZE_MENUITEM_ID</option>
+        </field>
       </fieldset>
       
       <fieldset name="TRACKING_SETTINGS">
