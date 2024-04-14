@@ -48,6 +48,7 @@ p, li {
 
 .content-grid {
   display: grid;
+  align-content: start;
   grid-template-columns:
     [full-width-start]
     minmax(var(--content-padding), 1fr)
@@ -67,6 +68,7 @@ p, li {
 .full-width > .full-width {
   grid-column: full-width;
   display: grid;
+  align-content: start;
   grid-template-columns: inherit;
 }
 
@@ -153,6 +155,10 @@ Nav Styles
 /*================
 Base Content Pane Styles
 =================*/
+
+body > .container {
+  min-height: 100vh;
+}
 
 .body-content {
   display: flex;

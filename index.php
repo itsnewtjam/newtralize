@@ -202,6 +202,15 @@ function getNPath($path, $uncache) {
         --max-content-width: 1200px;
         --content-padding: 1rem;
       }
+
+      body > .container {
+        grid-template-rows: 
+          <?php if ($banner) echo "auto"; ?>
+          <?php if ($topmenu) echo "auto"; ?>
+          1fr
+          <?php if ($footer) echo "auto"; ?>
+        ;
+      }
     </style>
 
     <link rel="stylesheet" href="<?= getNPath("/css/template.css", $uncachecss); ?>" type="text/css">
