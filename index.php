@@ -83,15 +83,9 @@ $belowbody = $n->get('belowbody') === "1";
 $footer = $n->get('footer') === "1";
 
 $navTime = $n->get('navTime');
-$containerNarrow = $n->get('containerNarrow');
-$containerNormal = $n->get('containerNormal');
-$containerWide = $n->get('containerWide');
-$bannerContainer = $n->get('bannerSize');
-$topmenuContainer = $n->get('topmenuSize');
-$abovebodyContainer = $n->get('abovebodySize');
-$mainbodyContainer = $n->get('mainbodySize');
-$belowbodyContainer = $n->get('belowbodySize');
-$footerContainer = $n->get('footerSize');
+$maxTextWidth = $n->get('maxTextWidth');
+$maxContentWidth = $n->get('maxContentWidth');
+$contentPadding = $n->get('contentPadding');
 
 $codeafterhead = $n->get('codeafterhead');
 $codebeforehead = $n->get('codebeforehead');
@@ -200,9 +194,8 @@ function getNPath($path, $uncache) {
 
     <style>
       :root {
-        --container-narrow: <?= $containerNarrow; ?>rem;
-        --container-normal: <?= $containerNormal; ?>rem;
-        --container-wide: <?= $containerWide; ?>rem;
+        --max-content-width: 1200px;
+        --content-padding: 1rem;
       }
     </style>
 
@@ -269,18 +262,18 @@ function getNPath($path, $uncache) {
 
     <?php if ($codeafterbody != null) echo $codeafterbody; ?>
 
-    <div class="container">
+    <div class="container | content-grid">
       <?php if ($banner) : ?>
-        <div class="banner-wrapper">
-          <div class="banner <?= $bannerContainer !== "full" ? "container-$bannerContainer" : ""; ?>">
+        <div class="banner-wrapper | full-width">
+          <div class="banner">
             <jdoc:include type="modules" name="banner" style="default" />
           </div>
         </div>
       <?php endif; ?>
 
       <?php if ($topmenu) : ?>
-        <header class="navbar-wrapper">
-          <div class="navbar <?= $topmenuContainer !== "full" ? "container-$topmenuContainer" : ""; ?>">
+        <header class="navbar-wrapper | full-width">
+          <div class="navbar">
             <a
               class="logo"
               href="<?= $this->baseurl ?>"
@@ -308,14 +301,14 @@ function getNPath($path, $uncache) {
         </header>
       <?php endif; ?>
 
-      <main class="content-wrapper">
+      <main class="content-wrapper | full-width">
         <?php if ($abovebody) : ?>
-          <div class="abovebody <?= $abovebodyContainer !== "full" ? "container-$abovebodyContainer" : ""; ?>">
+          <div class="abovebody">
             <jdoc:include type="modules" name="above-body" style="default" />
           </div>
         <?php endif; ?>
 
-        <div class="body-content <?= $mainbodyContainer !== "full" ? "container-$mainbodyContainer" : ""; ?>">
+        <div class="body-content">
           <?php if ($this->countModules('leftbody')) : ?>
             <?php if ($leftbody) : ?>
               <div class="leftbody">
@@ -347,15 +340,15 @@ function getNPath($path, $uncache) {
         </div>
 
         <?php if ($belowbody) : ?>
-          <div class="belowbody <?= $belowbodyContainer !== "full" ? "container-$belowbodyContainer" : ""; ?>">
+          <div class="belowbody">
             <jdoc:include type="modules" name="below-body" style="default" />
           </div>
         <?php endif; ?>
       </main>
 
       <?php if ($footer) : ?>
-        <footer class="footer-wrapper">
-          <div class="footer <?= $footerContainer !== "full" ? "container-$footerContainer" : ""; ?>">
+        <footer class="footer-wrapper | full-width">
+          <div class="footer">
             <?php if ($showFooterLogo) : ?>
               <a
                 class="footer-logo"

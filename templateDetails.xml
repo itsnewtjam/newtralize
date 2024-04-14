@@ -104,46 +104,10 @@
       </fieldset>
 
       <fieldset name="LAYOUT_SETTINGS">
+        <field name="maxTextWidth" type="number" default="75" min="0" label="TPL_NEWTRALIZE_TEXTWIDTH_LABEL" description="TPL_NEWTRALIZE_TEXTWIDTH_DESC" filter="string" />
+        <field name="maxContentWidth" type="number" default="75" min="0" label="TPL_NEWTRALIZE_CONTENTWIDTH_LABEL" description="TPL_NEWTRALIZE_CONTENTWIDTH_DESC" filter="string" />
+        <field name="contentPadding" type="number" default="20" min="0" label="TPL_NEWTRALIZE_CONTENTPADDING_LABEL" description="TPL_NEWTRALIZE_CONTENTPADDING_DESC" filter="string" />
         <field name="navTime" type="number" default="250" min="0" label="TPL_NEWTRALIZE_NAVTIME_LABEL" description="TPL_NEWTRALIZE_NAVTIME_DESC" filter="string" />
-        <field name="containerNormal" type="number" default="64" min="0" label="TPL_NEWTRALIZE_CONTAINERNORMAL_LABEL" description="TPL_NEWTRALIZE_CONTAINERNORMAL_DESC" filter="string" />
-        <field name="containerNarrow" type="number" default="40" min="0" label="TPL_NEWTRALIZE_CONTAINERNARROW_LABEL" description="TPL_NEWTRALIZE_CONTAINERNARROW_DESC" filter="string" />
-        <field name="containerWide" type="number" default="75" min="0" label="TPL_NEWTRALIZE_CONTAINERWIDE_LABEL" description="TPL_NEWTRALIZE_CONTAINERWIDE_DESC" filter="string" />
-        <field name="bannerSize" type="radio" class="btn-group" default="normal" label="TPL_NEWTRALIZE_BANNERSIZE_LABEL" description="TPL_NEWTRALIZE_BANNERSIZE_DESC" showon="banner:1">
-          <option value="narrow">TPL_NEWTRALIZE_SIZE_NARROW</option>
-          <option value="normal">TPL_NEWTRALIZE_SIZE_NORMAL</option>
-          <option value="wide">TPL_NEWTRALIZE_SIZE_WIDE</option>
-          <option value="full">TPL_NEWTRALIZE_SIZE_FULL</option>
-        </field>
-        <field name="topmenuSize" type="radio" class="btn-group" default="normal" label="TPL_NEWTRALIZE_TOPMENUSIZE_LABEL" description="TPL_NEWTRALIZE_TOPMENUSIZE_DESC" showon="topmenu:1">
-          <option value="narrow">TPL_NEWTRALIZE_SIZE_NARROW</option>
-          <option value="normal">TPL_NEWTRALIZE_SIZE_NORMAL</option>
-          <option value="wide">TPL_NEWTRALIZE_SIZE_WIDE</option>
-          <option value="full">TPL_NEWTRALIZE_SIZE_FULL</option>
-        </field>
-        <field name="abovebodySize" type="radio" class="btn-group" default="normal" label="TPL_NEWTRALIZE_ABOVEBODYSIZE_LABEL" description="TPL_NEWTRALIZE_ABOVEBODYSIZE_DESC" showon="abovebody:1">
-          <option value="narrow">TPL_NEWTRALIZE_SIZE_NARROW</option>
-          <option value="normal">TPL_NEWTRALIZE_SIZE_NORMAL</option>
-          <option value="wide">TPL_NEWTRALIZE_SIZE_WIDE</option>
-          <option value="full">TPL_NEWTRALIZE_SIZE_FULL</option>
-        </field>
-        <field name="mainbodySize" type="radio" class="btn-group" default="normal" label="TPL_NEWTRALIZE_MAINBODYSIZE_LABEL" description="TPL_NEWTRALIZE_MAINBODYSIZE_DESC" showon="mainbody:1">
-          <option value="narrow">TPL_NEWTRALIZE_SIZE_NARROW</option>
-          <option value="normal">TPL_NEWTRALIZE_SIZE_NORMAL</option>
-          <option value="wide">TPL_NEWTRALIZE_SIZE_WIDE</option>
-          <option value="full">TPL_NEWTRALIZE_SIZE_FULL</option>
-        </field>
-        <field name="belowbodySize" type="radio" class="btn-group" default="normal" label="TPL_NEWTRALIZE_BELOWBODYSIZE_LABEL" description="TPL_NEWTRALIZE_BELOWBODYSIZE_DESC" showon="belowbody:1">
-          <option value="narrow">TPL_NEWTRALIZE_SIZE_NARROW</option>
-          <option value="normal">TPL_NEWTRALIZE_SIZE_NORMAL</option>
-          <option value="wide">TPL_NEWTRALIZE_SIZE_WIDE</option>
-          <option value="full">TPL_NEWTRALIZE_SIZE_FULL</option>
-        </field>
-        <field name="footerSize" type="radio" class="btn-group" default="normal" label="TPL_NEWTRALIZE_FOOTERSIZE_LABEL" description="TPL_NEWTRALIZE_FOOTERSIZE_DESC" showon="footer:1">
-          <option value="narrow">TPL_NEWTRALIZE_SIZE_NARROW</option>
-          <option value="normal">TPL_NEWTRALIZE_SIZE_NORMAL</option>
-          <option value="wide">TPL_NEWTRALIZE_SIZE_WIDE</option>
-          <option value="full">TPL_NEWTRALIZE_SIZE_FULL</option>
-        </field>
       </fieldset>
 
       <fieldset name="MODULE_SETTINGS">

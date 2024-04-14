@@ -12,6 +12,6 @@ $modulePos = $module->position;
 $moduleTag = $params->get('module_tag', 'div');
 ?>
 
-<<?= $moduleTag; ?> class="<?= htmlspecialchars($params->get('moduleclass_sfx', ''), ENT_QUOTES, 'UTF-8'); ?>">
+<<?= $moduleTag; ?> class="<?= htmlspecialchars($params->get('moduleclass_sfx', ''), ENT_QUOTES, 'UTF-8'); ?>" data-module="<?= $module->id; ?>">
   <?= $module->content; ?>
 </<?= $moduleTag; ?>>
