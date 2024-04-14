@@ -1,6 +1,10 @@
 v1.0.0 (2024-04-14)
 [Added]
 - New layout system
+- Added new base menu types
+  - Provides a functional starting point for different menu styles
+  - Built in options for "Dropdown" and "Popover"
+  - Support for defining a custom menu type
 - New options to set a footer logo
 - Added option to scope CSS, JS, and Head files by ID rather than alias
 - CSS, JS, and Head files can now be scoped by category and by article
@@ -13,6 +17,24 @@ v1.0.0 (2024-04-14)
 [Removed]
 - Removed "Kill Joomla CSS" and "Kill Joomla JS" options
 - Removed instant.page option
+- Removed "Raw Pages" option, as components can implement this themselves
+
+v0.0.11 (2024-01-04)
+[Fixed]
+- Raw Pages defaults to empty rather than null
+
+v0.0.10 (2023-12-20)
+[Added]
+- New option to set certain component menu items to output raw
+
+v0.0.9 (2023-12-13)
+[Added]
+- Add option to set animation timing for the navigation
+
+v0.0.8 (2023-12-08)
+[Added]
+- Clarify options for Google tracking services
+  - Add option to define how your Google tracking is set up
 
 v0.0.7 (2023-07-28)
 [Added]
