@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <extension type="template" version="4.0" method="upgrade">
   <name>newtralize</name>
-  <version>0.0.11</version>
+  <version>1.0.0</version>
   <author>newtjam</author>
   <authorEmail>joomla@newtjam.com</authorEmail>
   <authorUrl>https://newtjam.com</authorUrl>
@@ -9,7 +9,7 @@
   <license>GNU General Public License version 2 or later</license>
   <description>newtralize is a clean and minimal template designed to neutralize Joomla and stay out of your way.</description>
   <updateservers>
-    <server type="extension" name="newtralize Updates">https://raw.githubusercontent.com/itsnewtjam/newtralize/master/dist/update.xml</server>
+    <server type="extension" name="newtralize Updates">https://raw.githubusercontent.com/itsnewtjam/newtralize/master/dist/update-release.xml</server>
   </updateservers>
   <files>
     <folder>css</folder>
