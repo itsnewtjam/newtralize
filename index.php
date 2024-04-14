@@ -199,8 +199,9 @@ function getNPath($path, $uncache) {
 
     <style>
       :root {
-        --max-content-width: 1200px;
-        --content-padding: 1rem;
+        --max-text-width: <?= $maxTextWidth; ?>ch;
+        --max-content-width: <?= $maxContentWidth; ?>em;
+        --content-padding: <?= $contentPadding; ?>px;
       }
 
       body > .container {

@@ -1,0 +1,50 @@
+v1.0.0 (2024-04-14)
+[Added]
+- New layout system
+- New options to set a footer logo
+- Added option to scope CSS, JS, and Head files by ID rather than alias
+- CSS, JS, and Head files can now be scoped by category and by article
+  - Files scoped to a category will only be loaded on articles in that category
+[Changed]
+- Reorganized template style settings
+- Cleaned up template CSS and index
+[Fixed]
+- Fixed 404 menu item error page not actually returning an HTTP error
+[Removed]
+- Removed "Kill Joomla CSS" and "Kill Joomla JS" options
+- Removed instant.page option
+
+v0.0.7 (2023-07-28)
+[Added]
+- Added new layout customization 
+  - Add option to define narrow, normal, and wide container sizes
+  - Add options to assign containers to template module positions
+  - Add generated container utility classes for use with custom content
+[Removed]
+- Removed the redundant alert-bar position
+
+v0.0.6 (2023-07-13)
+[Fixed]
+- Remove duplicate items in "<head>"
+
+v0.0.5 (2023-07-13)
+[Added]
+- Added cache prevention options
+  - Add option to avoid caching CSS files
+  - Add option to avoid caching JavaScript files
+  - Add option to send no cache HTTP headers
+[Changed]
+- Rework content structure to better support full-width elements with the content container
+
+v0.0.4 (2023-05-01)
+[Added]
+- Added landmarks to "index.php"
+- Extend keyboard navigation in the main menu
+
+v0.0.3 (2023-04-03)
+[Added]
+- Added ability to create menu- and page-scoped JavaScript
+
+v0.0.2 (2023-03-31)
+[Fixed]
+- Fixed file exists check for "custom.js"
