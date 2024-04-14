@@ -82,6 +82,7 @@ $rightbody = $n->get('rightbody') === "1";
 $belowbody = $n->get('belowbody') === "1";
 $footer = $n->get('footer') === "1";
 
+$navType = $n->get('navType', 'dropdown');
 $navTime = $n->get('navTime');
 $maxTextWidth = $n->get('maxTextWidth');
 $maxContentWidth = $n->get('maxContentWidth');
@@ -126,6 +127,10 @@ function getNPath($path, $uncache) {
     </script>
 
     <script src="<?= getNPath("/js/template.js", $uncachejs); ?>"></script>
+
+    <?php if (file_exists(NFILE . "/js/nav/$navType.js")) : ?>
+      <script src="<?= getNPath("/js/nav/$navType.js", $uncachejs); ?>"></script>
+    <?php endif; ?>
   
     <?php if (file_exists(NFILE . "/js/custom.js")) : ?>
       <script src="<?= getNPath("/js/custom.js", $uncachejs); ?>"></script>
@@ -200,6 +205,10 @@ function getNPath($path, $uncache) {
     </style>
 
     <link rel="stylesheet" href="<?= getNPath("/css/template.css", $uncachecss); ?>" type="text/css">
+
+    <?php if (file_exists(NFILE . "/css/nav/$navType.css")) : ?>
+      <link rel="stylesheet" href="<?= getNPath("/css/nav/$navType.css", $uncachecss); ?>" type="text/css">
+    <?php endif; ?>
 
     <?php if (file_exists(NFILE . "/css/custom.css")): ?>
       <link rel="stylesheet" href="<?= getNPath("/css/custom.css", $uncachecss); ?>" type="text/css">
@@ -292,7 +301,7 @@ function getNPath($path, $uncache) {
                   <rect class="line bottom" width="80" height="10" x="10" y="70"></rect>
                 </svg>
               </button>
-              <div class="menu-overlay" onclick="toggleMenu();"></div>
+              <div class="menu-overlay" onclick="toggleMenu();" style="--_nav-time: <?= $navTime ?>ms"></div>
               <div id="primary-navigation" data-state="closed" style="--_nav-time: <?= $navTime ?>ms">
                 <jdoc:include type="modules" name="navigation" style="default" />
               </div>

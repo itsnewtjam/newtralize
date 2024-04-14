@@ -1,0 +1,38 @@
+#primary-navigation {
+  display: none;
+  visibility: hidden;
+  position: absolute;
+  right: 0;
+  top: calc(100% + 1rem);
+  background-color: lightgrey;
+}
+
+#primary-navigation[data-state="open"] {
+  display: block;
+  visibility: visible;
+  animation: navDropdownOpen var(--_nav-time) forwards;
+}
+
+@keyframes navDropdownOpen {
+  from {
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+  }
+  to {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+}
+
+#primary-navigation[data-state="closing"] {
+  display: block;
+  visibility: visible;
+  animation: navDropdownClose var(--_nav-time) forwards;
+}
+
+@keyframes navDropdownClose {
+  from {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+  to {
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+  }
+}

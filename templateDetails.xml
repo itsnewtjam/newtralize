@@ -49,7 +49,7 @@
           <option value="0">TPL_NEWTRALIZE_NO</option>
           <option value="1">TPL_NEWTRALIZE_YES</option>
         </field>
-        <field name="footerlogo" type="media" label="TPL_NEWTRALIZE_FOOTERLOGO_LABEL" description="TPL_NEWTRALIZE_FOOTERLOGO" showon="differentfooterlogo:1" />
+        <field name="footerlogo" type="media" label="TPL_NEWTRALIZE_FOOTERLOGO_LABEL" description="TPL_NEWTRALIZE_FOOTERLOGO_DESC" showon="differentfooterlogo:1" />
         <field name="copyright" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_NEWTRALIZE_COPYRIGHT_LABEL" description="TPL_NEWTRALIZE_COPYRIGHT_DESC">
           <option value="0">TPL_NEWTRALIZE_DISABLED</option>
           <option value="1">TPL_NEWTRALIZE_ENABLED</option>
@@ -107,6 +107,11 @@
         <field name="maxTextWidth" type="number" default="75" min="0" label="TPL_NEWTRALIZE_TEXTWIDTH_LABEL" description="TPL_NEWTRALIZE_TEXTWIDTH_DESC" filter="string" />
         <field name="maxContentWidth" type="number" default="75" min="0" label="TPL_NEWTRALIZE_CONTENTWIDTH_LABEL" description="TPL_NEWTRALIZE_CONTENTWIDTH_DESC" filter="string" />
         <field name="contentPadding" type="number" default="20" min="0" label="TPL_NEWTRALIZE_CONTENTPADDING_LABEL" description="TPL_NEWTRALIZE_CONTENTPADDING_DESC" filter="string" />
+        <field name="navType" type="radio" class="btn-group" default="dropdown" label="TPL_NEWTRALIZE_NAVTYPE_LABEL" description="TPL_NEWTRALIZE_NAVTYPE_DESC">
+          <option value="dropdown">TPL_NEWTRALIZE_NAV_DROPDOWN</option>
+          <option value="popover">TPL_NEWTRALIZE_NAV_POPOVER</option>
+          <option value="custom">TPL_NEWTRALIZE_NAV_CUSTOM</option>
+        </field>
         <field name="navTime" type="number" default="250" min="0" label="TPL_NEWTRALIZE_NAVTIME_LABEL" description="TPL_NEWTRALIZE_NAVTIME_DESC" filter="string" />
       </fieldset>
 
