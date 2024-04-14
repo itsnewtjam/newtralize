@@ -1,97 +1,79 @@
-/* Box sizing rules */
-*,
-*::before,
-*::after {
+*, *::before, *::after {
   box-sizing: border-box;
 }
 
-/* Remove default margin/padding and inherit font styles  */
 * {
   margin: 0;
   padding: 0;
   font: inherit;
 }
 
-/* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
-ul[role="list"],
-ol[role="list"] {
-  list-style: none;
-}
-
-/* Set core root defaults */
-html:focus-within {
-  scroll-behavior: smooth;
-}
-
-html,
-body {
-  height: 100%;
-}
-
-/* Set core body defaults */
-body {
-  text-rendering: optimizeSpeed;
-  line-height: 1.5;
-  overflow-x: hidden;
-}
-
-/* A elements that don't have a class get default styles */
-a:not([class]) {
-  text-decoration-skip-ink: auto;
-}
-
-/* Make images easier to work with */
-img,
-picture,
-svg {
-  max-width: 100%;
-  display: block;
-}
-
-/* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
-@media (prefers-reduced-motion: reduce) {
-  html:focus-within {
-    scroll-behavior: auto;
-  }
-
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-}
-
-/*================
-Globals
-=================*/
-
 :target {
-  scroll-margin-block-start: 5rem;
+  scroll-padding-top: var(--header-height, 3rem);
+}
+
+html {
+  hanging-punctuation: first last;
 }
 
 body {
-  width: 100%;
+  min-height: 100svh;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
 }
 
-body > .container {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+img, picture, svg, canvas, video {
+  display: block;
+  max-width: 100%;
+}
+
+input, button, textarea, select {
+  font: inherit;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  text-wrap: balance;
+}
+
+p, li {
+  max-width: var(--max-text-width, 75ch);
+  text-wrap: pretty;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :has(:target) {
+    scroll-behavior: smooth;
+  }
+}
+
+.content-grid {
+  display: grid;
+  align-content: start;
+  grid-template-columns:
+    [full-width-start]
+    minmax(var(--content-padding), 1fr)
+    [content-start]
+    min(100% - (var(--content-padding) * 2), var(--max-content-width))
+    [content-end]
+    minmax(var(--content-padding), 1fr) 
+    [full-width-end];
+}
+
+.content-grid > :not(.full-width),
+.full-width > :not(.full-width) {
+  grid-column: content;
+}
+
+.content-grid > .full-width,
+.full-width > .full-width {
+  grid-column: full-width;
+  display: grid;
+  align-content: start;
+  grid-template-columns: inherit;
 }
 
 /*================
-Base Banner Styles
-=================*/
-
-.banner {
-  padding-inline: 1rem;
-}
-
-/*================
-Base Navbar Styles
+Nav Styles
 =================*/
 
 .navbar {
@@ -108,6 +90,7 @@ Base Navbar Styles
 }
 
 .nav-end {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -161,7 +144,7 @@ Base Navbar Styles
   inset: 0;
 }
 
-.menu-overlay:not([data-state="open"]) {
+.menu-overlay {
   display: none;
 }
 
@@ -169,29 +152,15 @@ Base Navbar Styles
   pointer-events: all;
 }
 
-#primary-navigation {
-  display: none;
-  visibility: hidden;
-}
-
-#primary-navigation[data-state="open"] {
-  display: block;
-  visibility: visible;
-}
-
 /*================
 Base Content Pane Styles
 =================*/
 
-body > .container > .content-wrapper {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
+body > .container {
+  min-height: 100vh;
 }
 
 .body-content {
-  flex-grow: 1;
   display: flex;
   align-items: stretch;
 }
@@ -255,26 +224,6 @@ Utility Classes
   .show-desktop-only {
     display: block;
   }
-}
-
-.container-narrow {
-  max-width: var(--container-narrow);
-  margin-inline: auto;
-}
-
-.container-normal {
-  max-width: var(--container-normal);
-  margin-inline: auto;
-}
-
-.container-wide {
-  max-width: var(--container-wide);
-  margin-inline: auto;
-}
-
-.escape-fw {
-  box-shadow: 0 0 0 100vmax var(--bg-util-color);
-  clip-path: inset(0 -100vmax);
 }
 
 .visually-hidden {

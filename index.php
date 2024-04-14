@@ -2,75 +2,107 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Application\SiteApplication;
 use Joomla\CMS\Factory;
+use Joomla\Database\DatabaseInterface;
 
+/** @var SiteApplication **/
 $app = Factory::getApplication();
-$document = Factory::getDocument();
-$user = Factory::getUser();
+$document = $app->getDocument();
 
-$timestamp = date('U');
+define('NBASE', "/templates/" . $this->template);
+define('NFILE', JPATH_BASE . NBASE);
+define('NTIMESTAMP', date('U'));
 
 $this->setHtml5(true);
 
 // Get active menu item alias
 $active = $app->getMenu()->getActive();
 
-$params = $app->getTemplate(true)->params;
+$activeCategory = null;
+$activeArticle = null;
+if ($active->query['option'] === "com_content" && $active->query['view'] === "article") {
+  /** @var DatabaseInterface **/
+  $db = Factory::getContainer()->get(DatabaseInterface::class);
+  $query = $db->getQuery(true);
+  $query
+    ->select($db->quoteName(
+      ['a.id', 'a.alias', 'b.id', 'b.alias'],
+      ['articleId', 'articleAlias', 'categoryId', 'categoryAlias']
+    ))
+    ->from($db->quoteName('#__content', 'a'))
+    ->join("INNER", $db->quoteName('#__categories', 'b') . " ON " . $db->quoteName('a.catid') . " = " . $db->quoteName('b.id'))
+    ->where($db->quoteName('a.id') . " = " . $db->quote($active->query['id']));
+  $db->setQuery($query);
+  $articleData = $db->loadObject();
+  $activeCategory = (object) [
+    'id' => $articleData->categoryId,
+    'alias' => $articleData->categoryAlias,
+  ];
+  $activeArticle = (object) [
+    'id' => $articleData->articleId,
+    'alias' => $articleData->articleAlias,
+  ];
+}
 
-$logo = $this->params->get('logo', '');
-$sitetitle = $this->params->get('sitetitle', $app->getCfg('sitename'));
-$sitedescription = $this->params->get('sitedescription');
+$n = $app->getTemplate(true)->params;
 
-$nocacheheaders = $this->params->get('nocacheheaders');
-$uncachecss = $this->params->get('uncachecss');
-$uncachejs = $this->params->get('uncachejs');
+$sitetitle = $app->get('sitename');
 
-$fontawesomecdn = $this->params->get('fontawesomecdn');
+$logo = $n->get('logo', '');
+$showFooterLogo = $n->get('showfooterlogo', '1') === "1";
+$differentFooterLogo = $n->get('differentfooterlogo', '1') === "1";
+$footerLogo = $differentFooterLogo ? $n->get('footerlogo', '') : $logo;
+$copyright = $n->get('copyright', '1') === "1";
+$copyrighttxt = $n->get('copyrighttxt', '');
 
-$googleSetup = $this->params->get('googleSetup');
-$gtmcode = $this->params->get('gtmcode');
-$gacode = $this->params->get('gacode');
-$gagtmcode = $this->params->get('gagtmcode');
-$fbcode = $this->params->get('fbcode');
+$nocacheheaders = $n->get('nocacheheaders', '0') === "1";
+$uncachecss = $n->get('uncachecss', '0') === "1";
+$uncachejs = $n->get('uncachejs', '0') === "1";
 
-$rawpages = $this->params->get('rawPages', []);
-$banner = $this->params->get('banner');
-$topmenu = $this->params->get('topmenu');
-$abovebody = $this->params->get('abovebody');
-$leftbody = $this->params->get('leftbody');
-$mainbodytop = $this->params->get('mainbodytop');
-$mainbodybottom = $this->params->get('mainbodybottom');
-$rightbody = $this->params->get('rightbody');
-$belowbody = $this->params->get('belowbody');
-$footer = $this->params->get('footer');
-$alertbar = $this->params->get('alertbar');
-$copyright = $this->params->get('copyright');
-$copyrighttxt = $this->params->get('copyrighttxt');
+$scopeCategories = $n->get('scopecategories', 'alias') === "alias" ? $activeCategory->alias : $activeCategory->id;
+$scopeArticles = $n->get('scopearticles', 'alias') === "alias" ? $activeArticle->alias : $activeArticle->id;
+$scopePages = $n->get('scopepages', 'alias') === "alias" ? $active->alias : $active->id;
 
-$navTime = $this->params->get('navTime');
-$containerNarrow = $this->params->get('containerNarrow');
-$containerNormal = $this->params->get('containerNormal');
-$containerWide = $this->params->get('containerWide');
-$bannerContainer = $this->params->get('bannerSize');
-$topmenuContainer = $this->params->get('topmenuSize');
-$abovebodyContainer = $this->params->get('abovebodySize');
-$mainbodyContainer = $this->params->get('mainbodySize');
-$belowbodyContainer = $this->params->get('belowbodySize');
-$footerContainer = $this->params->get('footerSize');
+$fontawesomecdn = $n->get('fontawesomecdn', '');
 
-$killjoomlajs = $this->params->get('killjoomlajs');
-$killjoomlacss = $this->params->get('killjoomlacss');
-$instant = $this->params->get('instant');
+$googleSetup = $n->get('googleSetup');
+$gtmcode = $n->get('gtmcode');
+$gacode = $n->get('gacode');
+$gagtmcode = $n->get('gagtmcode');
+$fbcode = $n->get('fbcode');
 
-$codeafterhead = $this->params->get('codeafterhead');
-$codebeforehead = $this->params->get('codebeforehead');
-$codeafterbody = $this->params->get('codeafterbody');
-$codebeforebody = $this->params->get('codebeforebody');
+$banner = $n->get('banner') === "1";
+$topmenu = $n->get('topmenu') === "1";
+$abovebody = $n->get('abovebody') === "1";
+$leftbody = $n->get('leftbody') === "1";
+$mainbodytop = $n->get('mainbodytop') === "1";
+$mainbodybottom = $n->get('mainbodybottom') === "1";
+$rightbody = $n->get('rightbody') === "1";
+$belowbody = $n->get('belowbody') === "1";
+$footer = $n->get('footer') === "1";
 
-if ($nocacheheaders == 1) {
+$navType = $n->get('navType', 'dropdown');
+$navTime = $n->get('navTime');
+$maxTextWidth = $n->get('maxTextWidth');
+$maxContentWidth = $n->get('maxContentWidth');
+$contentPadding = $n->get('contentPadding');
+
+$codeafterhead = $n->get('codeafterhead');
+$codebeforehead = $n->get('codebeforehead');
+$codeafterbody = $n->get('codeafterbody');
+$codebeforebody = $n->get('codebeforebody');
+
+if ($nocacheheaders) {
   header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
   header("Cache-Control: post-check=0, pre-check=0", false);
   header("Pragma: no-cache");
+}
+
+function getNPath($path, $uncache) {
+  $cachebust = "";
+  if ($uncache) $cachebust = "?v=" . NTIMESTAMP;
+  return NBASE . $path . $cachebust;
 }
 
 ?>
@@ -85,32 +117,6 @@ if ($nocacheheaders == 1) {
     <?php if ($codeafterhead != null) echo $codeafterhead; ?>
 
     <meta name="apple-mobile-web-app-capable" content="YES" />
-    
-    <?php unset($document->_scripts[JURI::root(true) . '/media/jui/js/jquery.min.js']); ?>
-
-    <?php 
-      if ($killjoomlajs == 1) {
-        unset($document->_scripts[JURI::root(true) . '/media/system/js/caption.js']);
-        unset($document->_scripts[JURI::root(true) . '/media/modal/js/script.min.js']);
-        unset($document->_scripts[JURI::root(true) . '/media/system/js/core.js']);
-        unset($document->_scripts[JURI::root(true) . '/media/jui/js/bootstrap.min.js']);
-        if (isset($this->_script['text/javascript'])) {
-          $this->_script['text/javascript'] = preg_replace('/jQuery\(window\).on\(\'load\'\,  function\(\) \{(.*);/is', '', $this->_script['text/javascript']);
-          if (empty($this->_script['text/javascript'])) {
-            unset($this->_script['text/javascript']);
-          }
-        }
-      }
-    ?>
-
-    <?php 
-      if ($killjoomlacss == 1) {
-        unset($this->_stylesheets[JURI::root(true) . '/media/modals/css/bootstrap.min.css']);
-        unset($this->_stylesheets[JURI::root(true) . '/media/jui/css/bootstrap.min.css']);
-        unset($this->_stylesheets[JURI::root(true) . '/media/jui/css/bootstrap-responsive.min.css']);
-        unset($this->_stylesheets[JURI::root(true) . '/media/jui/css/bootstrap-extended.css']);
-      }
-    ?>
 
     <?php $this->setGenerator(null); ?>
 
@@ -120,18 +126,30 @@ if ($nocacheheaders == 1) {
       };
     </script>
 
-    <script src="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/js/template.js<?php if ($uncachejs == 1) echo "?v=$timestamp"; ?>"></script>
+    <script src="<?= getNPath("/js/template.js", $uncachejs); ?>"></script>
+
+    <?php if (file_exists(NFILE . "/js/nav/$navType.js")) : ?>
+      <script src="<?= getNPath("/js/nav/$navType.js", $uncachejs); ?>"></script>
+    <?php endif; ?>
   
-    <?php if (file_exists(JPATH_SITE . "/templates" . "/" . $this->template . "/js/custom.js")) : ?>
-      <script src="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/js/custom.js<?php if ($uncachejs == 1) echo "?v=$timestamp"; ?>"></script>
+    <?php if (file_exists(NFILE . "/js/custom.js")) : ?>
+      <script src="<?= getNPath("/js/custom.js", $uncachejs); ?>"></script>
     <?php endif; ?>
 
-    <?php if (file_exists(JPATH_SITE . "/templates" . "/" . $this->template . "/js/menus/".$active->menutype.".js")) : ?>
-      <script src="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/js/menus/<?= $active->menutype; ?>.js<?php if ($uncachejs == 1) echo "?v=$timestamp"; ?>"></script>
+    <?php if (file_exists(NFILE . "/js/menus/$active->menutype.js")) : ?>
+      <script src="<?= getNPath("/js/menus/$active->menutype.js", $uncachejs); ?>"></script>
     <?php endif; ?>
 
-    <?php if (file_exists(JPATH_SITE . "/templates" . "/" . $this->template . "/js/pages/".$active->alias.".js")) : ?>
-      <script src="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/js/pages/<?= $active->alias; ?>.js<?php if ($uncachejs == 1) echo "?v=$timestamp"; ?>"></script>
+    <?php if (file_exists(NFILE . "/js/categories/$scopeCategories.js")) : ?>
+      <script src="<?= getNPath("/js/categories/$scopeCategories.js", $uncachejs); ?>"></script>
+    <?php endif; ?>
+
+    <?php if (file_exists(NFILE . "/js/articles/$scopeArticles.js")) : ?>
+      <script src="<?= getNPath("/js/articles/$scopeArticles.js", $uncachejs); ?>"></script>
+    <?php endif; ?>
+
+    <?php if (file_exists(NFILE . "/js/pages/$scopePages.js")) : ?>
+      <script src="<?= getNPath("/js/pages/$scopePages.js", $uncachejs); ?>"></script>
     <?php endif; ?>
 
     <?php if ($googleSetup === "gtm" && $gtmcode != null) : ?>
@@ -156,11 +174,6 @@ if ($nocacheheaders == 1) {
           gtag('config', '<?= $gagtmcode; ?>');
         <?php endif; ?>
 			</script>
-      <?php 
-        if (file_exists(JPATH_SITE."/"."templates/".$this->template."/"."heads/gaconversions/".$active->alias.".php")) {
-          include(JPATH_SITE."/"."templates/".$this->template."/"."heads/gaconversions/".$active->alias.".php");
-        }
-      ?>
     <?php endif; ?>
 
     <?php if ($fbcode != null) : ?>
@@ -186,24 +199,45 @@ if ($nocacheheaders == 1) {
 
     <style>
       :root {
-        --container-narrow: <?= $containerNarrow ?>rem;
-        --container-normal: <?= $containerNormal ?>rem;
-        --container-wide: <?= $containerWide ?>rem;
+        --max-text-width: <?= $maxTextWidth; ?>ch;
+        --max-content-width: <?= $maxContentWidth; ?>em;
+        --content-padding: <?= $contentPadding; ?>px;
+      }
+
+      body > .container {
+        grid-template-rows: 
+          <?php if ($banner) echo "auto"; ?>
+          <?php if ($topmenu) echo "auto"; ?>
+          1fr
+          <?php if ($footer) echo "auto"; ?>
+        ;
       }
     </style>
 
-    <link rel="stylesheet" href="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/css/template.css<?php if ($uncachecss == 1) echo "?v=$timestamp"; ?>" type="text/css">
+    <link rel="stylesheet" href="<?= getNPath("/css/template.css", $uncachecss); ?>" type="text/css">
 
-    <?php if (file_exists(JPATH_SITE."/"."templates/".$this->template."/"."css/custom.css")): ?>
-      <link rel="stylesheet" href="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/css/custom.css<?php if ($uncachecss == 1) echo "?v=$timestamp"; ?>" type="text/css">
+    <?php if (file_exists(NFILE . "/css/nav/$navType.css")) : ?>
+      <link rel="stylesheet" href="<?= getNPath("/css/nav/$navType.css", $uncachecss); ?>" type="text/css">
     <?php endif; ?>
 
-    <?php if (file_exists(JPATH_SITE."/"."templates/".$this->template."/"."css/menus/".$active->menutype.".css")): ?>
-      <link rel="stylesheet" href="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/css/menus/<?= $active->menutype; ?>.css<?php if ($uncachecss == 1) echo "?v=$timestamp"; ?>" type="text/css">
+    <?php if (file_exists(NFILE . "/css/custom.css")): ?>
+      <link rel="stylesheet" href="<?= getNPath("/css/custom.css", $uncachecss); ?>" type="text/css">
+    <?php endif; ?>
+
+    <?php if (file_exists(NFILE . "/css/menus/$active->menutype.css")): ?>
+      <link rel="stylesheet" href="<?= getNPath("/css/menus/$active->menutype.css", $uncachecss); ?>" type="text/css">
+    <?php endif; ?>
+
+    <?php if (file_exists(NFILE . "/css/categories/$scopeCategories.css")) : ?>
+      <link rel="stylesheet" href="<?= getNPath("/css/categories/$scopeCategories.css", $uncachecss); ?>" type="text/css">
+    <?php endif; ?>
+
+    <?php if (file_exists(NFILE . "/css/articles/$scopeArticles.css")) : ?>
+      <link rel="stylesheet" href="<?= getNPath("/css/articles/$scopeArticles.css", $uncachecss); ?>" type="text/css">
     <?php endif; ?>
     
-    <?php if (file_exists(JPATH_SITE."/"."templates/".$this->template."/"."css/pages/".$active->alias.".css")): ?>
-      <link rel="stylesheet" href="<?= $this->baseurl; ?>/templates/<?= $this->template; ?>/css/pages/<?= $active->alias; ?>.css<?php if ($uncachecss == 1) echo "?v=$timestamp"; ?>" type="text/css">
+    <?php if (file_exists(NFILE . "/css/pages/$scopePages.css")): ?>
+      <link rel="stylesheet" href="<?= getNPath("/css/pages/$scopePages.css", $uncachecss); ?>" type="text/css">
     <?php endif; ?>
 
     <?php if ($fontawesomecdn != null) : ?>
@@ -211,6 +245,30 @@ if ($nocacheheaders == 1) {
     <?php endif; ?>
 
     <?php if ($codebeforehead != null) echo $codebeforehead; ?>
+
+    <?php 
+      if (file_exists(NFILE . "/heads/menus/$active->menutype.php")) {
+        include(getNPath("/heads/menus/$active->menutype.php", false));
+      }
+    ?>
+    
+    <?php 
+      if (file_exists(NFILE . "/heads/categories/$scopeCategories.php")) {
+        include(getNPath("/heads/categories/$scopeCategories.php", false));
+      }
+    ?>
+    
+    <?php 
+      if (file_exists(NFILE . "/heads/articles/$scopeArticles.php")) {
+        include(getNPath("/heads/articles/$scopeArticles.php", false));
+      }
+    ?>
+    
+    <?php 
+      if (file_exists(NFILE . "/heads/pages/$scopePages.php")) {
+        include(getNPath("/heads/pages/$scopePages.php", false));
+      }
+    ?>
   </head>
 
   <body data-menu="<?= $active->menutype; ?>" data-page="<?= $active->alias; ?>">
@@ -223,119 +281,123 @@ if ($nocacheheaders == 1) {
 
     <?php if ($codeafterbody != null) echo $codeafterbody; ?>
 
-    <?php if (in_array($active->id, $rawpages)) : ?>
-      <jdoc:include type="component" />
-    <?php else : ?>
-      <div class="container">
-        <?php if ($banner == 1) : ?>
-          <div class="banner-wrapper">
-            <div class="banner <?= $bannerContainer !== "full" ? "container-$bannerContainer" : ""; ?>">
-              <jdoc:include type="modules" name="banner" style="default" />
-            </div>
+    <div class="container | content-grid">
+      <?php if ($banner) : ?>
+        <div class="banner-wrapper | full-width">
+          <div class="banner">
+            <jdoc:include type="modules" name="banner" style="default" />
+          </div>
+        </div>
+      <?php endif; ?>
+
+      <?php if ($topmenu) : ?>
+        <header class="navbar-wrapper | full-width">
+          <div class="navbar">
+            <a
+              class="logo"
+              href="<?= $this->baseurl ?>"
+            >
+              <img
+                src="<?= $this->baseurl; ?>/<?= htmlspecialchars($logo); ?>"
+                alt="<?= htmlspecialchars($sitetitle); ?>"
+              />
+            </a>
+            <nav class="nav-end">
+              <jdoc:include type="modules" name="navbar" style="default" />
+              <button id="nav-button" aria-label="Toggle Main Menu" aria-controls="primary-navigation" aria-expanded="false" onclick="toggleMenu();">
+                <svg class="hamburger" viewBox="0 0 100 100" width="32">
+                  <rect class="line top" width="80" height="10" x="10" y="20"></rect>
+                  <rect class="line middle" width="80" height="10" x="10" y="45"></rect>
+                  <rect class="line bottom" width="80" height="10" x="10" y="70"></rect>
+                </svg>
+              </button>
+              <div class="menu-overlay" onclick="toggleMenu();" style="--_nav-time: <?= $navTime ?>ms"></div>
+              <div id="primary-navigation" data-state="closed" style="--_nav-time: <?= $navTime ?>ms">
+                <jdoc:include type="modules" name="navigation" style="default" />
+              </div>
+            </nav>
+          </div>
+        </header>
+      <?php endif; ?>
+
+      <main class="content-wrapper | full-width">
+        <?php if ($abovebody) : ?>
+          <div class="abovebody">
+            <jdoc:include type="modules" name="above-body" style="default" />
           </div>
         <?php endif; ?>
 
-        <?php if ($topmenu == 1) : ?>
-          <header class="navbar-wrapper">
-            <div class="navbar <?= $topmenuContainer !== "full" ? "container-$topmenuContainer" : ""; ?>">
+        <div class="body-content">
+          <?php if ($this->countModules('leftbody')) : ?>
+            <?php if ($leftbody) : ?>
+              <div class="leftbody">
+                <jdoc:include type="modules" name="left-body" style="default" />
+              </div>
+            <?php endif; ?>
+          <?php endif; ?>
+
+          <div class="mainbody">
+            <?php if ($mainbodytop) : ?>
+              <jdoc:include type="modules" name="main-body-top" style="default" />
+            <?php endif; ?>
+            
+            <jdoc:include type="message" />
+            <jdoc:include type="component" />
+
+            <?php if ($mainbodybottom) : ?>
+              <jdoc:include type="modules" name="main-body-bottom" style="default" />
+            <?php endif; ?>
+          </div>
+
+          <?php if ($this->countModules('right-body')) : ?>
+            <?php if ($rightbody) : ?>
+              <div class="rightbody">
+                <jdoc:include type="modules" name="right-body" style="default" />
+              </div>
+            <?php endif; ?>
+          <?php endif; ?>
+        </div>
+
+        <?php if ($belowbody) : ?>
+          <div class="belowbody">
+            <jdoc:include type="modules" name="below-body" style="default" />
+          </div>
+        <?php endif; ?>
+      </main>
+
+      <?php if ($footer) : ?>
+        <footer class="footer-wrapper | full-width">
+          <div class="footer">
+            <?php if ($showFooterLogo) : ?>
               <a
-                class="logo"
-                href="<?= $this->baseurl ?>"
+                class="footer-logo"
+                href="<?= $this->baseurl; ?>"
               >
                 <img
-                  src="<?= $this->baseurl; ?>/<?= htmlspecialchars($logo); ?>"
+                  src="<?= $this->baseurl; ?>/<?= htmlspecialchars($footerLogo); ?>"
                   alt="<?= htmlspecialchars($sitetitle); ?>"
                 />
               </a>
-              <nav class="nav-end">
-                <jdoc:include type="modules" name="navbar" style="default" />
-                <button id="nav-button" aria-label="Toggle Main Menu" aria-controls="primary-navigation" aria-expanded="false" onclick="toggleMenu();">
-                  <svg class="hamburger" viewBox="0 0 100 100" width="32">
-                    <rect class="line top" width="80" height="10" x="10" y="20"></rect>
-                    <rect class="line middle" width="80" height="10" x="10" y="45"></rect>
-                    <rect class="line bottom" width="80" height="10" x="10" y="70"></rect>
-                  </svg>
-                </button>
-                <div class="menu-overlay" onclick="toggleMenu();"></div>
-                <div id="primary-navigation" data-state="closed" style="--_nav-time: <?= $navTime ?>ms">
-                  <jdoc:include type="modules" name="navigation" style="default" />
-                </div>
-              </nav>
-            </div>
-          </header>
-        <?php endif; ?>
-
-        <main class="content-wrapper">
-          <?php if ($abovebody == 1) : ?>
-            <div class="abovebody <?= $abovebodyContainer !== "full" ? "container-$abovebodyContainer" : ""; ?>">
-              <jdoc:include type="modules" name="above-body" style="default" />
-            </div>
-          <?php endif; ?>
-
-          <div class="body-content <?= $mainbodyContainer !== "full" ? "container-$mainbodyContainer" : ""; ?>">
-            <?php if ($this->countModules('leftbody')) : ?>
-              <?php if ($leftbody == 1) : ?>
-                <div class="leftbody">
-                  <jdoc:include type="modules" name="left-body" style="default" />
-                </div>
-              <?php endif; ?>
             <?php endif; ?>
-
-            <div class="mainbody">
-              <?php if ($mainbodytop == 1) : ?>
-                <jdoc:include type="modules" name="main-body-top" style="default" />
-              <?php endif; ?>
-              
-              <jdoc:include type="message" />
-              <jdoc:include type="component" />
-
-              <?php if ($mainbodybottom == 1) : ?>
-                <jdoc:include type="modules" name="main-body-bottom" style="default" />
-              <?php endif; ?>
-            </div>
-
-            <?php if ($this->countModules('right-body')) : ?>
-              <?php if ($rightbody == 1) : ?>
-                <div class="rightbody">
-                  <jdoc:include type="modules" name="right-body" style="default" />
-                </div>
-              <?php endif; ?>
+            <jdoc:include type="modules" name="footer" style="default" />
+            <?php if ($copyright) : ?>
+              <hr />
+              <small>
+                <?php if ($copyrighttxt != null) : ?>
+                  &copy;<?= date('Y'); ?> <?= $copyrighttxt; ?>
+                <?php else : ?>
+                  &copy;<?= date('Y'); ?> <?= htmlspecialchars($sitetitle); ?>
+                <?php endif; ?>
+              </small>
             <?php endif; ?>
           </div>
+        </footer>
+      <?php endif; ?>
 
-          <?php if ($belowbody == 1) : ?>
-            <div class="belowbody <?= $belowbodyContainer !== "full" ? "container-$belowbodyContainer" : ""; ?>">
-              <jdoc:include type="modules" name="below-body" style="default" />
-            </div>
-          <?php endif; ?>
-        </main>
-
-        <?php if ($footer == 1) : ?>
-          <footer>
-            <div class="footer-wrapper <?= $footerContainer !== "full" ? "container-$footerContainer" : ""; ?>">
-              <jdoc:include type="modules" name="footer" style="default" />
-              <?php if ($copyright == 1) : ?>
-                <hr />
-                <small>
-                  <?php if ($copyrighttxt != null) : ?>
-                    &copy;<?= date('Y'); ?> <?= $copyrighttxt; ?>
-                  <?php else : ?>
-                    &copy;<?= date('Y'); ?> <?= htmlspecialchars($sitetitle); ?>
-                  <?php endif; ?>
-                </small>
-        <?php endif; ?>
-            </div>
-          </footer>
-        <?php endif; ?>
-
-        <jdoc:include type="modules" name="debug" style="default" />
-      </div>
-    <?php endif; ?>
+      <jdoc:include type="modules" name="debug" style="default" />
+    </div>
 
     <?php if ($codebeforebody != null) echo $codebeforebody; ?>
 
-    <?php if ($instant == 1) : ?>
-      <script src="//instant.page/5.1.0" type="module" integrity="sha384-by67kQnR+pyfy8yWP4kPO12fHKRLHZPfEsiSXR8u2IKcTdxD805MGUXBzVPnkLHw"></script>
-    <?php endif; ?>
   </body>
 </html>
