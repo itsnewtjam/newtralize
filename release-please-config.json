@@ -1,5 +1,4 @@
 {
-  "draft": true,
   "pull-request-title-pattern": "chore: release${component} ${version}",
   "extra-files": [
     {
