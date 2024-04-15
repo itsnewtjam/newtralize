@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <extension type="template" version="4.0" method="upgrade">
   <name>newtralize</name>
-  <version>1.0.0</version>
+  <version>2.0.0</version>
   <author>newtjam</author>
   <authorEmail>joomla@newtjam.com</authorEmail>
   <authorUrl>https://newtjam.com</authorUrl>
@@ -40,7 +40,7 @@
   <config>
     <fields name="params">
       <fieldset name="SITE_SETTINGS">
-        <field name="logo" type="media" label="TPL_NEWTRALIZE_LOGO_LABEL" description="TPL_NEWTRALIZE_LOGO_DESC" />
+        <field name="logo" type="media" label="TPL_NEWTRALIZE_LOGO_LABEL" description="TPL_NEWTRALIZE_LOGO_DESC"/>
         <field name="showfooterlogo" type="radio" label="TPL_NEWTRALIZE_SHOWFOOTERLOGO_LABEL" description="TPL_NEWTRALIZE_SHOWFOOTERLOGO_DESC" class="btn-group btn-group-yesno" default="1">
           <option value="0">TPL_NEWTRALIZE_NO</option>
           <option value="1">TPL_NEWTRALIZE_YES</option>
@@ -49,12 +49,12 @@
           <option value="0">TPL_NEWTRALIZE_NO</option>
           <option value="1">TPL_NEWTRALIZE_YES</option>
         </field>
-        <field name="footerlogo" type="media" label="TPL_NEWTRALIZE_FOOTERLOGO_LABEL" description="TPL_NEWTRALIZE_FOOTERLOGO_DESC" showon="differentfooterlogo:1" />
+        <field name="footerlogo" type="media" label="TPL_NEWTRALIZE_FOOTERLOGO_LABEL" description="TPL_NEWTRALIZE_FOOTERLOGO_DESC" showon="differentfooterlogo:1"/>
         <field name="copyright" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_NEWTRALIZE_COPYRIGHT_LABEL" description="TPL_NEWTRALIZE_COPYRIGHT_DESC">
           <option value="0">TPL_NEWTRALIZE_DISABLED</option>
           <option value="1">TPL_NEWTRALIZE_ENABLED</option>
         </field>
-        <field name="copyrighttxt" type="text" default="" label="TPL_NEWTRALIZE_COPYRIGHTTXT_LABEL" description="TPL_NEWTRALIZE_COPYRIGHTTXT_DESC" filter="string" />
+        <field name="copyrighttxt" type="text" default="" label="TPL_NEWTRALIZE_COPYRIGHTTXT_LABEL" description="TPL_NEWTRALIZE_COPYRIGHTTXT_DESC" filter="string"/>
       </fieldset>
       
       <fieldset name="CACHE_SETTINGS">
@@ -93,26 +93,26 @@
           <option value="ga">Google Analytics</option>
           <option value="ga-gtm">Google Analytics with GTM Conversions</option>
         </field>
-        <field name="gtmcode"  type="text" default="" label="TPL_NEWTRALIZE_GTM_LABEL" description="TPL_NEWTRALIZE_GTM_DESC" filter="string" showon="googleSetup:gtm" />
-        <field name="gacode"  type="text" default="" label="TPL_NEWTRALIZE_GA_LABEL" description="TPL_NEWTRALIZE_GA_DESC" filter="string" showon="googleSetup:ga[OR]googleSetup:ga-gtm" />
-        <field name="gagtmcode"  type="text" default="" label="TPL_NEWTRALIZE_GAGTM_LABEL" description="TPL_NEWTRALIZE_GAGTM_DESC" filter="string" showon="googleSetup:ga-gtm" />
-        <field name="fbcode"  type="text" default="" label="TPL_NEWTRALIZE_FB_LABEL" description="TPL_NEWTRALIZE_FB_DESC" filter="string" />
+        <field name="gtmcode" type="text" default="" label="TPL_NEWTRALIZE_GTM_LABEL" description="TPL_NEWTRALIZE_GTM_DESC" filter="string" showon="googleSetup:gtm"/>
+        <field name="gacode" type="text" default="" label="TPL_NEWTRALIZE_GA_LABEL" description="TPL_NEWTRALIZE_GA_DESC" filter="string" showon="googleSetup:ga[OR]googleSetup:ga-gtm"/>
+        <field name="gagtmcode" type="text" default="" label="TPL_NEWTRALIZE_GAGTM_LABEL" description="TPL_NEWTRALIZE_GAGTM_DESC" filter="string" showon="googleSetup:ga-gtm"/>
+        <field name="fbcode" type="text" default="" label="TPL_NEWTRALIZE_FB_LABEL" description="TPL_NEWTRALIZE_FB_DESC" filter="string"/>
       </fieldset>
       
       <fieldset name="ICON_SETTINGS">
-        <field name="fontawesomecdn" type="text" label="TPL_NEWTRALIZE_FONTAWESOMECDN_LABEL" description="TPL_NEWTRALIZE_FONTAWESOMECDN_DESC" />
+        <field name="fontawesomecdn" type="text" label="TPL_NEWTRALIZE_FONTAWESOMECDN_LABEL" description="TPL_NEWTRALIZE_FONTAWESOMECDN_DESC"/>
       </fieldset>
 
       <fieldset name="LAYOUT_SETTINGS">
-        <field name="maxTextWidth" type="number" default="75" min="0" label="TPL_NEWTRALIZE_TEXTWIDTH_LABEL" description="TPL_NEWTRALIZE_TEXTWIDTH_DESC" filter="string" />
-        <field name="maxContentWidth" type="number" default="75" min="0" label="TPL_NEWTRALIZE_CONTENTWIDTH_LABEL" description="TPL_NEWTRALIZE_CONTENTWIDTH_DESC" filter="string" />
-        <field name="contentPadding" type="number" default="20" min="0" label="TPL_NEWTRALIZE_CONTENTPADDING_LABEL" description="TPL_NEWTRALIZE_CONTENTPADDING_DESC" filter="string" />
+        <field name="maxTextWidth" type="number" default="75" min="0" label="TPL_NEWTRALIZE_TEXTWIDTH_LABEL" description="TPL_NEWTRALIZE_TEXTWIDTH_DESC" filter="string"/>
+        <field name="maxContentWidth" type="number" default="75" min="0" label="TPL_NEWTRALIZE_CONTENTWIDTH_LABEL" description="TPL_NEWTRALIZE_CONTENTWIDTH_DESC" filter="string"/>
+        <field name="contentPadding" type="number" default="20" min="0" label="TPL_NEWTRALIZE_CONTENTPADDING_LABEL" description="TPL_NEWTRALIZE_CONTENTPADDING_DESC" filter="string"/>
         <field name="navType" type="radio" class="btn-group" default="dropdown" label="TPL_NEWTRALIZE_NAVTYPE_LABEL" description="TPL_NEWTRALIZE_NAVTYPE_DESC">
           <option value="dropdown">TPL_NEWTRALIZE_NAV_DROPDOWN</option>
           <option value="popover">TPL_NEWTRALIZE_NAV_POPOVER</option>
           <option value="custom">TPL_NEWTRALIZE_NAV_CUSTOM</option>
         </field>
-        <field name="navTime" type="number" default="250" min="0" label="TPL_NEWTRALIZE_NAVTIME_LABEL" description="TPL_NEWTRALIZE_NAVTIME_DESC" filter="string" />
+        <field name="navTime" type="number" default="250" min="0" label="TPL_NEWTRALIZE_NAVTIME_LABEL" description="TPL_NEWTRALIZE_NAVTIME_DESC" filter="string"/>
       </fieldset>
 
       <fieldset name="MODULE_SETTINGS">
@@ -155,10 +155,10 @@
       </fieldset>
       
       <fieldset name="CUSTOM_CODE">
-        <field name="codeafterhead" type="textarea" label="TPL_NEWTRALIZE_CODEAFTERHEAD_LABEL" description="TPL_NEWTRALIZE_CODEAFTERHEAD_DESC" rows="4" columns="30" filter="raw" default="" />
-        <field name="codebeforehead" type="textarea" label="TPL_NEWTRALIZE_CODEBEFOREHEAD_LABEL" description="TPL_NEWTRALIZE_CODEBEFOREHEAD_DESC" rows="4" columns="30" filter="raw" default="" />
-        <field name="codeafterbody" type="textarea" label="TPL_NEWTRALIZE_CODEAFTERBODY_LABEL" description="TPL_NEWTRALIZE_CODEAFTERBODY_DESC" rows="4" columns="30" filter="raw" default="" />
-        <field name="codebeforebody" type="textarea" label="TPL_NEWTRALIZE_CODEBEFOREBODY_LABEL" description="TPL_NEWTRALIZE_CODEBEFOREBODY_DESC" rows="4" columns="30" filter="raw" default="" />
+        <field name="codeafterhead" type="textarea" label="TPL_NEWTRALIZE_CODEAFTERHEAD_LABEL" description="TPL_NEWTRALIZE_CODEAFTERHEAD_DESC" rows="4" columns="30" filter="raw" default=""/>
+        <field name="codebeforehead" type="textarea" label="TPL_NEWTRALIZE_CODEBEFOREHEAD_LABEL" description="TPL_NEWTRALIZE_CODEBEFOREHEAD_DESC" rows="4" columns="30" filter="raw" default=""/>
+        <field name="codeafterbody" type="textarea" label="TPL_NEWTRALIZE_CODEAFTERBODY_LABEL" description="TPL_NEWTRALIZE_CODEAFTERBODY_DESC" rows="4" columns="30" filter="raw" default=""/>
+        <field name="codebeforebody" type="textarea" label="TPL_NEWTRALIZE_CODEBEFOREBODY_LABEL" description="TPL_NEWTRALIZE_CODEBEFOREBODY_DESC" rows="4" columns="30" filter="raw" default=""/>
       </fieldset>
 		</fields>
   </config>
