@@ -328,7 +328,7 @@ function getNPath($path, $uncache) {
         <?php endif; ?>
 
         <div class="body-content">
-          <?php if ($this->countModules('leftbody')) : ?>
+          <?php if ($this->countModules('left-body')) : ?>
             <?php if ($leftbody) : ?>
               <div class="leftbody">
                 <jdoc:include type="modules" name="left-body" style="default" />

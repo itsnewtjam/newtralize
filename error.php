@@ -50,6 +50,7 @@ if ($isNotFound) {
     try {
       $content = @file_get_contents(Uri::root() . ($isNotFound ? '404' : 'error'));
       if (!$content) throw new Exception();
+      echo $content;
       die; 
     } catch (Exception $e) {}
   ?>

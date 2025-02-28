@@ -1,3 +1,8 @@
+v1.0.1 (2025-02-28)
+[Fixed]
+- Fixed custom error pages not outputting their content
+- Fixed a typo for displaying "left-body" module position
+
 v1.0.0 (2024-04-14)
 [Added]
 - New layout system
