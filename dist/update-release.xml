@@ -10,6 +10,6 @@
     <downloads>
       <downloadurl type="full" format="zip">https://github.com/itsnewtjam/newtralize/releases/latest/download/newtralize.zip</downloadurl>
     </downloads>
-    <targetplatform name="joomla" version="4"/>
+    <targetplatform name="joomla" version="4|5"/>
   </update>
 </updates>
