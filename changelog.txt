@@ -1,3 +1,7 @@
+v1.0.2 (2025-03-06)
+[Fixed]
+- Fixed an issue where nav menus were not clickable
+
 v1.0.1 (2025-02-28)
 [Fixed]
 - Fixed custom error pages not outputting their content
