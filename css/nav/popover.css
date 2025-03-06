@@ -15,6 +15,7 @@
   display: block;
   visibility: visible;
   animation: navDropdownOpen var(--_nav-time) forwards;
+  pointer-events: all;
 }
 
 @keyframes navDropdownOpen {
