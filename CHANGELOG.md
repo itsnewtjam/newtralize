@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.2](https://github.com/itsnewtjam/newtralize/compare/v1.0.1...v1.0.2) (2025-03-06)
+
+
+### Bug Fixes
+
+* nav menus not clickable ([#32](https://github.com/itsnewtjam/newtralize/issues/32)) ([1d75b99](https://github.com/itsnewtjam/newtralize/commit/1d75b99e62d3b4c105a1f48eb58cb8f7e54bdc54))
+
 ## [1.0.1](https://github.com/itsnewtjam/newtralize/compare/v1.0.0...v1.0.1) (2025-02-28)
 
 
