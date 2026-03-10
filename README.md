@@ -4,7 +4,7 @@
 
 <p align="center">Scoped files. No clashes, no stress. Just a pleasant experience.</p>
 
-newtralize is a free template for Joomla 4/5 designed to make managing the appearance of your content a breeze.
+newtralize is a free template for Joomla 4+ designed to make managing the appearance of your content a breeze.
 
 - **Scoped Files:** Say goodbye to class name collisions. Scope your CSS, JavaScript, and custom PHP code to individual pages.
 - **Streamlined Grid System:** You can easily implement your designer's vision. No containers, no wrappers. Seriously.
@@ -17,6 +17,6 @@ newtralize is a free template for Joomla 4/5 designed to make managing the appea
 
 ### Installation
 
-newtralize is designed for Joomla 4 and 5.
+newtralize is designed for Joomla 4+.
 
 Download the [latest version](https://github.com/itsnewtjam/newtralize/releases/latest/download/newtralize.zip), and install it on your Joomla site using your preferred method.

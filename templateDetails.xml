@@ -55,6 +55,7 @@
           <option value="1">TPL_NEWTRALIZE_ENABLED</option>
         </field>
         <field name="copyrighttxt" type="text" default="" label="TPL_NEWTRALIZE_COPYRIGHTTXT_LABEL" description="TPL_NEWTRALIZE_COPYRIGHTTXT_DESC" filter="string"/>
+        <field name="schemecookie" type="text" default="color-scheme" label="TPL_NEWTRALIZE_SCHEMECOOKIE_LABEL" description="TPL_NEWTRALIZE_SCHEMECOOKIE_DESC" filter="string"/>
       </fieldset>
       
       <fieldset name="CACHE_SETTINGS">
@@ -104,9 +105,11 @@
       </fieldset>
 
       <fieldset name="LAYOUT_SETTINGS">
+        <field name="breakpoint" type="number" default="60" min="0" label="TPL_NEWTRALIZE_BREAKPOINT_LABEL" description="TPL_NEWTRALIZE_BREAKPOINT_DESC" filter="string"/>
         <field name="maxTextWidth" type="number" default="75" min="0" label="TPL_NEWTRALIZE_TEXTWIDTH_LABEL" description="TPL_NEWTRALIZE_TEXTWIDTH_DESC" filter="string"/>
         <field name="maxContentWidth" type="number" default="75" min="0" label="TPL_NEWTRALIZE_CONTENTWIDTH_LABEL" description="TPL_NEWTRALIZE_CONTENTWIDTH_DESC" filter="string"/>
         <field name="contentPadding" type="number" default="20" min="0" label="TPL_NEWTRALIZE_CONTENTPADDING_LABEL" description="TPL_NEWTRALIZE_CONTENTPADDING_DESC" filter="string"/>
+        <field name="bodyInset" type="number" default="5" min="0" label="TPL_NEWTRALIZE_BODYINSET_LABEL" description="TPL_NEWTRALIZE_BODYINSET_DESC" filter="string"/>
         <field name="navType" type="radio" class="btn-group" default="dropdown" label="TPL_NEWTRALIZE_NAVTYPE_LABEL" description="TPL_NEWTRALIZE_NAVTYPE_DESC">
           <option value="dropdown">TPL_NEWTRALIZE_NAV_DROPDOWN</option>
           <option value="popover">TPL_NEWTRALIZE_NAV_POPOVER</option>
@@ -121,6 +124,10 @@
           <option value="1">TPL_NEWTRALIZE_ENABLED</option>
         </field>
         <field name="topmenu" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_NEWTRALIZE_TOPMENU_LABEL" description="TPL_NEWTRALIZE_TOPMENU_DESC">
+          <option value="0">TPL_NEWTRALIZE_DISABLED</option>
+          <option value="1">TPL_NEWTRALIZE_ENABLED</option>
+        </field>
+        <field name="afternav" type="radio" class="btn-group btn-group-yesno" default="1" label="TPL_NEWTRALIZE_AFTERNAV_LABEL" description="TPL_NEWTRALIZE_AFTERNAV_DESC">
           <option value="0">TPL_NEWTRALIZE_DISABLED</option>
           <option value="1">TPL_NEWTRALIZE_ENABLED</option>
         </field>
