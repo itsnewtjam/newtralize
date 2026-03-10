@@ -53,7 +53,11 @@ p, li {
     [full-width-start]
     minmax(var(--content-padding), 1fr)
     [content-start]
+    minmax(0, var(--body-inset))
+    [body-start]
     min(100% - (var(--content-padding) * 2), var(--max-content-width))
+    [body-end]
+    minmax(0, var(--body-inset))
     [content-end]
     minmax(var(--content-padding), 1fr) 
     [full-width-end];
@@ -70,6 +74,31 @@ p, li {
   display: grid;
   align-content: start;
   grid-template-columns: inherit;
+}
+
+.content-grid > .hang-left,
+.full-width > .hang-left {
+  grid-column-start: full-width-start;
+  grid-column-end: content-end;
+  display: grid;
+  align-content: start;
+  grid-template-columns: inherit;
+  grid-template-columns: subgrid;
+}
+
+.content-grid > .hang-right,
+.full-width > .hang-right {
+  grid-column-start: content-start;
+  grid-column-end: full-width-end;
+  display: grid;
+  align-content: start;
+  grid-template-columns: inherit;
+  grid-template-columns: subgrid;
+}
+
+.hang-left > *,
+.hang-right > * {
+  grid-column: body;
 }
 
 /*================
@@ -97,8 +126,8 @@ Nav Styles
   margin-inline-start: auto;
 }
 
-@media (max-width: 60em) {
-  .nav-end > *:not(#nav-button, .menu-overlay, #primary-navigation) {
+@media (max-width: /*{{breakpoint}}*/) {
+  .nav-end__inner > *:not(#nav-button, .menu-overlay, #primary-navigation) {
     display: none;
   }
 }
@@ -185,7 +214,7 @@ body > .container {
   }
 }
 
-@media (max-width: 60em) {
+@media (max-width: /*{{breakpoint}}*/) {
   .body-content {
     flex-direction: column;
   }
@@ -216,7 +245,7 @@ Utility Classes
   display: none;
 }
 
-@media (min-width: 60em) {
+@media (min-width: /*{{breakpoint}}*/) {
   .show-mobile-only {
     display: none;
   }

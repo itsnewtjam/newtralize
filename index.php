@@ -74,6 +74,7 @@ $fbcode = $n->get('fbcode');
 
 $banner = $n->get('banner') === "1";
 $topmenu = $n->get('topmenu') === "1";
+$afternav = $n->get('afternav') === "1";
 $abovebody = $n->get('abovebody') === "1";
 $leftbody = $n->get('leftbody') === "1";
 $mainbodytop = $n->get('mainbodytop') === "1";
@@ -84,9 +85,11 @@ $footer = $n->get('footer') === "1";
 
 $navType = $n->get('navType', 'dropdown');
 $navTime = $n->get('navTime');
-$maxTextWidth = $n->get('maxTextWidth');
-$maxContentWidth = $n->get('maxContentWidth');
-$contentPadding = $n->get('contentPadding');
+$breakpoint = $n->get('breakpoint') . 'em';
+$maxTextWidth = $n->get('maxTextWidth') . 'ch';
+$maxContentWidth = $n->get('maxContentWidth') . 'em';
+$contentPadding = $n->get('contentPadding') . 'px';
+$bodyInset = $n->get('bodyInset') . 'em';
 
 $codeafterhead = $n->get('codeafterhead');
 $codebeforehead = $n->get('codebeforehead');
@@ -99,7 +102,7 @@ if ($nocacheheaders) {
   header("Pragma: no-cache");
 }
 
-function getNPath($path, $uncache) {
+function getNPath($path, $uncache = false) {
   $cachebust = "";
   if ($uncache) $cachebust = "?v=" . NTIMESTAMP;
   return NBASE . $path . $cachebust;
@@ -197,24 +200,37 @@ function getNPath($path, $uncache) {
 			<!-- End Facebook Pixel Code -->
     <?php endif; ?>
 
+    <?php
+      $gridRows = '1fr';
+      if ($topmenu) $gridRows = "auto {$gridRows}";
+      if ($banner) $gridRows = "auto {$gridRows}";
+      if ($banner) $gridRows = "{$gridRows} auto";
+    ?>
     <style>
+      <?= "
       :root {
-        --max-text-width: <?= $maxTextWidth; ?>ch;
-        --max-content-width: <?= $maxContentWidth; ?>em;
-        --content-padding: <?= $contentPadding; ?>px;
+        --max-text-width: {$maxTextWidth};
+        --max-content-width: {$maxContentWidth};
+        --content-padding: {$contentPadding};
+        --body-inset: {$bodyInset};
       }
 
       body > .container {
-        grid-template-rows: 
-          <?php if ($banner) echo "auto"; ?>
-          <?php if ($topmenu) echo "auto"; ?>
-          1fr
-          <?php if ($footer) echo "auto"; ?>
-        ;
+        grid-template-rows: {$gridRows};
       }
+      "; ?>
     </style>
 
-    <link rel="stylesheet" href="<?= getNPath("/css/template.css", $uncachecss); ?>" type="text/css">
+    <?php
+    $templateCss = getNPath("/css/template.css");
+    $compiledCss = getNPath("/css/template_comp.css");
+    if (!file_exists($compiledCss) || filemtime($templateCss) > filemtime($compiledCss)) {
+      $css = file_get_contents($templateCss);
+      $css = str_replace('/*{{breakpoint}}*/', $breakpoint, $css);
+      file_put_contents($compiledCss, $css);
+    }
+    ?>
+    <link rel="stylesheet" href="<?= getNPath("/css/template_comp.css", $uncachecss); ?>" type="text/css">
 
     <?php if (file_exists(NFILE . "/css/nav/$navType.css")) : ?>
       <link rel="stylesheet" href="<?= getNPath("/css/nav/$navType.css", $uncachecss); ?>" type="text/css">
@@ -303,18 +319,25 @@ function getNPath($path, $uncache) {
               />
             </a>
             <nav class="nav-end">
-              <jdoc:include type="modules" name="navbar" style="default" />
-              <button id="nav-button" aria-label="Toggle Main Menu" aria-controls="primary-navigation" aria-expanded="false" onclick="toggleMenu();">
-                <svg class="hamburger" viewBox="0 0 100 100" width="32">
-                  <rect class="line top" width="80" height="10" x="10" y="20"></rect>
-                  <rect class="line middle" width="80" height="10" x="10" y="45"></rect>
-                  <rect class="line bottom" width="80" height="10" x="10" y="70"></rect>
-                </svg>
-              </button>
-              <div class="menu-overlay" onclick="toggleMenu();" style="--_nav-time: <?= $navTime ?>ms"></div>
-              <div id="primary-navigation" data-state="closed" style="--_nav-time: <?= $navTime ?>ms">
-                <jdoc:include type="modules" name="navigation" style="default" />
+              <div class="nav-end__inner">
+                <jdoc:include type="modules" name="navbar" style="default" />
+                <button id="nav-button" aria-label="Toggle Main Menu" aria-controls="primary-navigation" aria-expanded="false" onclick="toggleMenu();">
+                  <svg class="hamburger" viewBox="0 0 100 100" width="32">
+                    <rect class="line top" width="80" height="10" x="10" y="20"></rect>
+                    <rect class="line middle" width="80" height="10" x="10" y="45"></rect>
+                    <rect class="line bottom" width="80" height="10" x="10" y="70"></rect>
+                  </svg>
+                </button>
+                <div class="menu-overlay" onclick="toggleMenu();" style="--_nav-time: <?= $navTime ?>ms"></div>
+                <div id="primary-navigation" data-state="closed" style="--_nav-time: <?= $navTime ?>ms">
+                  <jdoc:include type="modules" name="navigation" style="default" />
+                </div>
               </div>
+              <?php if ($afternav) : ?>
+              <div class="after-nav">
+                <jdoc:include type="modules" name="after-nav" style="default" />
+              </div>
+              <?php endif; ?>
             </nav>
           </div>
         </header>
