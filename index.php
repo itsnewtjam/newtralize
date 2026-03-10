@@ -20,8 +20,6 @@ define('NTIMESTAMP', date('U'));
 
 $this->setHtml5(true);
 
-$scheme = $app->getInput()->cookie->get('color-scheme', 'light');
-
 // Get active menu item alias
 $active = $app->getMenu()->getActive();
 
@@ -61,6 +59,9 @@ $differentFooterLogo = $n->get('differentfooterlogo', '1') === "1";
 $footerLogo = $differentFooterLogo ? $n->get('footerlogo', '') : $logo;
 $copyright = $n->get('copyright', '1') === "1";
 $copyrighttxt = $n->get('copyrighttxt', '');
+$schemeCookie = $n->get('schemecookie', 'color-scheme');
+
+$scheme = $app->getInput()->cookie->get($schemeCookie, 'light');
 
 $nocacheheaders = $n->get('nocacheheaders', '0') === "1";
 $uncachecss = $n->get('uncachecss', '0') === "1";

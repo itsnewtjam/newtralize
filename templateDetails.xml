@@ -55,6 +55,7 @@
           <option value="1">TPL_NEWTRALIZE_ENABLED</option>
         </field>
         <field name="copyrighttxt" type="text" default="" label="TPL_NEWTRALIZE_COPYRIGHTTXT_LABEL" description="TPL_NEWTRALIZE_COPYRIGHTTXT_DESC" filter="string"/>
+        <field name="schemecookie" type="text" default="color-scheme" label="TPL_NEWTRALIZE_SCHEMECOOKIE_LABEL" description="TPL_NEWTRALIZE_SCHEMECOOKIE_DESC" filter="string"/>
       </fieldset>
       
       <fieldset name="CACHE_SETTINGS">
