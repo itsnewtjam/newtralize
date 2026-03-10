@@ -1,10 +1,14 @@
 <?php
 
+
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Application\SiteApplication;
+use Joomla\CMS\Document\HtmlDocument;
 use Joomla\CMS\Factory;
 use Joomla\Database\DatabaseInterface;
+
+/** @var HtmlDocument $this **/
 
 /** @var SiteApplication **/
 $app = Factory::getApplication();
@@ -15,6 +19,8 @@ define('NFILE', JPATH_BASE . NBASE);
 define('NTIMESTAMP', date('U'));
 
 $this->setHtml5(true);
+
+$scheme = $app->getInput()->cookie->get('color-scheme', 'light');
 
 // Get active menu item alias
 $active = $app->getMenu()->getActive();
@@ -111,7 +117,7 @@ function getNPath($path, $uncache = false) {
 ?>
 
 <!DOCTYPE html>
-<html lang="<?= $this->language; ?>" dir="<?= $this->direction; ?>">
+<html lang="<?= $this->language; ?>" dir="<?= $this->direction; ?>" data-color-scheme="<?= $scheme; ?>">
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -222,8 +228,8 @@ function getNPath($path, $uncache = false) {
     </style>
 
     <?php
-    $templateCss = getNPath("/css/template.css");
-    $compiledCss = getNPath("/css/template_comp.css");
+    $templateCss = NFILE . "/css/template.css";
+    $compiledCss = NFILE . "/css/template_comp.css";
     if (!file_exists($compiledCss) || filemtime($templateCss) > filemtime($compiledCss)) {
       $css = file_get_contents($templateCss);
       $css = str_replace('/*{{breakpoint}}*/', $breakpoint, $css);
