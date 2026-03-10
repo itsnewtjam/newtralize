@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/itsnewtjam/newtralize/compare/v1.0.2...v1.1.0) (2026-03-10)
+
+
+### Features
+
+* Merge 1.1 dev ([#35](https://github.com/itsnewtjam/newtralize/issues/35)) ([0af5968](https://github.com/itsnewtjam/newtralize/commit/0af59686ef697da6faa8026df8545ecdf2a7439e))
+
 ## [1.0.2](https://github.com/itsnewtjam/newtralize/compare/v1.0.1...v1.0.2) (2025-03-06)
 
 
