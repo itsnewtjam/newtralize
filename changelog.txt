@@ -1,3 +1,14 @@
+v1.1.0 (2026-03-10)
+[Added]
+- Added ability to respect stored color scheme setting
+  - Automatically looks for color scheme cookie and applies value to root HTML element, defaults to "light"
+  - Can customize the name of the cookie checked
+  - Can target themes in CSS with 'html[data-color-scheme="{scheme}"'
+- Added new inset "body" column to the content grid
+- Added new "after-nav" module position
+  - Places modules after the main navbar content
+- New option to set the breakpoint used in the template CSS
+
 v1.0.2 (2025-03-06)
 [Fixed]
 - Fixed an issue where nav menus were not clickable
